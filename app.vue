@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 #nuxtPage {
   height: 95vh;
 }
