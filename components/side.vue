@@ -47,13 +47,14 @@
 </template>
 
 <script lang="ts" setup>
+
+
 const imageUrl: string =
   "https://www.freeimg.cn/i/2024/05/19/664a1a0f4b164.jpg";
 const githubUrl: string = "https://github.com/Bread-etc";
-const router = useRouter();
 const routes = ref([
   { path: "/", icon: "pi pi-pencil" },
-  { path: "/contact", icon: "pi pi-megaphone" },
+  { path: "/contact", icon: "pi pi-at" },
   { path: "/about", icon: "pi pi-heart" },
 ]);
 </script>
