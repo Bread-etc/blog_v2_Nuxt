@@ -1,14 +1,7 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
-    <Side class="px-8 py-2 mr-1"></Side>
-    <div class="px-4 py-2 flex-1 rounded-lg max-w-2xl" id="nuxtPage">
+  <div class="flex justify-center items-center min-h-screen w-screen lg:px-4">
+    <div class="bg-gray-200 w-full max-w-screen-lg lg:rounded-lg lg:h-[98vh] h-[100vh]">
       <NuxtPage></NuxtPage>
     </div>
   </div>
 </template>
-
-<style>
-#nuxtPage {
-  height: 95vh;
-}
-</style>

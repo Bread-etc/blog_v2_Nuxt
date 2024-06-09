@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Button label="Primary" text raised />
+    <div class="w-full">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam fugiat pariatur ipsum enim! Similique autem tenetur dolor minus placeat voluptatum excepturi natus, illo debitis, ut mollitia perferendis vero error ab.
     </div>
 </template>
 
