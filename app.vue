@@ -7,7 +7,7 @@
         <Side></Side>
       </aside>
       <main class="flex-1 m-4">
-        <NuxtPage></NuxtPage>
+        <NuxtPage keepalive></NuxtPage>
       </main>
     </div>
   </div>
