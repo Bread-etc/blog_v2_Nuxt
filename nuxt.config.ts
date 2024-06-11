@@ -1,6 +1,10 @@
 import path from "path";
 
 export default defineNuxtConfig({
+  alias: {
+    "@": path.resolve(__dirname, "/"),
+  },
+  css: ["~/assets/styles/main.css"],
   app: {
     head: {
       title: "面包etc的博客",
@@ -78,9 +82,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  },
-  css: [
-    // 全局样式表 [会进行打包处理]
-    "./assets/styles/style.css"
-  ]
+  }
 })
