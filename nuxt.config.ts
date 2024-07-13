@@ -23,7 +23,8 @@ export default defineNuxtConfig({
   // 模块
   modules: [
     "@nuxtjs/tailwindcss",
-    "nuxt-primevue"
+    "nuxt-primevue",
+    "@pinia/nuxt",
   ],
   primevue: {
     options: {

@@ -1,5 +1,7 @@
 <template>
-  <div class="h-[95vh]"></div>
+  <div>
+    <Floating />
+  </div>
 </template>
 
 <script lang="ts" setup>
