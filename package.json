@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
-    "@vueuse/core": "^10.11.0",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
@@ -21,6 +20,9 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@types/node": "^20.14.10",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
     "nuxt-primevue": "^3.0.0"
   }
 }
