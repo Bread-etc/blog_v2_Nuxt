@@ -1,7 +1,8 @@
 <template>
   <div class="flex justify-center items-center min-h-screen w-screen lg:px-4 overflow-hidden">
     <div
-      class="bg-gray-200 w-full max-w-screen-lg lg:rounded-xl lg:h-[98vh] h-[100vh] flex justify-center items-center">
+      style="transition: all ease-in-out 0.3s !important;"
+      class="bg-LightBg dark:bg-DarkBg w-full max-w-screen-lg lg:rounded-xl lg:h-[98vh] h-[100vh] flex justify-center items-center">
       <aside>
         <Side></Side>
       </aside>
