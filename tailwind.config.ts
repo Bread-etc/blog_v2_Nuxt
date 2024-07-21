@@ -43,11 +43,18 @@ module.exports = {
 
 
                 // 全局颜色变量
-                "LightBg": "#f1f4fb",
-                "DarkBg": "#222131",
-                "LightContent": "#ffffff",
-                "DarkContent": "#39394b",
 
+                /* 背景颜色 [外部圆角矩形] */
+                "LightBg": "#fefefe",
+                "DarkBg": "#1a1823",
+
+                /* 内容颜色 [侧边以及中间圆角矩形] */
+                "LightContent": "#f5f4eb",
+                "DarkContent": "#221f2a",
+
+                /* 主题修饰颜色 [部分突出部分] */
+                "LightEm": "#3eb56f",       // 绿色色调
+                "DarkEm": "#753ced",        // 紫色色调
 
           }
         }

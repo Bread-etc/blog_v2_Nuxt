@@ -7,18 +7,19 @@
       </div>
       <div class="flex-grow flex flex-col justify-center items-center w-full space-y-4">
         <NuxtLink v-for="route in routes" :key="route.path" :to="route.path" class="w-[68%]">
-          <Button :icon="route.icon" rounded severity="secondary" iconClass="text-[14px]"
-            style="padding: 3px; width: 100%; transition: all ease-in-out 0.4s !important;" />
+          <Button :icon="route.icon" rounded severity="help" iconClass="text-[14px]"
+            style="padding: 3px; width: 100%; transition: all ease-in-out 0.4s !important;"
+            class="dark:text-white dark:bg-DarkEm" />
         </NuxtLink>
       </div>
       <div class="flex flex-col justify-center items-center w-full mb-4">
         <div class="mb-2 w-[68%]">
-          <Button :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'" rounded severity="contrast"
+          <Button :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'" rounded severity="secondary"
             :class="['text-[14px]', { 'transition-all duration-500': themeStore }]"
             style="padding: 7px; width: 100%; transition: all ease-in-out 0.4s !important;" @click="toggleColorMode" />
         </div>
         <a :href="githubUrl" target="_blank" rel="noopener noreferrer" class="w-[68%]">
-          <Button icon="pi pi-github" rounded severity="contrast" iconClass="text-[18px]"
+          <Button icon="pi pi-github" rounded severity="secondary" iconClass="text-[18px]"
             style="padding: 3px; width: 100%; transition: all ease-in-out 0.4s !important;" />
         </a>
       </div>
@@ -44,7 +45,6 @@ const routes = ref<any[]>([
 const { system: themeSystem, store: themeStore } = useColorMode();
 const toggleColorMode = () => {
   themeStore.value = themeStore.value === "dark" ? "light" : "dark";
-  console.log(themeSystem);
 }
 
 </script>

@@ -41,5 +41,12 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: "./tailwind.config.ts"
+  },
+  // 添加运行时配置
+  runtimeConfig: {
+    apiSecret: process.env.NUXT_API_SECRET,
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || SERVER_BASE_API,
+    }
   }
 })
