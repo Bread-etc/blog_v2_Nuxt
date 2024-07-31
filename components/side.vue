@@ -29,6 +29,7 @@
               width: 100%;
               transition: all ease-in-out 0.4s !important;
               border: 0;
+              --tw-ring-color: none;
             "
             class="text-white bg-LightEm dark:bg-DarkEm"
           />
@@ -48,6 +49,8 @@
               padding: 7px;
               width: 100%;
               transition: all ease-in-out 0.4s !important;
+              border: 0;
+              --tw-ring-color: none;
             "
             @click="toggleColorMode"
           />
@@ -67,6 +70,7 @@
               padding: 3px;
               width: 100%;
               transition: all ease-in-out 0.4s !important;
+              border: 0px;
             "
           />
         </a>
