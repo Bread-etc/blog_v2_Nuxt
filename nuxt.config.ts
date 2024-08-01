@@ -14,7 +14,6 @@ export default defineNuxtConfig({
         { name: "viewport", content: "width=device-width, initial-scale=1" }
       ],
       link: [
-        { rel: "icon", type: "image/x-icon", href: "/assets/images/favicon.ico" },
         { rel: "stylesheet", href: "https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css" },
       ]
     }
@@ -25,7 +24,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "@primevue/nuxt-module",
-    "@pinia/nuxt",
     "@vueuse/nuxt",
   ],
   primevue: {
@@ -41,12 +39,5 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: "./tailwind.config.ts"
-  },
-  // 添加运行时配置
-  runtimeConfig: {
-    apiSecret: process.env.NUXT_API_SECRET,
-    public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || SERVER_BASE_API,
-    }
   }
 })

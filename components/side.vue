@@ -3,7 +3,7 @@
     class="m-4 mr-0 bg-LightContent dark:bg-DarkContent h-full w-10 rounded-2xl"
     style="transition: all ease-in-out 0.4s !important"
   >
-    <div class="flex flex-col items-center h-[95vh]">
+    <div class="flex flex-col items-center h-[92vh]">
       <div class="pt-4">
         <Avatar
           size="normal"
