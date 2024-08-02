@@ -31,7 +31,7 @@
               border: 0;
               --tw-ring-color: none;
             "
-            class="text-white bg-LightEm dark:bg-DarkEm"
+            class="text-white bg-LightEm dark:bg-DarkEm hover:bg-HoverLightEm dark:hover:bg-HoverDarkEm"
           />
         </NuxtLink>
       </div>

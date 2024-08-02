@@ -5,7 +5,9 @@ export default defineNuxtConfig({
   alias: {
     "@": path.resolve(__dirname, "/"),
   },
-  css: ["~/assets/styles/main.css"],
+  css: [
+    "~/assets/styles/main.css", 
+  ],
   app: {
     head: {
       title: "面包etc的博客",
@@ -24,6 +26,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "@primevue/nuxt-module",
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
     "@vueuse/nuxt",
   ],
   primevue: {
@@ -38,6 +42,8 @@ export default defineNuxtConfig({
     }
   },
   tailwindcss: {
-    configPath: "./tailwind.config.ts"
+    // 关闭tailwindcss viewer服务
+    viewer: false,
+    configPath: "./tailwind.config.ts",
   }
 })
