@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     "@": path.resolve(__dirname, "/"),
   },
   css: [
-    "~/assets/styles/main.css", 
+    "~/assets/styles/main.css",
   ],
   app: {
     head: {
@@ -45,5 +45,20 @@ export default defineNuxtConfig({
     // 关闭tailwindcss viewer服务
     viewer: false,
     configPath: "./tailwind.config.ts",
+  },
+  // 运行时配置
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE
+    }
+  },
+  // 如果存在跨域
+  nitro: {
+    devProxy: {
+      "/api": {
+        target: process.env.NUXT_PUBLIC_API_BASE,
+        changeOrigin: true
+      }
+    }
   }
 })
