@@ -10,6 +10,7 @@
 - 分离`tailwindcss.config.ts`配置文件
 - 更新`primevue`版本
 - 添加全局颜色变量
+- 利用`$fetch`封装拦截器interceptor
 
 ### 数据库设计
 #### 用户表 (user)
