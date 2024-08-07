@@ -53,9 +53,6 @@ export default defineNuxtConfig({
     viewer: false,
     configPath: "./tailwind.config.ts",
   },
-  // plugins: [
-  //   "./plugins/primevue.ts",
-  // ],
   // 运行时配置
   runtimeConfig: {
     public: {

@@ -1,18 +1,15 @@
 <template>
-  <Toast />
-  <div
-    class="bg-transparent rounded-xl px-2 pb-2 flex"
-    style="transition: all 0.4s ease-in-out !important"
-  >
-    <div class="dark:text-white flex-1 h-[92vh] rounded-xl overflow-auto">
+  <div class="bg-transparent rounded-xl px-2 pb-2 flex">
+    <div class="flex-1 h-[92vh] rounded-xl overflow-auto">
       <template v-if="hasData">
         <Card
           v-for="(item, _index) in items"
-          class="transition-all duration-1000 ease-in-out bg-LightContent dark:bg-DarkContent mb-3 h-[22vh]"
+          class="bg-LightContent dark:bg-DarkContent mb-3 h-[22vh] dark:text-white"
           v-animateonscroll="{
-            enterClass: 'animate-fadein',
-            leaveClass: 'animate-fadeout',
+            enterClass: 'animate-fadeinright',
+            leaveClass: 'animate-fadeoutright',
           }"
+          style="transition: all ease-in-out 0.5s !important"
         >
           <template #title>{{ item.title }}</template>
           <template #content>

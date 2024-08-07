@@ -6,7 +6,6 @@
     <div class="flex flex-col items-center h-[92vh]">
       <div class="pt-4">
         <Avatar
-          size="normal"
           :image="imageUrl"
           style="padding: 5px; background: rgba(0, 0, 0, 0)"
         ></Avatar>
@@ -18,15 +17,13 @@
           v-for="route in routes"
           :key="route.path"
           :to="route.path"
-          class="w-[68%]"
+          style="scale: 0.7"
         >
           <Button
             :icon="route.icon"
             rounded
-            iconClass="text-[14px]"
+            iconClass="text-[20px]"
             style="
-              padding: 3px;
-              width: 100%;
               transition: all ease-in-out 0.4s !important;
               border: 0;
               --tw-ring-color: none;
@@ -36,18 +33,16 @@
         </NuxtLink>
       </div>
       <div class="flex flex-col justify-center items-center w-full mb-4">
-        <div class="mb-2 w-[68%]">
+        <div class="mb-2" style="scale: 0.7">
           <Button
             :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"
             rounded
             severity="secondary"
             :class="[
-              'text-[14px]',
+              'text-[20px]',
               { 'transition-all duration-500': themeStore },
             ]"
             style="
-              padding: 7px;
-              width: 100%;
               transition: all ease-in-out 0.4s !important;
               border: 0;
               --tw-ring-color: none;
@@ -59,19 +54,14 @@
           :href="githubUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-[68%]"
+          style="scale: 0.7"
         >
           <Button
             icon="pi pi-github"
             rounded
             severity="secondary"
-            iconClass="text-[18px]"
-            style="
-              padding: 3px;
-              width: 100%;
-              transition: all ease-in-out 0.4s !important;
-              border: 0px;
-            "
+            iconClass="text-[20px]"
+            style="transition: all ease-in-out 0.4s !important; border: 0px"
           />
         </a>
       </div>
