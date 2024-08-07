@@ -1,4 +1,5 @@
 import path from "path";
+import Aura from '@primevue/themes/aura';
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
@@ -6,7 +7,7 @@ export default defineNuxtConfig({
     "@": path.resolve(__dirname, "/"),
   },
   css: [
-    "~/assets/styles/main.css",
+    "~/assets/styles/main.css"
   ],
   app: {
     head: {
@@ -32,13 +33,19 @@ export default defineNuxtConfig({
   ],
   primevue: {
     options: {
-      unstyled: true,
       ripple: true,
-      inputStyle: "filled"
+      inputVariant: 'filled',
+      theme: {
+        preset: Aura,
+        options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: false
+        }
+      }
     },
-    importPT: { from: path.resolve(__dirname, "./presets/aura/") },
     components: {
-      exclude: ["Editor", "Chart"]
+      exclude: ["Editor", "Chart", "Dock"]
     }
   },
   tailwindcss: {
@@ -46,10 +53,13 @@ export default defineNuxtConfig({
     viewer: false,
     configPath: "./tailwind.config.ts",
   },
+  // plugins: [
+  //   "./plugins/primevue.ts",
+  // ],
   // 运行时配置
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE
+      baseUrl: process.env.NUXT_PUBLIC_API_BASE
     }
   },
   // 如果存在跨域

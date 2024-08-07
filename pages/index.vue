@@ -1,4 +1,5 @@
 <template>
+  <Toast />
   <div
     class="bg-transparent rounded-xl px-2 pb-2 flex"
     style="transition: all 0.4s ease-in-out !important"
@@ -27,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref } from "vue";
 
 const hasData = ref<boolean>(false);
 
@@ -49,12 +50,9 @@ const data = ref([
   { title: "b", content: "B" },
 ]);
 
-// 监听list是否全部加载
-const watch = watchEffect(() => {});
-
 onMounted(() => {
   hasData.value = true;
-})
+});
 </script>
 
 <style scoped>
