@@ -53,6 +53,13 @@ export default defineNuxtConfig({
     viewer: false,
     configPath: "./tailwind.config.ts",
   },
+  // 持久化存储
+  piniaPersistedstate: {
+    cookieOptions: {
+      sameSite: 'strict',
+    },
+    storage: 'localStorage',
+  },
   // 运行时配置
   runtimeConfig: {
     public: {

@@ -6,6 +6,7 @@
     <div class="flex flex-col items-center h-[92vh]">
       <div class="pt-4">
         <Avatar
+          class="image"
           :image="imageUrl"
           style="padding: 5px; background: rgba(0, 0, 0, 0)"
         ></Avatar>
@@ -89,3 +90,11 @@ const toggleColorMode = () => {
   themeStore.value = themeStore.value === "dark" ? "light" : "dark";
 };
 </script>
+
+<style scoped>
+.image ::v-deep {
+  img {
+    border-radius: 5px;
+  }
+}
+</style>

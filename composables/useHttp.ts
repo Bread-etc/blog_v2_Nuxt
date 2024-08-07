@@ -1,11 +1,12 @@
+import { useUserStore } from './../stores/user.store';
 /**
  * 对$fetch进行封装 [https://github.com/LUDA0831/nuxt3-template-demo/blob/main/composables/useHttp.ts]
  * 1. 简化http请求
  * 2. 支持服务端渲染(ssr)
  * 3. 避免重复数据获取
  */
-import { showToast } from './../utils/toast';
-import { useRuntimeConfig } from "nuxt/app";
+import showToast from "../utils/toastService";
+import { navigateTo, useRuntimeConfig } from "nuxt/app";
 import type { FetchResponse, SearchParameters } from 'ofetch'
 
 export interface ResOptions<T> {
@@ -15,11 +16,43 @@ export interface ResOptions<T> {
     success: boolean;
 }
 
+const config = useRuntimeConfig();
+const baseUrl = config.public.baseUrl as string;
+
+
 // 处理错误
 function handelError<T>(response: FetchResponse<ResOptions<T>> & FetchResponse<ResponseType>) {
     const err = (text: string) => {
-        
+        showToast("error", "Error", response?._data?.message ?? text);
+    };
+
+    if (!response._data) {
+        err("请求超时，服务器无响应！");
+        return;
     }
+
+    const userStore = useUserStore();
+    const handleMap: { [key: number]: () => void } = {
+        404: () => err("服务器资源不存在"),
+        500: () => err("服务器内部错误"),
+        403: () => err("没有权限访问该资源"),
+        401: () => {
+            err("token已过期，需要重新登录");
+            userStore.clearUserInfo();
+            navigateTo('/login');
+        },
+    }
+    handleMap[response.status] ? handleMap[response.status](): err("未知错误！");
+}
+
+// get 方法传递数组形式参数
+function paramsSerializer(params?: SearchParameters) {
+    if (!params) return;
+
+    const query = useCloneDeep(params);
+    Object.entries(query).forEach(([key, val]) => {
+        
+    })
 }
 
 // // HttpService请求类
