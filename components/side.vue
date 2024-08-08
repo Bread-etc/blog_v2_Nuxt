@@ -18,7 +18,7 @@
           v-for="route in routes"
           :key="route.path"
           :to="route.path"
-          style="scale: 0.7"
+          style="scale: 0.65"
         >
           <Button
             :icon="route.icon"
@@ -34,7 +34,7 @@
         </NuxtLink>
       </div>
       <div class="mb-4 flex w-full flex-col items-center justify-center">
-        <div class="mb-2" style="scale: 0.7">
+        <div class="mb-2" style="scale: 0.65">
           <Button
             :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"
             rounded
@@ -55,7 +55,7 @@
           :href="githubUrl"
           target="_blank"
           rel="noopener noreferrer"
-          style="scale: 0.7"
+          style="scale: 0.65"
         >
           <Button
             icon="pi pi-github"

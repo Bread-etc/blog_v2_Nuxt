@@ -1,11 +1,13 @@
 {
   "name": "nuxt-app",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "author": "bread_etc",
   "scripts": {
     "build": "nuxt build --dotenv .env.production",
     "dev": "nuxt dev --dotenv .env.development --open",
-    "clean": "nuxt clean",
+    "clean": "nuxt cleanup",
     "analyze": "nuxt analyze",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
