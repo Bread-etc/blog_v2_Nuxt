@@ -1,9 +1,9 @@
 <template>
   <div
-    class="m-4 mr-0 bg-LightContent dark:bg-DarkContent h-full w-10 rounded-2xl"
+    class="bg-LightContent dark:bg-DarkContent m-4 mr-0 h-full w-10 rounded-2xl"
     style="transition: all ease-in-out 0.4s !important"
   >
-    <div class="flex flex-col items-center h-[92vh]">
+    <div class="flex h-[92vh] flex-col items-center">
       <div class="pt-4">
         <Avatar
           class="image"
@@ -12,7 +12,7 @@
         ></Avatar>
       </div>
       <div
-        class="flex-grow flex flex-col justify-center items-center w-full space-y-4"
+        class="flex w-full flex-grow flex-col items-center justify-center space-y-4"
       >
         <NuxtLink
           v-for="route in routes"
@@ -29,11 +29,11 @@
               border: 0;
               --tw-ring-color: none;
             "
-            class="text-white bg-LightEm dark:bg-DarkEm hover:bg-HoverLightEm dark:hover:bg-HoverDarkEm"
+            class="bg-LightEm dark:bg-DarkEm hover:bg-HoverLightEm dark:hover:bg-HoverDarkEm text-white"
           />
         </NuxtLink>
       </div>
-      <div class="flex flex-col justify-center items-center w-full mb-4">
+      <div class="mb-4 flex w-full flex-col items-center justify-center">
         <div class="mb-2" style="scale: 0.7">
           <Button
             :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"
@@ -92,7 +92,7 @@ const toggleColorMode = () => {
 </script>
 
 <style scoped>
-.image ::v-deep {
+:deep(.image) {
   img {
     border-radius: 5px;
   }

@@ -1,11 +1,13 @@
-import { HttpService } from "../../composables/useHttp";
-import type { BlogInfo } from '../model/BlogInfo';
+/**
+ * 博客首页主要内容接口
+ */
+import { useHttp } from "~/composables/useHttp";
+import type { BlogInfo } from "model/BlogInfo";
 
-const http = new HttpService();
+enum Api {
+  getList = "/getList",
+}
 
-export class IBlogInfoMethod {
-
-    public getBlogInfo() {
-        return http.get<BlogInfo>("/getList");
-    }
+export async function getList() {
+  return useHttp.get<BlogInfo>(Api.getList);
 }

@@ -1,15 +1,15 @@
 <template>
   <div
-    class="flex justify-center items-center min-h-screen w-screen lg:px-4 overflow-hidden bg-lightOutBgImage dark:bg-darkOutBgImage"
+    class="flex min-h-screen w-screen items-center justify-center overflow-hidden bg-lightOutBgImage dark:bg-darkOutBgImage lg:px-4"
   >
     <Toast />
     <div
-      class="bg-LightBg dark:bg-DarkBg max-w-screen-xl w-[70%] lg:rounded-xl lg:h-[98vh] h-[100vh] flex justify-center items-center transition-all ease-in-out duration-300"
+      class="bg-LightBg dark:bg-DarkBg flex h-[100vh] w-[70%] max-w-screen-xl items-center justify-center transition-all duration-300 ease-in-out lg:h-[98vh] lg:rounded-xl"
     >
       <aside>
-        <Side></Side>
+        <Side />
       </aside>
-      <main class="flex-1 m-4">
+      <main class="m-4 flex-1">
         <NuxtPage keepalive class="h-[92vh]"></NuxtPage>
       </main>
     </div>

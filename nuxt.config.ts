@@ -1,78 +1,68 @@
-import path from "path";
-import Aura from '@primevue/themes/aura';
+import Aura from "@primevue/themes/aura";
+import { fileURLToPath } from "url";
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   alias: {
-    "@": path.resolve(__dirname, "/"),
+    model: fileURLToPath(new URL("./api/model", import.meta.url))
   },
-  css: [
-    "~/assets/styles/main.css"
-  ],
-  app: {
-    head: {
-      title: "面包etc的博客",
-      meta: [
-        { charset: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" }
-      ],
-      link: [
-        { rel: "stylesheet", href: "https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css" },
-      ]
-    }
+  css: ["assets/styles/main.css"],
+  typescript: {
+    shim: false,
+    strict: true,
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+    },
   },
   devServer: { port: 3030 },
   devtools: { enabled: false },
-  // 模块
+
+  // 模块配置项
   modules: [
     "@nuxtjs/tailwindcss",
     "@primevue/nuxt-module",
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
     "@vueuse/nuxt",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+    "nuxt-lodash",
   ],
-  primevue: {
-    options: {
-      ripple: true,
-      inputVariant: 'filled',
-      theme: {
-        preset: Aura,
-        options: {
-          prefix: 'p',
-          darkModeSelector: 'system',
-          cssLayer: false
-        }
-      }
-    },
-    components: {
-      exclude: ["Editor", "Chart", "Dock"]
-    }
-  },
   tailwindcss: {
-    // 关闭tailwindcss viewer服务
+    /* 配置项 */
     viewer: false,
     configPath: "./tailwind.config.ts",
   },
-  // 持久化存储
-  piniaPersistedstate: {
-    cookieOptions: {
-      sameSite: 'strict',
+  primevue: {
+    /* 配置项 */
+    options: {
+      ripple: true,
+      inputVariant: "filled",
+      theme: {
+        preset: Aura,
+        options: {
+          preset: "Prime",
+          darkModeSelector: "system",
+          cssLayer: false,
+        },
+      },
     },
-    storage: 'localStorage',
   },
-  // 运行时配置
-  runtimeConfig: {
-    public: {
-      baseUrl: process.env.NUXT_PUBLIC_API_BASE
-    }
+  vueuse: {
+    /* 配置项 */
+    ssrHandlers: true,
   },
-  // 如果存在跨域
-  nitro: {
-    devProxy: {
-      "/api": {
-        target: process.env.NUXT_PUBLIC_API_BASE,
-        changeOrigin: true
-      }
-    }
-  }
-})
+  piniaPersistedState: {
+    cookieOptions: {
+      // 30 天过期
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: "strict",
+    },
+    storage: "localStorage",
+  },
+  lodash: {
+    /* 配置项 */
+    prefix: "use",
+    prefixSkip: ["string"],
+  },
+});

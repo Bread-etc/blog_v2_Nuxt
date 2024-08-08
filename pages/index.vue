@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-transparent rounded-xl px-2 pb-2 flex">
-    <div class="flex-1 h-[92vh] rounded-xl overflow-auto">
+  <div class="flex rounded-xl bg-transparent px-2 pb-2">
+    <div class="h-[92vh] flex-1 overflow-auto rounded-xl">
       <template v-if="hasData">
         <Card
           v-for="(item, _index) in items"
@@ -13,7 +13,7 @@
         >
           <template #title>{{ item.title }}</template>
           <template #content>
-            <p class="m-0 cardCut">
+            <p class="cardCut m-0">
               {{ item.content }}
             </p>
           </template>

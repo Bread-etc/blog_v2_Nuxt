@@ -1,23 +1,11 @@
 <template>
-  <div class="p-4 dark:text-white">
-    contact
-    <button @click="showToast()">123456</button>
-  </div>
+  <div class="p-4 dark:text-white">contact</div>
 </template>
 
 <script lang="ts" setup>
-import { useToast } from "primevue/usetoast";
-import Toast from "primevue/toast";
-const toast = useToast();
+// import { useApi } from "~/composables/index";
 
-const showToast = () => {
-  toast.add({
-    severity: "success",
-    summary: "Success Message",
-    detail: "Message Content",
-    life: 3000
-  });
-};
+// const api = useApi();
 </script>
 
 <style scoped></style>

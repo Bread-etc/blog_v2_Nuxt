@@ -1,0 +1,2 @@
+# prettier.yaml
+plugins: ["prettier-plugin-tailwindcss"]

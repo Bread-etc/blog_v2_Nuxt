@@ -2,12 +2,13 @@
  * 登录登出接口
  */
 
-import { LoginParams, LoginResultModel } from "../model/Login";
+import { useHttp } from "~/composables/useHttp";
+import type { LoginParams, LoginResultModel } from "model/Login";
 
-export enum Api {
-  login = '/admin/login',
-  logout = '/admin/logout',
-  getUserInfo = '/admin/getUserInfo'
+enum Api {
+  login = "/admin/login",
+  logout = "/admin/logout",
+  getUserInfo = "/admin/getUserInfo",
 }
 
 // 登录
