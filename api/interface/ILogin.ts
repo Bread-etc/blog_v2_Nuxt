@@ -2,7 +2,7 @@
  * 登录登出接口
  */
 
-import type { LoginParams, LoginResultModel } from "../model/Login";
+import { LoginParams, LoginResultModel } from "../model/Login";
 
 export enum Api {
   login = '/admin/login',

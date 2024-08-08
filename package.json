@@ -1,38 +1,20 @@
 {
   "name": "nuxt-app",
-  "type": "module",
-  "version": "0.1.0",
   "private": true,
-  "author": "bread_etc",
-  "license": "MIT",
-  "homepage": "https://github.com/Bread-etc/blog_v2_Nuxt",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Bread-etc/blog_v2_Nuxt"
-  },
-  "bugs": "https://github.com/Bread-etc/blog_v2_Nuxt/issues",
-  "keywords": [
-    "nuxt3",
-    "vue3",
-    "typescript"
-  ],
+  "type": "module",
   "scripts": {
     "build": "nuxt build --dotenv .env.production",
     "dev": "nuxt dev --dotenv .env.development --open",
-    "clean": "nuxt clean",
-    "analyze": "nuxt analyze",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@primevue/themes": "^4.0.4",
-    "primeicons": "^7.0.0",
-    "pinia": "^2.2.0",
     "@pinia/nuxt": "^0.5.2",
-    "primevue": "^4.0.0",
+    "@primevue/themes": "^4.0.4",
     "nuxt": "^3.11.2",
+    "pinia": "^2.2.0",
+    "primeicons": "^7.0.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
@@ -43,6 +25,6 @@
     "@types/node": "^20.14.10",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
-    "nuxt-lodash": "^2.5.3"
+    "primevue": "^4.0.0"
   }
 }
