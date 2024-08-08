@@ -4,13 +4,14 @@
 - 添加字体 LXGW WenKai webfont
 - 添加路由缓存`keepalive`
 
-### 暑期更新
+### update
 - 添加`vueuse`
 - 添加深色浅色模式切换
 - 分离`tailwindcss.config.ts`配置文件
 - 更新`primevue`版本
 - 添加全局颜色变量
 - 利用`$fetch`封装拦截器interceptor
+- 添加`lodash`
 
 ### 数据库设计
 #### 用户表 (user)
