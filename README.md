@@ -13,6 +13,8 @@
 - 利用`$fetch`封装拦截器interceptor
 - 添加`lodash`
 - 引入`utteranc`评论功能
+- 添加`styleLint`配置
+- 添加`error.vue`错误页
 
 ### 数据库设计
 #### 用户表 (user)
