@@ -9,9 +9,10 @@
           label="Edit"
           icon="pi pi-user-edit"
           severity="secondary"
-          outlined 
+          outlined
           size="small"
-          class="scale-[0.65] rounded-lg dark:text-white dark:border-white"
+          class="scale-[0.65] rounded-lg dark:border-white dark:text-white"
+          @click="routeToLogin()"
         />
       </div>
       <span class="py-1">信息工程专业大学生，主要方向为前端</span>
@@ -40,10 +41,11 @@
         <p class="m-0 flex flex-col">
           <NuxtLink
             v-for="link in friendLinkList"
-            class="email px-1 text-sm font-bold text-blue-500"
+            class="email inline-block px-1 text-sm font-bold text-blue-500"
             alt="friendLink"
             :to="link.value"
             no-rel
+            target="_blank"
           >
             {{ link.name }}
           </NuxtLink>
@@ -57,6 +59,7 @@
 import { onMounted } from "vue";
 import type { BlogInfo } from "../api/model/BlogInfo";
 import { useApi } from "../composables/index";
+import { navigateTo } from "nuxt/app";
 
 const { blogInfo } = useApi();
 
@@ -79,6 +82,11 @@ const friendLinkList: { id: number; value: string; name: string }[] = [
   { id: 2, value: "https://github.com", name: "github" },
   { id: 3, value: "https://x.com", name: "x.com" },
 ];
+
+// 跳转后台登录界面
+const routeToLogin = () => {
+  navigateTo("/admin/login");
+};
 </script>
 
 <style scoped>
