@@ -9,7 +9,7 @@
       >
       <span class="py-1">评论区支持markdown和emoji😘</span>
       <span class="py-1">本站内容仅供学习参考使用</span>
-      <Divider />
+      <Divider type="dashed"/>
       <div ref="commentRef" id="comment"></div>
     </div>
   </div>
@@ -49,7 +49,7 @@ onMounted(() => {
   }
 }
 
-:deep(Divider)::before {
+:deep(.p-divider)::before {
   @apply border-black dark:border-white /* 轻模式下为黑色，暗模式下为白色 */
 }
 </style>

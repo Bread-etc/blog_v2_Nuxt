@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-lodash",
+    "@prisma/nuxt",
   ],
 
   tailwindcss: {

@@ -1,0 +1,55 @@
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// 生成器
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 定义数据源
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  userName    String   @unique @map("user_name")
+  password    String
+  role        String
+  nickName    String?  @map("nick_name")
+  createdTime DateTime @default(now()) @map("created_time")
+
+  posts Post[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String? // 对应 PostgreSQL 的 TEXT 类型
+  authorId    Int      @map("author_id")
+  categoryId  Int      @map("category_id")
+  createdTime DateTime @default(now()) @map("created_time")
+  updatedTime DateTime @updatedAt @map("updated_time")
+
+  author    User       @relation(fields: [authorId], references: [id])
+  category  Category   @relation(fields: [categoryId], references: [id])
+  postFiles PostFile[]
+}
+
+model PostFile {
+  id          Int    @id @default(autoincrement())
+  postId      Int    @map("post_id")
+  fileName    String @map("file_name")
+  fileAddress String @map("file_address")
+
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String
+  color String?
+  icon  String?
+
+  posts Post[]
+}

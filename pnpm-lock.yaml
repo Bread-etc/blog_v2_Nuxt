@@ -17,6 +17,9 @@ importers:
       '@primevue/themes':
         specifier: ^4.0.4
         version: 4.0.4
+      '@prisma/nuxt':
+        specifier: ^0.0.35
+        version: 0.0.35(magicast@0.3.4)(rollup@4.20.0)(vite@5.4.0(@types/node@22.1.0)(terser@5.31.5))
       '@types/pg':
         specifier: ^8.11.6
         version: 8.11.6
@@ -42,6 +45,9 @@ importers:
       '@primevue/nuxt-module':
         specifier: ^4.0.4
         version: 4.0.4(@babel/parser@7.25.3)(magicast@0.3.4)(rollup@4.20.0)(vue@3.4.37)
+      '@prisma/client':
+        specifier: ^5.18.0
+        version: 5.18.0
       '@vueuse/core':
         specifier: ^10.11.1
         version: 10.11.1(vue@3.4.37)
@@ -903,6 +909,18 @@ packages:
   '@primevue/themes@4.0.4':
     resolution: {integrity: sha512-eknRgSo1KQY+r7LEtb/jERhVHq4/Vlu5BKBQ8/Sc/G3DBDHaeJTDqYHWWoTxdaTJkXbC2pJMKFaJ/Vs7LuoIOw==}
     engines: {node: '>=12.11.0'}
+
+  '@prisma/client@5.18.0':
+    resolution: {integrity: sha512-BWivkLh+af1kqC89zCJYkHsRcyWsM8/JHpsDMM76DjP3ZdEquJhXa4IeX+HkWPnwJ5FanxEJFZZDTWiDs/Kvyw==}
+    engines: {node: '>=16.13'}
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+
+  '@prisma/nuxt@0.0.35':
+    resolution: {integrity: sha512-p8AeISCMGDnMDRj7EOcvM/T61Qy7+RauzMR3zU7V5Jte2dexSg6OBxcsxJyss+qHJFi/Ego0NGuvitCkBXDwaw==}
 
   '@rollup/plugin-alias@5.1.0':
     resolution: {integrity: sha512-lpA3RZ9PdIG7qqhEfv79tBffNaoDuukFDrmhLqg9ifv99u/ehn+lOg30x2zmhf8AQqQUZaMk/B9fZraQ6/acDQ==}
@@ -4686,6 +4704,24 @@ snapshots:
   '@primevue/themes@4.0.4':
     dependencies:
       '@primeuix/styled': 0.0.5
+
+  '@prisma/client@5.18.0': {}
+
+  '@prisma/nuxt@0.0.35(magicast@0.3.4)(rollup@4.20.0)(vite@5.4.0(@types/node@22.1.0)(terser@5.31.5))':
+    dependencies:
+      '@nuxt/devtools-kit': 1.3.9(magicast@0.3.4)(rollup@4.20.0)(vite@5.4.0(@types/node@22.1.0)(terser@5.31.5))
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.20.0)
+      '@prisma/client': 5.18.0
+      chalk: 5.3.0
+      defu: 6.1.4
+      execa: 8.0.1
+      prompts: 2.4.2
+    transitivePeerDependencies:
+      - magicast
+      - prisma
+      - rollup
+      - supports-color
+      - vite
 
   '@rollup/plugin-alias@5.1.0(rollup@4.20.0)':
     dependencies:
