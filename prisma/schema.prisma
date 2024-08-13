@@ -20,6 +20,8 @@ model User {
   createdTime DateTime @default(now()) @map("created_time")
 
   posts Post[]
+
+  @@map("user")
 }
 
 model Post {
@@ -34,6 +36,8 @@ model Post {
   author    User       @relation(fields: [authorId], references: [id])
   category  Category   @relation(fields: [categoryId], references: [id])
   postFiles PostFile[]
+
+  @@map("post")
 }
 
 model PostFile {
@@ -43,6 +47,8 @@ model PostFile {
   fileAddress String @map("file_address")
 
   post Post @relation(fields: [postId], references: [id])
+
+  @@map("post_file")
 }
 
 model Category {
@@ -52,4 +58,6 @@ model Category {
   icon  String?
 
   posts Post[]
+
+  @@map("category")
 }
