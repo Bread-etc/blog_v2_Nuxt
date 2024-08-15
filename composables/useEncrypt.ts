@@ -7,9 +7,9 @@ import JSEncrypt from "jsencrypt";
 async function fetchPublicKey(): Promise<string> {
   try {
     const { publicKey } = useApi();
-    const res = (await publicKey.getPublicKey()).data.publicKey;
-    
-    return res;
+    const res = await publicKey.getPublicKey();
+    const data = res.data;
+    return data;
   } catch (error) {
     console.error("Failed to fetch public key", error);
     throw new Error("Failed to fetch public key");

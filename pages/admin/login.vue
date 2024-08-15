@@ -65,7 +65,8 @@ const handleLogin = async () => {
   const encryptedUsername = await encryptContent(username.value);
   const encryptedPassword = await encryptContent(password.value);
 
-  console.log(encryptedUsername, encryptedPassword);
+  console.log(encryptedUsername);
+  console.log(encryptedPassword);
 };
 </script>
 

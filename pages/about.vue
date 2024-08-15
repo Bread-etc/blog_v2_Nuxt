@@ -61,21 +61,21 @@ import type { BlogInfo } from "../api/model/BlogInfo";
 import { useApi } from "../composables/index";
 import { navigateTo } from "nuxt/app";
 
-const { blogInfo } = useApi();
+// const { blogInfo } = useApi();
 
-async function getList() {
-  const data: BlogInfo = await blogInfo.getList();
-  console.log(data);
-}
+// async function getList() {
+//   const data: BlogInfo = await blogInfo.getList();
+//   console.log(data);
+// }
 
-onMounted(async () => {
-  try {
-    const data = await blogInfo.getList();
-    console.log("数据:", data);
-  } catch (error) {
-    console.error("请求失败:", error);
-  }
-});
+// onMounted(async () => {
+//   try {
+//     const data = await blogInfo.getList();
+//     console.log("数据:", data);
+//   } catch (error) {
+//     console.error("请求失败:", error);
+//   }
+// });
 
 const friendLinkList: { id: number; value: string; name: string }[] = [
   { id: 1, value: "http://hastur23.top", name: "hastur23.top" },
