@@ -20,6 +20,7 @@
     "@primevue/themes": "^4.0.4",
     "@prisma/nuxt": "^0.0.35",
     "@types/pg": "^8.11.6",
+    "jsencrypt": "^3.3.2",
     "nuxt": "^3.12.4",
     "pg": "^8.12.0",
     "primeicons": "^7.0.0",

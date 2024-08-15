@@ -1,5 +1,6 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
+  "lib": ["ESNext", "DOM", "DOM.Iterable"],
   "extends": "./.nuxt/tsconfig.json",
   "include": [".nuxt/**/*.ts"],
   "compilerOptions": {

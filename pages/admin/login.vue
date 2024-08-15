@@ -29,7 +29,7 @@
               id="password"
               v-model="password"
               :feedback="false"
-              :invalid="password.value === ''"
+              :invalid="password === ''"
               toggleMask
             />
             <label
@@ -55,12 +55,17 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useEncrypt } from "~/composables";
 
 const username = ref<string>("");
 const password = ref<string>("");
+const { encryptContent } = useEncrypt();
 
-const handleLogin = () => {
-  console.log(username.value, password.value);
+const handleLogin = async () => {
+  const encryptedUsername = await encryptContent(username.value);
+  const encryptedPassword = await encryptContent(password.value);
+
+  console.log(encryptedUsername, encryptedPassword);
 };
 </script>
 

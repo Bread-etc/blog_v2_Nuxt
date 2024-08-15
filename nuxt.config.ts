@@ -17,6 +17,9 @@ export default defineNuxtConfig({
   nitro: createNitroConifg(),
   devServer: { port: 3030 },
   devtools: { enabled: false },
+  build: {
+    transpile: ["jsencrypt"],
+  },
 
   // 模块配置项
   modules: [
