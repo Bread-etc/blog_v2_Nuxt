@@ -55,18 +55,18 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useEncrypt } from "~/composables";
+import { useApi, useEncrypt } from "~/composables";
 
 const username = ref<string>("");
 const password = ref<string>("");
 const { encryptContent } = useEncrypt();
+const { login } = useApi();
 
 const handleLogin = async () => {
   const encryptedUsername = await encryptContent(username.value);
   const encryptedPassword = await encryptContent(password.value);
 
-  console.log(encryptedUsername);
-  console.log(encryptedPassword);
+  await login.login({ username: encryptedUsername, password: encryptedPassword});
 };
 </script>
 

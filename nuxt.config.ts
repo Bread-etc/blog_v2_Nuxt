@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   devServer: { port: 3030 },
   devtools: { enabled: false },
   build: {
+    // 构建添加编译 jsencrypt
     transpile: ["jsencrypt"],
   },
 

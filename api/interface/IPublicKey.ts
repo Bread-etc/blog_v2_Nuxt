@@ -4,7 +4,7 @@
 import { useHttp } from "~/composables/useHttp";
 
 enum Api {
-  getPublicKey = "/getPublicKey",
+  getPublicKey = "/secret/getPublicKey",
 }
 
 // 获取公钥

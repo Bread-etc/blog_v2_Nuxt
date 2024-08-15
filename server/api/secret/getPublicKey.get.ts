@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { useErrorWrapper, useResponseWrapper } from "../utils/responseWrapper";
+import { useErrorWrapper, useResponseWrapper } from "~/server/utils/responseWrapper";
 
 // 生成 RSA 密钥对
 const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {

@@ -3,7 +3,7 @@
  */
 
 export interface LoginParams {
-  user_name: string;
+  username: string;
   password: string;
 }
 

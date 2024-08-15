@@ -65,3 +65,4 @@
 
 - 采用原生`nitro` + `prisma`
 - 采用~~`MySQL`~~,`postgresql`
+- 添加`jsonwebtoken`鉴权

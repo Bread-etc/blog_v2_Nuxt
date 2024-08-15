@@ -6,9 +6,9 @@ import { useHttp } from "~/composables/useHttp";
 import type { LoginParams, LoginResultModel } from "model/Login";
 
 enum Api {
-  login = "/admin/login",
-  logout = "/admin/logout",
-  getUserInfo = "/admin/getUserInfo",
+  login = "/auth/login",
+  logout = "/auth/logout",
+  getUserInfo = "/auth/getUserInfo",
 }
 
 // 登录
