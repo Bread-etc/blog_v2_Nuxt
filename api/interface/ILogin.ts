@@ -18,7 +18,7 @@ export async function login(params: LoginParams) {
 
 // 登出
 export async function logout() {
-  return useHttp.post<void>(Api.logout);
+  return useHttp.post<string>(Api.logout);
 }
 
 // 获取用户信息

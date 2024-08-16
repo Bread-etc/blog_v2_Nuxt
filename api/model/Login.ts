@@ -13,7 +13,7 @@ export interface LoginResultModel {
   // 用户名
   user_name: string;
   // 密码
-  password: string;
+  // password: string;
   // 角色
   role: string;
   // 昵称

@@ -42,7 +42,21 @@ export default defineEventHandler(async (event) => {
       },
     );
 
-    return useResponseWrapper({ token }, 200, true, "Login successful");
+    // 返回不含密码的用户信息
+    const userInfo = {
+      id: user.id,
+      userName: user.userName,
+      role: user.role,
+      nickName: user.nickName,
+      createdTime: user.createdTime,
+    };
+
+    return useResponseWrapper(
+      { userInfo: userInfo, token: token },
+      200,
+      true,
+      "Login successful",
+    );
   } catch (error) {
     return useErrorWrapper("", 500, false, "Internal server error");
   }

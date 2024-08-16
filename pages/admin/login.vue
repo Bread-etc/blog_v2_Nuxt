@@ -40,7 +40,6 @@
           </FloatLabel>
           <Button
             class="mx-2 my-3 w-4/5"
-            style="border: 0 !important"
             label="login"
             severity="success"
             icon="pi pi-check"
@@ -63,10 +62,12 @@ const { encryptContent } = useEncrypt();
 const { login } = useApi();
 
 const handleLogin = async () => {
+  // 获取加密后的用户名和密码
   const encryptedUsername = await encryptContent(username.value);
   const encryptedPassword = await encryptContent(password.value);
 
-  await login.login({ username: encryptedUsername, password: encryptedPassword});
+  // 调用登录接口,获取token
+  const token = (await login.login({ username: encryptedUsername, password: encryptedPassword})).data;
 };
 </script>
 
