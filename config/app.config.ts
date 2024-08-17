@@ -10,10 +10,10 @@ export function appConfig(): NuxtConfig["app"] {
         { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],
       link: [
-        {
-          rel: "stylesheet",
-          href: "https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css",
-        },
+        // {
+        //   rel: "stylesheet",
+        //   href: "https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css",
+        // },
       ],
     },
   };

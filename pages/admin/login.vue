@@ -54,20 +54,26 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useApi, useEncrypt } from "~/composables";
+import { useEncrypt } from "~/composables";
+import { useUserStore } from "~/stores/user.store";
+import type { LoginParams } from "model/Login";
 
 const username = ref<string>("");
 const password = ref<string>("");
+// 实例化 store
+const userStore = useUserStore();
 const { encryptContent } = useEncrypt();
-const { login } = useApi();
 
 const handleLogin = async () => {
   // 获取加密后的用户名和密码
   const encryptedUsername = await encryptContent(username.value);
   const encryptedPassword = await encryptContent(password.value);
-
-  // 调用登录接口,获取token
-  const token = (await login.login({ username: encryptedUsername, password: encryptedPassword})).data;
+  const params: LoginParams = {
+    username: encryptedUsername,
+    password: encryptedPassword,
+  };
+  // 调用store势力中登录接口,获取token
+  userStore.login(params);
 };
 </script>
 

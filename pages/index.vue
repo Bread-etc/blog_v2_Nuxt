@@ -4,7 +4,7 @@
       <template v-if="hasData">
         <Card
           v-for="(item, _index) in items"
-          class="bg-LightContent dark:bg-DarkContent mb-3 h-[22vh] dark:text-white"
+          class="mb-3 h-[22vh] bg-LightContent dark:bg-DarkContent dark:text-white"
           v-animateonscroll="{
             enterClass: 'animate-fadeinright',
             leaveClass: 'animate-fadeoutright',

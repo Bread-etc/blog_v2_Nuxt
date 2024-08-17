@@ -1,20 +1,30 @@
 @import "transition.css";
 @import "primeicons/primeicons.css";
 
+/* 设置字体 */
+@font-face {
+  font-family: "Pingfang SC";
+  src: url("../fonts/PingFangSC-Regular.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
 body {
   font-family:
-    "LXGW WenKai",
-    Inter var,
+    Pingfang SC,
     -apple-system,
     BlinkMacSystemFont,
     Segoe UI,
     Roboto,
+    Ubuntu,
+    Helvetica Neue,
     Helvetica,
     Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+    Hiragino Sans GB,
+    Microsoft YaHei UI,
+    Microsoft YaHei,
+    Source Han Sans CN,
+    sans-serif;
 }
 
 :root {

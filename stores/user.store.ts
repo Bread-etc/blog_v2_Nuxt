@@ -22,12 +22,15 @@ function storeSetup() {
     const { login } = useApi();
     const { data } = await login.login(params);
     userInfo.value = data;
+    // 保存token
+    localStorage.setItem("token", data.token);
     return data;
   };
 
   // 清除登录信息
   const clearUserInfo = () => {
     userInfo.value = undefined;
+    localStorage.removeItem("token");
   };
 
   // 登出
@@ -59,6 +62,6 @@ function storeSetup() {
   };
 }
 
-export const useUserStore = defineStore("app-user", storeSetup, {
+export const useUserStore = defineStore("userStore", storeSetup, {
   persist: true,
 });

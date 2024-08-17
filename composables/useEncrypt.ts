@@ -9,6 +9,7 @@ async function fetchPublicKey(): Promise<string> {
     const { publicKey } = useApi();
     const res = await publicKey.getPublicKey();
     const data = res.data;
+    console.log(data, "publicKey");
     return data;
   } catch (error) {
     console.error("Failed to fetch public key", error);
