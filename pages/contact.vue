@@ -9,8 +9,8 @@
       >
       <span class="py-1">评论区支持markdown和emoji😘</span>
       <span class="py-1">本站内容仅供学习参考使用</span>
-      <Divider type="dashed"/>
-      <div ref="commentRef" id="comment"></div>
+      <Divider type="dashed" />
+      <div ref="commentRef" id="comment" v-show="!isLoading"></div>
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@
 import { onMounted, ref } from "vue";
 
 const commentRef = ref<HTMLElement | null>(null);
+
 onMounted(() => {
   try {
     if (commentRef.value) {
@@ -30,6 +31,7 @@ onMounted(() => {
       script.setAttribute("issue-term", "pathname");
       script.setAttribute("label", "💬comment");
       script.setAttribute("theme", "preferred-color-scheme");
+      script.setAttribute("loading", "");
       commentRef.value.appendChild(script);
     } else {
       console.warn(
@@ -50,6 +52,6 @@ onMounted(() => {
 }
 
 :deep(.p-divider)::before {
-  @apply border-black dark:border-white /* 轻模式下为黑色，暗模式下为白色 */
+  @apply /* 轻模式下为黑色，暗模式下为白色 */ border-black dark:border-white;
 }
 </style>

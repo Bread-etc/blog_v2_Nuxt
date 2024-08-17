@@ -11,15 +11,15 @@ export interface LoginResultModel {
   // id
   id: number;
   // 用户名
-  user_name: string;
+  userName: string;
   // 密码
   // password: string;
   // 角色
   role: string;
   // 昵称
-  nick_name: string;
+  nickName: string;
   // 创建时间
-  created_time: Date | string;
+  createdTime: Date | string;
   // token令牌
   token: string;
 }

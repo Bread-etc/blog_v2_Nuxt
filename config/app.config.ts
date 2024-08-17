@@ -5,7 +5,7 @@ export function appConfig(): NuxtConfig["app"] {
     pageTransition: { name: "page", mode: "out-in" },
     keepalive: true,
     head: {
-      title: "bread_etc 's blog",
+      title: "Bread_etc 's blog",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],

@@ -19,6 +19,7 @@ function storeSetup() {
 
   // 登录
   const login = async (params: LoginParams) => {
+    clearUserInfo();
     const { login } = useApi();
     const { data } = await login.login(params);
     userInfo.value = data;

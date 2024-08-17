@@ -4,7 +4,6 @@
  * 2. 支持服务端渲染(ssr)
  * 3. 避免重复数据获取
  */
-import showToast from "~/utils/toastService";
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo, useRuntimeConfig } from "nuxt/app";
 import type { FetchResponse, SearchParameters } from "ofetch";
@@ -16,12 +15,19 @@ export interface ResOptions<T> {
   success: boolean;
 }
 
+const toastService = usePVToastService();
+
 // 处理错误
 function handelError<T>(
   response: FetchResponse<ResOptions<T>> & FetchResponse<ResponseType>,
 ) {
   const err = (text: string) => {
-    showToast("error", "Error", response?._data?.message ?? text);
+    toastService.add({
+      severity: "error",
+      summary: "Error 😢",
+      detail: response?._data?.message ?? text,
+      life: 3000,
+    });
   };
 
   if (!response._data) {

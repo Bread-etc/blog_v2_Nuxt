@@ -6,7 +6,7 @@
   "author": "bread_etc",
   "scripts": {
     "build": "nuxt build --dotenv .env.production",
-    "dev": "nuxt dev --dotenv .env.development --open --host",
+    "dev": "nuxt dev --dotenv .env.development --open",
     "clean": "nuxt cleanup",
     "analyze": "nuxt analyze",
     "generate": "nuxt generate",

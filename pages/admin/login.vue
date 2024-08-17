@@ -40,7 +40,7 @@
           </FloatLabel>
           <Button
             class="mx-2 my-3 w-4/5"
-            label="login"
+            label="Login"
             severity="success"
             icon="pi pi-check"
             @click="handleLogin"
@@ -54,15 +54,18 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import type { LoginParams } from "model/Login";
 import { useEncrypt } from "~/composables";
 import { useUserStore } from "~/stores/user.store";
-import type { LoginParams } from "model/Login";
+import { navigateTo } from "nuxt/app";
 
 const username = ref<string>("");
 const password = ref<string>("");
 // 实例化 store
 const userStore = useUserStore();
 const { encryptContent } = useEncrypt();
+// 吐司组件
+const toastService = usePVToastService();
 
 const handleLogin = async () => {
   // 获取加密后的用户名和密码
@@ -73,7 +76,16 @@ const handleLogin = async () => {
     password: encryptedPassword,
   };
   // 调用store势力中登录接口,获取token
-  userStore.login(params);
+  const token: string = await userStore.login(params);
+  if (token) {
+    toastService.add({
+      severity: "success",
+      summary: "登录成功",
+      detail: `欢迎回来~,${userStore.userInfo?.nick_name || "管理员"}`,
+      life: 3000,
+    });
+    navigateTo("/admin/dashboard");
+  }
 };
 </script>
 
