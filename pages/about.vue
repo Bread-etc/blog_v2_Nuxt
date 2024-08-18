@@ -15,7 +15,7 @@
           @click="routeToLogin()"
         />
       </div>
-      <span class="py-1">信息工程专业大学生，主要方向为前端</span>
+      <span class="py-1">信息工程专业在读大学生，主要学习前端</span>
       <Fieldset
         id="fieldset"
         class="bg-LightContent dark:bg-DarkContent dark:text-white"
@@ -56,6 +56,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  layout: "default",
+});
 import { navigateTo } from "nuxt/app";
 
 const friendLinkList: { id: number; value: string; name: string }[] = [

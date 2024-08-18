@@ -74,11 +74,10 @@ const fetch = $fetch.create({
     options.baseURL = config.public.apiBase;
     // 添加请求头
     const userStore = useUserStore();
-    if (!userStore.isLogin) {
-      return;
+    if (userStore.isLogin) {
+      options.headers = new Headers(options.headers);
+      options.headers.set("Authorization", `Bearer ${userStore.getToken}`);
     }
-    options.headers = new Headers(options.headers);
-    options.headers.set("Authorization", `Bearer ${userStore.getToken}`);
   },
   // 响应拦截器
   onResponse({ response }) {

@@ -16,6 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  layout: "default",
+});
 import { onMounted, ref } from "vue";
 
 const commentRef = ref<HTMLElement | null>(null);

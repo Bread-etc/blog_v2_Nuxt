@@ -53,8 +53,11 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  layout: "default",
+});
 import { ref } from "vue";
-import type { LoginParams } from "model/Login";
+import type { LoginParams, LoginResultModel } from "model/Login";
 import { useEncrypt } from "~/composables";
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo } from "nuxt/app";
@@ -69,17 +72,21 @@ const { encryptContent } = useEncrypt();
 const toastService = usePVToastService();
 
 const handleLogin = async () => {
-  // 获取加密后的用户名和密码
-  const params: LoginParams = await encryptContent(username.value, password.value);
+  //获取加密后的用户名和密码
+  const params: LoginParams = await encryptContent(
+    username.value,
+    password.value,
+  );
   // 调用store实例中登录接口,获取token
-  const token: string = await userStore.login(params);
-  if (token) {
+  const userInfo: LoginResultModel = await userStore.login(params);
+  if (userInfo) {
     toastService.add({
       severity: "success",
       summary: "登录成功",
       detail: `欢迎回来~,${userStore.userInfo?.nickName || "管理员"}`,
       life: 3000,
     });
+    localStorage.setItem("_token", userInfo.token);
     setTimeout(() => {
       navigateTo("/admin/dashboard");
     }, 1500);
