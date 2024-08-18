@@ -4,7 +4,7 @@
       class="flex h-[92vh] flex-1 flex-col overflow-auto rounded-xl dark:text-white"
     >
       <div class="flex justify-between">
-        <h1 class="flex-1 text-2xl">关于📚</h1>
+        <h1 class="flex-1 text-2xl font-bold">关于📚</h1>
         <Button
           label="Edit"
           icon="pi pi-user-edit"
@@ -31,7 +31,7 @@
           </span>
         </p>
       </Fieldset>
-      <h2 class="py-2 text-lg">友情链接🔗</h2>
+      <h2 class="py-2 text-lg font-bold">友情链接🔗</h2>
       <Fieldset
         id="fieldset"
         class="bg-LightContent dark:bg-DarkContent dark:text-white"

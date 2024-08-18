@@ -3,14 +3,14 @@
     <div
       class="flex h-[92vh] flex-1 flex-col overflow-auto rounded-xl dark:text-white"
     >
-      <h1 class="text-2xl">欢迎来到我的留言板 👋</h1>
+      <h1 class="text-2xl font-bold">欢迎来到我的留言板 👋</h1>
       <span class="py-1"
         >经 Github 登录后,在下方的留言框中输入您的留言内容即可</span
       >
       <span class="py-1">评论区支持markdown和emoji😘</span>
       <span class="py-1">本站内容仅供学习参考使用</span>
       <Divider type="dashed" />
-      <div ref="commentRef" id="comment" v-show="!isLoading"></div>
+      <div ref="commentRef" id="comment"></div>
     </div>
   </div>
 </template>

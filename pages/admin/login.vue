@@ -70,13 +70,8 @@ const toastService = usePVToastService();
 
 const handleLogin = async () => {
   // 获取加密后的用户名和密码
-  const encryptedUsername = await encryptContent(username.value);
-  const encryptedPassword = await encryptContent(password.value);
-  const params: LoginParams = {
-    username: encryptedUsername,
-    password: encryptedPassword,
-  };
-  // 调用store势力中登录接口,获取token
+  const params: LoginParams = await encryptContent(username.value, password.value);
+  // 调用store实例中登录接口,获取token
   const token: string = await userStore.login(params);
   if (token) {
     toastService.add({

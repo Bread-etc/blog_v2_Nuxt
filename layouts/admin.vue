@@ -3,6 +3,7 @@
     <Toast />
     <div class="flex h-[100vh] w-[70%] max-w-screen-xl items-center justify-center bg-LightBg transition-all duration-300 ease-in-out dark:bg-DarkBg lg:h-[98vh] lg:rounded-xl">
       <main class="m-4 flex-1">
+        <NuxtLoadingIndicator />
         <NuxtPage class="h-[92vh]"></NuxtPage>
       </main>
     </div>

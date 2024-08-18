@@ -10,6 +10,7 @@
         <Side />
       </aside>
       <main class="m-4 flex-1">
+        <NuxtLoadingIndicator />
         <NuxtPage class="h-[92vh]"></NuxtPage>
       </main>
     </div>

@@ -16,28 +16,22 @@ async function fetchPublicKey(): Promise<string> {
   }
 }
 
-async function encryptContent(content: string) {
-  // 实例化 store
-  const secretStore = useSecretStore();
-  let publicKey = secretStore.getSecret()?.publicKey;
-
-  if (!publicKey) {
-    publicKey = await fetchPublicKey();
-    // 公钥有效期为3天
-    const expiryTime = new Date().getTime() + 1000 * 60 * 60 * 24 * 3;
-    secretStore.setSecret(publicKey, expiryTime);
-  }
+async function encryptContent(username: string, password: string) {
+  // 获取公钥
+  let publicKey = await fetchPublicKey();
 
   // 加密器
   const encryptor = new JSEncrypt();
   encryptor.setPublicKey(publicKey);
-  const encryptedContent = encryptor.encrypt(content);
+  const encryptedUsername = encryptor.encrypt(username);
+  const encryptedPassword = encryptor.encrypt(password);
 
-  if (!encryptedContent) {
+
+  if (!encryptedUsername || !encryptedPassword) {
     throw new Error("Failed to encrypt content");
   }
 
-  return encryptedContent;
+  return { username: encryptedUsername, password: encryptedPassword };
 }
 
 export const encrypt = { encryptContent, fetchPublicKey };
