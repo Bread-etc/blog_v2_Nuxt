@@ -1,3 +1,4 @@
+import { useNuxtApp } from "nuxt/app";
 import { useToast } from "primevue/usetoast";
 
 export const usePVToastService = () => {

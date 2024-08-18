@@ -7,6 +7,7 @@
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo, useRuntimeConfig } from "nuxt/app";
 import type { FetchResponse, SearchParameters } from "ofetch";
+import { usePVToastService } from "./useToastService";
 
 export interface ResOptions<T> {
   code: number;

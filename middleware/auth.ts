@@ -1,4 +1,5 @@
 import { defineNuxtRouteMiddleware, navigateTo } from "nuxt/app";
+import { usePVToastService } from "~/composables/useToastService";
 import { useUserStore } from "~/stores/user.store";
 
 const toastService = usePVToastService();

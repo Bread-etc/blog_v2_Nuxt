@@ -58,6 +58,7 @@ import type { LoginParams } from "model/Login";
 import { useEncrypt } from "~/composables";
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo } from "nuxt/app";
+import { usePVToastService } from "~/composables/useToastService";
 
 const username = ref<string>("");
 const password = ref<string>("");
@@ -81,10 +82,12 @@ const handleLogin = async () => {
     toastService.add({
       severity: "success",
       summary: "登录成功",
-      detail: `欢迎回来~,${userStore.userInfo?.nick_name || "管理员"}`,
+      detail: `欢迎回来~,${userStore.userInfo?.nickName || "管理员"}`,
       life: 3000,
     });
-    navigateTo("/admin/dashboard");
+    setTimeout(() => {
+      navigateTo("/admin/dashboard");
+    }, 1500);
   }
 };
 </script>

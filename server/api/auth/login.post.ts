@@ -54,6 +54,7 @@ export default defineEventHandler(async (event) => {
 
     return useResponseWrapper(userInfo, 200, true, "Login successful");
   } catch (error) {
+    console.log(error);
     return useErrorWrapper("", 500, false, "Internal server error");
   }
 });

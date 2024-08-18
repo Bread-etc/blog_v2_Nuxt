@@ -1,17 +1,25 @@
 <template>
-  <div
-    class="flex min-h-screen w-screen items-center justify-center overflow-hidden bg-lightOutBgImage dark:bg-darkOutBgImage lg:px-4"
-  >
-    <Toast />
-    <div
-      class="flex h-[100vh] w-[70%] max-w-screen-xl items-center justify-center bg-LightBg transition-all duration-300 ease-in-out dark:bg-DarkBg lg:h-[98vh] lg:rounded-xl"
-    >
-      <aside>
-        <Side />
-      </aside>
-      <main class="m-4 flex-1">
-        <NuxtPage class="h-[92vh]"></NuxtPage>
-      </main>
+  <!-- <NuxtLoadingIndicator style="position: absolute; width: 100vw; height: 50px" /> -->
+  <NuxtLayout>
+    <div>
+      <NuxtPage class="h-[92vh]"></NuxtPage>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
+
+<script setup>
+definePageMeta({
+  layout: "default",
+});
+</script>
+
+<style>
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.4s;
+}
+.layout-enter-from,
+.layout-leave-to {
+  filter: grayscale(1);
+}
+</style>
