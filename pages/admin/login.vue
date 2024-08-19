@@ -39,7 +39,7 @@
             >
           </FloatLabel>
           <Button
-            class="mx-2 my-3 w-4/5"
+            class="mx-2 my-3 w-full"
             label="Login"
             severity="success"
             icon="pi pi-check"
@@ -97,7 +97,19 @@ const handleLogin = async () => {
 <style scoped>
 :deep(#password) {
   input {
-    padding: 0.25rem 0.5rem;
+    @apply px-2 py-1;
+  }
+}
+
+:deep(.p-floatlabel) {
+  width: 100%;
+
+  .p-password {
+    width: 100%;
+  }
+
+  .p-inputtext {
+    width: 100%;
   }
 }
 </style>

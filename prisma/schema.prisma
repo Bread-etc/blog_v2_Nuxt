@@ -33,9 +33,10 @@ model Post {
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
 
-  author    User       @relation(fields: [authorId], references: [id])
-  category  Category   @relation(fields: [categoryId], references: [id])
-  postFiles PostFile[]
+  author       User           @relation(fields: [authorId], references: [id])
+  categories   Category[]     @relation("PostCategory")
+  postFiles    PostFile[]
+  PostCategory PostCategory[]
 
   @@map("post")
 }
@@ -57,7 +58,19 @@ model Category {
   color String?
   icon  String?
 
-  posts Post[]
+  posts        Post[]         @relation("PostCategory")
+  PostCategory PostCategory[]
 
   @@map("category")
+}
+
+model PostCategory {
+  postId     Int
+  categoryId Int
+
+  post     Post     @relation(fields: [postId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId])
+  @@map("post_category")
 }

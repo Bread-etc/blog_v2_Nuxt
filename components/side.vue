@@ -94,7 +94,7 @@ const toggleColorMode = () => {
 <style scoped>
 :deep(.image) {
   img {
-    border-radius: 5px;
+    @apply rounded-md;
   }
 }
 </style>

@@ -55,6 +55,6 @@ onMounted(() => {
 }
 
 :deep(.p-divider)::before {
-  @apply /* 轻模式下为黑色，暗模式下为白色 */ border-black dark:border-white;
+  @apply border-black dark:border-white;
 }
 </style>

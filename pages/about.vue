@@ -79,15 +79,14 @@ const routeToLogin = () => {
 }
 
 :deep(#fieldset) {
-  padding-bottom: 0.5rem;
+  @apply pb-2;
 
   legend {
-    background: none;
+    @apply bg-transparent;
   }
 }
 
 :deep(.p-fieldset-toggleable > .p-fieldset-legend):hover {
-  @apply text-black dark:text-white; /* 轻模式下为黑色，暗模式下为白色 */
-  background: transparent;
+  @apply text-black dark:text-white bg-transparent;
 }
 </style>
