@@ -32,6 +32,7 @@ model Post {
   categoryId  Int      @map("category_id")
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
+  status      Boolean  @default(false) @map("status")
 
   author       User           @relation(fields: [authorId], references: [id])
   categories   Category[]     @relation("PostCategory")

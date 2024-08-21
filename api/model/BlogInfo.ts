@@ -11,6 +11,7 @@ export interface ArticleInfo {
   categories: Category[]; // 支持多分类
   createdTime: Date | string;
   updatedTime: Date | string;
+  status: boolean;
 }
 
 // 获取单个文章文件 [用于content渲染markdown]
