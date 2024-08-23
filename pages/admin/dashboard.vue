@@ -17,7 +17,7 @@
               severity="secondary"
               text
               size="small"
-              @click="isShowInfo = true"
+              @click="showInfoDialog"
             />
             <Button
               class="mr-2 text-black dark:text-white"
@@ -25,7 +25,7 @@
               severity="secondary"
               text
               size="small"
-              @click="isShow = true"
+              @click="showEditDialog"
             />
             <IconField>
               <InputIcon>
@@ -56,7 +56,7 @@
               row-hover
               paginator
               :rowsPerPageOptions="[10, 20]"
-              @row-edit-save="editRowModal"
+              @row-edit-save="showEditDialog"
               scrollable
               scroll-height="calc(92vh -  6.5rem)"
             >
@@ -83,7 +83,7 @@
                     icon="pi pi-pencil"
                     severity="secondary"
                     rounded
-                    @click="editRowModal(data)"
+                    @click="showEditDialog(data)"
                   />
                 </template>
               </Column>
@@ -93,68 +93,8 @@
       </div>
     </div>
 
-    <Dialog v-model:visible="isShow" modal class="w-1/2">
-      <template #header>
-        <h1 class="text-lg font-semibold">编辑信息</h1>
-      </template>
-      <div class="flex flex-col">
-        <div id="title" class="mb-2 flex flex-col">
-          <label for="title" class="mb-1 text-sm font-semibold"
-            >标题 (title)🍔:</label
-          >
-          <InputText
-            class="flex-1 p-1 text-sm"
-            v-model="infoTitle"
-            type="text"
-            size="small"
-          />
-        </div>
-        <div id="content" class="mb-2 flex flex-col">
-          <label for="title" class="mb-1 text-sm font-semibold"
-            >简介 (content)🍟:</label
-          >
-          <Textarea v-model="infoContent" rows="3" cols="30" />
-        </div>
-        <div id="category" class="mb-2 flex flex-col">
-          <label for="title" class="mb-1 text-sm font-semibold"
-            >分类 (category)🥤:</label
-          >
-          <MultiSelect
-            v-model="selectedTags"
-            display="chip"
-            :options="tags"
-            optionLabel="name"
-            filter
-            :maxSelectedLabels="3"
-            :invalid="selectedTags.length === 0"
-          />
-        </div>
-      </div>
-      <div class="mt-4 flex justify-end gap-4">
-        <Button
-          type="button"
-          label="Cancel"
-          severity="secondary"
-          @click="isShow = false"
-          size="small"
-        ></Button>
-        <Button
-          type="button"
-          label="Save"
-          @click="isShow = false"
-          size="small"
-        ></Button>
-      </div>
-    </Dialog>
-
-    <Dialog v-model:visible="isShowInfo" modal class="w-1/2">
-      <template #header>
-        <h1 class="text-lg font-semibold">站点信息</h1>
-      </template>
-      <div class="flex flex-col">
-        <div class="flex flex-col"></div>
-      </div>
-    </Dialog>
+    <EditDialog ref="refEditDialog"/>
+    <InfoDialog ref="refInfoDialog" />
   </div>
 </template>
 
@@ -165,9 +105,7 @@ definePageMeta({
 });
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
-import { useToast } from "primevue/usetoast";
 
-const toast = useToast();
 
 // datatable 配置项
 const filters = ref({
@@ -175,7 +113,7 @@ const filters = ref({
 });
 const loading = ref(true);
 
-// 定义表格所需变量
+// 表格数据
 const articleList: any[] = [
   {
     id: 1,
@@ -288,30 +226,22 @@ const articleList: any[] = [
     updatedTime: "2024/09/21",
   },
 ];
-const isShow = ref(false);
-const isShowInfo = ref(false);
 
-// Dialog 变量
-const infoTitle = ref("");
-const infoContent = ref("");
-const selectedTags: any = ref([]);
-const tags = ref([
-  { name: "New York", code: "NY" },
-  { name: "Rome", code: "RM" },
-  { name: "London", code: "LDN" },
-  { name: "Istanbul", code: "IST" },
-  { name: "Paris", code: "PRS" },
-]);
+// 弹窗 Dialog 控制
+const refInfoDialog = ref();
+const showInfoDialog = () => {
+  refInfoDialog.value.open();
+};
+
+const refEditDialog = ref();
+const showEditDialog = (data: any) => {
+  refEditDialog.value.open(data);
+}
+
 
 onMounted(() => {
   loading.value = false;
 });
-
-/* 辅助方法 */
-const editRowModal = (data: any) => {
-  isShow.value = true;
-  console.log(data);
-};
 </script>
 
 <style scoped>
@@ -353,10 +283,10 @@ const editRowModal = (data: any) => {
 }
 
 :deep(tr) {
-  border: none;
+  @apply border-none;
 }
 
 :deep(.p-datatable-tbody > tr > td) {
-  border: #ccc;
+  @apply border-[#bbb];
 }
 </style>
