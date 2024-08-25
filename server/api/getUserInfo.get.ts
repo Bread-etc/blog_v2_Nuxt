@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { useResponseWrapper, useErrorWrapper } from "../utils/responseWrapper";
 
 const prisma = new PrismaClient();
 

@@ -16,7 +16,6 @@ CREATE TABLE "post" (
     "title" TEXT NOT NULL,
     "content" TEXT,
     "author_id" INTEGER NOT NULL,
-    "category_id" INTEGER NOT NULL,
     "created_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_time" TIMESTAMP(3) NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT false,

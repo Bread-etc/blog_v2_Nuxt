@@ -29,7 +29,6 @@ model Post {
   title       String
   content     String? // 对应 PostgreSQL 的 TEXT 类型
   authorId    Int      @map("author_id")
-  categoryId  Int      @map("category_id")
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
   status      Boolean  @default(false) @map("status")
