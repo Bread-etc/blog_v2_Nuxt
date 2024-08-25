@@ -21,6 +21,14 @@
             />
             <Button
               class="mr-2 text-black dark:text-white"
+              icon="pi pi-tags"
+              severity="secondary"
+              text
+              size="small"
+              @click="showTagDialog"
+            />
+            <Button
+              class="mr-2 text-black dark:text-white"
               icon="pi pi-plus"
               severity="secondary"
               text
@@ -93,7 +101,8 @@
       </div>
     </div>
 
-    <EditDialog ref="refEditDialog"/>
+    <EditDialog ref="refEditDialog" />
+    <EditCategory ref="refEditTagDialog" />
     <InfoDialog ref="refInfoDialog" />
   </div>
 </template>
@@ -105,7 +114,6 @@ definePageMeta({
 });
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
-
 
 // datatable 配置项
 const filters = ref({
@@ -233,11 +241,15 @@ const showInfoDialog = () => {
   refInfoDialog.value.open();
 };
 
+const refEditTagDialog = ref();
+const showTagDialog = () => {
+  refEditTagDialog.value.open();
+};
+
 const refEditDialog = ref();
 const showEditDialog = (data: any) => {
   refEditDialog.value.open(data);
-}
-
+};
 
 onMounted(() => {
   loading.value = false;
