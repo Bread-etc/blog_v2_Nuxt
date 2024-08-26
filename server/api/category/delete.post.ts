@@ -4,11 +4,10 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   try {
-    const categoryId = Number(event.context.params!.id);
-
+    const { id } = await readBody(event);
     // 删除对应标签
     await prisma.category.delete({
-      where: { id: categoryId },
+      where: { id: id },
     });
 
     return useResponseWrapper("delete category successfully");

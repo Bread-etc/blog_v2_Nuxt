@@ -2,6 +2,8 @@
  * 博客结构
  */
 
+import type { Category } from "./Category";
+
 // 获取单个文章详细信息 [用于渲染table和card]
 export interface ArticleInfo {
   id: number;
@@ -20,12 +22,4 @@ export interface ArticleFile {
   postId: number;
   fileName: string;
   fileAddress: string;
-}
-
-// 获取分类/标签列表 [categoryId = id]
-export interface Category {
-  id: number;
-  name: string;
-  color?: string;
-  icon?: string;
 }
