@@ -39,7 +39,6 @@
     | title        | varchar   | 文章标题                    |
     | content      | varchar   | 文章内容                    |
     | author_id    | varchar   | 外键,关联 `user` 表的`id`   |
-    | category_id  | varchar   | 外键,关联`category`表的`id` |
     | created_time | timestamp | 默认值为当前时间            |
     | updated_time | timestamp | 自动更新为当前时间          |
 
@@ -73,3 +72,4 @@
 - 采用~~`MySQL`~~,`postgresql`
 - 添加`jsonwebtoken`鉴权
 - 添加`PostCategory`关联表,形成多对多关系
+- 完成`category`增删改查接口

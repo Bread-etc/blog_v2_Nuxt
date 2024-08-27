@@ -40,6 +40,7 @@
                 <i class="pi pi-search"></i>
               </InputIcon>
               <InputText
+                size="small"
                 v-model="filters['global'].value"
                 placeholder="Filter Search..."
               />
@@ -68,8 +69,12 @@
               scrollable
               scroll-height="calc(92vh -  6.5rem)"
             >
-              <template #empty> 没有匹配项 </template>
-              <template #loading> 加载中,请稍后... </template>
+              <template #empty>
+                <div class="my-1">没有匹配项</div>
+              </template>
+              <template #loading>
+                <div class="my-1">加载中,请稍后...</div>
+              </template>
               <Column field="id" header="#"></Column>
               <Column field="title" header="标题"></Column>
               <Column field="fileName" header="文件名"></Column>
@@ -122,118 +127,7 @@ const filters = ref({
 const loading = ref(true);
 
 // 表格数据
-const articleList: any[] = [
-  {
-    id: 1,
-    title: "vue.js",
-    authorId: 1,
-    status: true,
-    categories: [{ name: "vue.js", id: 0 }],
-    fileName: "vue.js",
-    createdTime: "2024/08/20",
-    updatedTime: "2024/08/20",
-  },
-  {
-    id: 2,
-    title: "react.js",
-    authorId: 1,
-    status: false,
-    categories: [{ name: "react.js", id: 1 }],
-    fileName: "react.js",
-    createdTime: "2024/08/21",
-    updatedTime: "2024/08/21",
-  },
-  {
-    id: 3,
-    title: "angular.js",
-    authorId: 1,
-    status: false,
-    fileName: "angular.js",
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/08/22",
-    updatedTime: "2024/08/22",
-  },
-  {
-    id: 4,
-    title: "vue.js",
-    authorId: 1,
-    status: false,
-    fileName: "vue.js",
-    categories: [{ name: "vue.js", id: 0 }],
-    createdTime: "2024/08/20",
-    updatedTime: "2024/08/20",
-  },
-  {
-    id: 5,
-    title: "react.js",
-    authorId: 1,
-    status: false,
-    fileName: "react.js",
-    categories: [{ name: "react.js", id: 1 }],
-    createdTime: "2024/08/21",
-    updatedTime: "2024/08/21",
-  },
-  {
-    id: 6,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: false,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/08/22",
-    updatedTime: "2024/08/22",
-  },
-  {
-    id: 7,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: false,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/08/22",
-    updatedTime: "2024/08/22",
-  },
-  {
-    id: 8,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: false,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/08/22",
-    updatedTime: "2024/08/22",
-  },
-  {
-    id: 9,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: false,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/08/22",
-    updatedTime: "2024/08/22",
-  },
-  {
-    id: 10,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: true,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/09/21",
-    updatedTime: "2024/09/21",
-  },
-  {
-    id: 11,
-    title: "angular.js",
-    fileName: "angular.js",
-    authorId: 1,
-    status: true,
-    categories: [{ name: "angular.js", id: 2 }],
-    createdTime: "2024/09/21",
-    updatedTime: "2024/09/21",
-  },
-];
+const articleList: any[] = [];
 
 // 弹窗 Dialog 控制
 const refInfoDialog = ref();

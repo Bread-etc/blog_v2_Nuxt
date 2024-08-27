@@ -198,14 +198,14 @@ async function deleteTag() {
 }
 
 // 清空输入框
-function clearUpInfo() {
+const clearUpInfo = () => {
   selectedTags.value = [];
   tagId.value = 1;
   name.value = "";
   color.value = "";
   icon.value = "";
   getList();
-}
+};
 
 /* 生命周期钩子 */
 onMounted(async () => {
