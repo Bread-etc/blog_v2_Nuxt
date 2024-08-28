@@ -77,21 +77,36 @@
 
 <script lang="ts" setup>
 import type { Category } from "model/Category";
+import type { Article } from "model/BlogInfo";
+import { set } from "@vueuse/core";
 
 /* 弹窗控制 */
 const isShow = ref(false);
 const toastService = usePVToastService();
+const dialogData = ref<Article>();
 // 定义打开方法
-const open = (data: any) => {
+const open = () => {
   isShow.value = true;
   getCategories();
-  data.value = data;
+};
+// 定义数据获取方法
+const setData = (data: Article) => {
+  dialogData.value = data;
+  let value = toRaw(dialogData.value);
+  console.log(value);
+  if (value) {
+    set(postId, value.id);
+    set(authorId, value.authorId);
+    set(title, value.title);
+    set(content, value.content ? value.content : "");
+    set(selectedTags, value.categories);
+    set(status, value.status);
+    // set(fileUpload, value.postFiles[0].fileName);
+  }
 };
 // 暴露给父组件
-defineExpose({ open });
+defineExpose({ open, setData });
 
-// Dialog 变量
-const data = ref();
 // 绑定渲染变量
 const postId = ref(1);
 const authorId = ref(1);
@@ -190,7 +205,6 @@ const getCategories = async () => {
 };
 
 /* 生命周期钩子 */
-
 </script>
 
 <style scoped>

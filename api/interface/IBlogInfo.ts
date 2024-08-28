@@ -2,18 +2,19 @@
  * 博客首页主要内容接口
  */
 import { useHttp } from "~/composables/useHttp";
-import type { ArticleFile, ArticleInfo } from "model/BlogInfo";
+import type { ArticleList, ArticleListParams } from "model/BlogInfo";
 
 enum Api {
-  getList = "/info/getList",
-  getArticle = "/info/getArticle",
-  getCategory = "/info/getCategory",
+  getList = "/post/getArticleList",
+  searchArticle = "/post/search",
 }
 
-export async function getList() {
-  return useHttp.get<ArticleInfo[]>(Api.getList);
+// 获取文章列表
+export async function getList(params: ArticleListParams) {
+  return useHttp.get<ArticleList>(Api.getList, params);
 }
 
-export async function getArticle(params: number) {
-  return useHttp.post<ArticleFile>(Api.getArticle, params);
+// 获取指定id的文章
+export async function getArticle(params: { id: number }) {
+  return useHttp.post<ArticleList>(Api.searchArticle, params);
 }

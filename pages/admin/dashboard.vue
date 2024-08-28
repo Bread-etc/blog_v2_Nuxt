@@ -119,6 +119,7 @@ definePageMeta({
 });
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
+import type { Article, articleShow } from "model/BlogInfo";
 
 // datatable 配置项
 const filters = ref({
@@ -126,10 +127,14 @@ const filters = ref({
 });
 const loading = ref(true);
 
-// 表格数据
-const articleList: any[] = [];
+// 数据和请求参数
+let articleList: articleShow[] = [];
+let query = ref({
+  page: 1,
+  limit: 10,
+});
 
-// 弹窗 Dialog 控制
+/* 弹窗 Dialog 控制 */
 const refInfoDialog = ref();
 const showInfoDialog = () => {
   refInfoDialog.value.open();
@@ -141,12 +146,41 @@ const showTagDialog = () => {
 };
 
 const refEditDialog = ref();
-const showEditDialog = (data: any) => {
-  refEditDialog.value.open(data);
+const showEditDialog = async (data: any) => {
+  await refEditDialog.value.open();
+  let dialogValue: Article = await getArticleById(data.id);
+  await refEditDialog.value.setData(dialogValue);
+};
+
+/* 网络请求 */
+const { blogInfo } = useApi();
+const getArticleList = async () => {
+  loading.value = true;
+  let list = (await blogInfo.getList(query.value)).data.list;
+  articleList = list.map((item) => {
+    const fileName = item.postFiles[0].fileName;
+    return {
+      id: item.id,
+      title: item.title,
+      authorId: item.authorId,
+      status: item.status,
+      fileName: fileName.slice(0, fileName.indexOf(".")),
+      categories: item.categories,
+      createdTime: useDateFormat(item.createdTime, "YYYY-MM-DD").value,
+      updatedTime: useDateFormat(item.updatedTime, "YYYY-MM-DD").value,
+    };
+  });
+  loading.value = false;
+};
+
+const getArticleById = async (id: number) => {
+  let params: { id: number } = { id: id };
+  let data = (await blogInfo.getArticle(params)).data;
+  return data;
 };
 
 onMounted(() => {
-  loading.value = false;
+  getArticleList();
 });
 </script>
 
