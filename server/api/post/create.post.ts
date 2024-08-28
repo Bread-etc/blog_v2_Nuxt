@@ -53,9 +53,6 @@ export default defineEventHandler(async (event) => {
           title,
           content,
           authorId,
-          categories: {
-            connect: selectedTags.map((id) => ({ id })),
-          },
           status,
         },
       });

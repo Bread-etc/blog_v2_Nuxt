@@ -20,13 +20,23 @@ export default defineEventHandler(async (event) => {
       skip,
       take: pageSize,
       include: {
-        categories: true, // 包括关联的分类信息
         postFiles: true, // 包括关联的文件信息
+        PostCategory: {
+          include: {
+            category: true, // 获取关丽娜的分类信息
+          },
+        },
       },
       orderBy: {
-        createdTime: "desc", // 按创建时间倒序排序
+        createdTime: "asc", // 按创建时间升序排序
       },
     });
+
+    // 处理文章中的分类信息
+    const processedArticles = articles.map((article) => ({
+      ...article,
+      categories: article.PostCategory.map((pc) => pc.category), // 提取分类信息
+    }));
 
     // 获取文章总数
     const total = await prisma.post.count();
@@ -36,7 +46,7 @@ export default defineEventHandler(async (event) => {
 
     // 返回分页结果
     return useResponseWrapper({
-      list: articles,
+      list: processedArticles,
       meta: {
         currentPage,
         pageSize,

@@ -2,12 +2,16 @@
   <Dialog
     v-model:visible="isShow"
     modal
-    class="w-1/4 !border-none dark:bg-DarkBg dark:text-white"
+    class="w-2/5 !border-none dark:bg-DarkBg dark:text-white"
   >
     <template #header>
-      <div class="flex items-center text-lg font-semibold">
+      <div class="flex flex-1 items-center text-nowrap text-lg font-semibold">
         编辑标签
-        <SelectButton v-model="mode" :options="options" class="scale-[0.7]" />
+        <SelectButton
+          v-model="mode"
+          :options="options"
+          class="flex-1 scale-[0.7] justify-center"
+        />
       </div>
     </template>
     <div class="flex flex-col">

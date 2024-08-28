@@ -47,6 +47,7 @@ export default defineEventHandler(async (event) => {
       where: { id: postId },
       include: {
         postFiles: true,
+        PostCategory: true,
       },
     });
 
@@ -65,16 +66,16 @@ export default defineEventHandler(async (event) => {
       if (existingFile && existingFile.fileName !== file.originalFilename) {
         fs.unlinkSync(existingFile.fileAddress);
       }
-    }
 
-    // 更新文章文件信息
-    await prisma.postFile.update({
-      where: { id: existingPost.id },
-      data: {
-        fileName: file?.originalFilename!,
-        fileAddress: newFilePath!,
-      },
-    });
+      // 更新文章文件信息
+      await prisma.postFile.update({
+        where: { id: existingPost.id },
+        data: {
+          fileName: file?.originalFilename!,
+          fileAddress: newFilePath!,
+        },
+      });
+    }
 
     // 更新文章信息
     await prisma.post.update({
@@ -83,9 +84,11 @@ export default defineEventHandler(async (event) => {
         title,
         content,
         status,
-        categories: {
-          set: [], // 清空之前的分类
-          connect: selectedTags.map((tagId) => ({ id: tagId })), // 重新连接分类
+        PostCategory: {
+          deleteMany: {},
+          create: selectedTags.map((categoryId) => ({
+            categoryId,
+          })),
         },
       },
     });

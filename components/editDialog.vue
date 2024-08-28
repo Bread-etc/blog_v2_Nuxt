@@ -2,7 +2,7 @@
   <Dialog
     v-model:visible="isShow"
     modal
-    class="w-1/3 !border-none dark:bg-DarkBg dark:text-white"
+    class="w-2/5 !border-none dark:bg-DarkBg dark:text-white"
   >
     <template #header>
       <h1 class="text-lg font-semibold">编辑信息</h1>
@@ -78,32 +78,37 @@
 <script lang="ts" setup>
 import type { Category } from "model/Category";
 import type { Article } from "model/BlogInfo";
-import { set } from "@vueuse/core";
+import { get, set } from "@vueuse/core";
 
 /* 弹窗控制 */
 const isShow = ref(false);
 const toastService = usePVToastService();
 const dialogData = ref<Article>();
+const mode = ref(false); // false 为创建模式，true 为编辑模式
 // 定义打开方法
 const open = () => {
   isShow.value = true;
   getCategories();
 };
 // 定义数据获取方法
-const setData = (data: Article) => {
-  dialogData.value = data;
-  let value = toRaw(dialogData.value);
-  console.log(value);
-  if (value) {
-    set(postId, value.id);
-    set(authorId, value.authorId);
-    set(title, value.title);
-    set(content, value.content ? value.content : "");
-    set(selectedTags, value.categories);
-    set(status, value.status);
-    // set(fileUpload, value.postFiles[0].fileName);
+const setData = (data: Article | boolean) => {
+  if (typeof data === "boolean") {
+    mode.value = false;
+  } else {
+    mode.value = true;
+    dialogData.value = data;
+    let value = toRaw(dialogData.value);
+    if (value) {
+      set(postId, value.id);
+      set(authorId, value.authorId);
+      set(title, value.title);
+      set(content, value.content ? value.content : "");
+      set(selectedTags, value.categories);
+      set(status, value.status);
+    }
   }
 };
+
 // 暴露给父组件
 defineExpose({ open, setData });
 
@@ -131,7 +136,7 @@ const cancelEditModal = () => {
 
 const saveEditModal = async () => {
   isShow.value = false;
-  submitCreate();
+  get(mode) ? await updateArticle() : await submitCreate();
   clearUpInfo();
 };
 
@@ -173,7 +178,7 @@ const submitCreate = async () => {
     });
 
     const result = await response.json();
-    console.log(result, response);
+
     if (result.success) {
       toastService.add({
         severity: "success",
@@ -204,7 +209,55 @@ const getCategories = async () => {
   tags.value = (await category.getList()).data;
 };
 
-/* 生命周期钩子 */
+// 更新指定 id 标签
+const updateArticle = async () => {
+  let sendTags = selectedTags.value.map((item) => String(item.id));
+
+  const formData = new FormData();
+
+  formData.append("postId", String(postId.value));
+  formData.append("title", title.value);
+  formData.append("content", content.value);
+  formData.append("tags", sendTags.join());
+  formData.append("status", String(status.value));
+
+  // 如果有新的文件上传
+  if (fileUpload.value && fileUpload.value.files.length > 0) {
+    formData.append("file", fileUpload.value.files[0]);
+  }
+
+  try {
+    const response = await fetch("/api/post/edit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+    console.log(result, response);
+    if (result.success) {
+      toastService.add({
+        severity: "success",
+        summary: "成功",
+        detail: "更新成功",
+        life: 1500,
+      });
+    } else {
+      toastService.add({
+        severity: "error",
+        summary: "失败",
+        detail: "更新失败",
+        life: 1500,
+      });
+    }
+  } catch (error) {
+    toastService.add({
+      severity: "error",
+      summary: "错误",
+      detail: "提交时出现问题",
+      life: 1500,
+    });
+  }
+};
 </script>
 
 <style scoped>

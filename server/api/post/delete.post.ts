@@ -7,8 +7,7 @@ export default defineEventHandler(async (event) => {
   const { postId } = await readBody(event);
 
   try {
-    // 开始事务
-    await prisma.$transaction(async (event) => {
+    await prisma.$transaction(async () => {
       const post = await prisma.post.findUnique({
         where: { id: postId },
         include: { postFiles: true }, // 获取与文章相关的文件信息

@@ -11,6 +11,7 @@
             </h1>
           </template>
           <template #end>
+            <!-- 打开站点信息弹窗 -->
             <Button
               class="mr-2 text-black dark:text-white"
               icon="pi pi-compass"
@@ -19,6 +20,7 @@
               size="small"
               @click="showInfoDialog"
             />
+            <!-- 打开分类编辑弹窗 -->
             <Button
               class="mr-2 text-black dark:text-white"
               icon="pi pi-tags"
@@ -27,13 +29,14 @@
               size="small"
               @click="showTagDialog"
             />
+            <!-- 打开文章新建弹窗 -->
             <Button
               class="mr-2 text-black dark:text-white"
               icon="pi pi-plus"
               severity="secondary"
               text
               size="small"
-              @click="showEditDialog"
+              @click="showEditDialog(false)"
             />
             <IconField>
               <InputIcon>
@@ -91,6 +94,7 @@
               <Column field="updatedTime" header="更新时间"></Column>
               <Column filed="actions" header="操作">
                 <template #body="{ data }">
+                  <!-- 打开文章编辑弹窗 -->
                   <Button
                     class="scale-[0.6]"
                     icon="pi pi-pencil"
@@ -98,6 +102,14 @@
                     rounded
                     @click="showEditDialog(data)"
                   />
+                  <!-- 删除文章popover -->
+                  <Button
+                    class="scale-[0.6]"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    rounded
+                    @click="deleteItem(data, $event)"
+                  ></Button>
                 </template>
               </Column>
             </DataTable>
@@ -106,6 +118,7 @@
       </div>
     </div>
 
+    <ConfirmDialog></ConfirmDialog>
     <EditDialog ref="refEditDialog" />
     <EditCategory ref="refEditTagDialog" />
     <InfoDialog ref="refInfoDialog" />
@@ -120,6 +133,9 @@ definePageMeta({
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
 import type { Article, articleShow } from "model/BlogInfo";
+
+const confirm = useConfirm();
+const toastService = usePVToastService();
 
 // datatable 配置项
 const filters = ref({
@@ -148,8 +164,12 @@ const showTagDialog = () => {
 const refEditDialog = ref();
 const showEditDialog = async (data: any) => {
   await refEditDialog.value.open();
-  let dialogValue: Article = await getArticleById(data.id);
-  await refEditDialog.value.setData(dialogValue);
+  if (!data) {
+    await refEditDialog.value.setData(false);
+  } else {
+    let dialogValue: Article = await getArticleById(data.id);
+    await refEditDialog.value.setData(dialogValue);
+  }
 };
 
 /* 网络请求 */
@@ -177,6 +197,42 @@ const getArticleById = async (id: number) => {
   let params: { id: number } = { id: id };
   let data = (await blogInfo.getArticle(params)).data;
   return data;
+};
+
+const deleteItem = async (data: articleShow, event: any) => {
+  confirm.require({
+    message: `是否删除${data.fileName}.md和相关记录?`,
+    header: "删除记录",
+    icon: "pi pi-times-circle",
+    rejectLabel: "Cancel",
+    rejectProps: {
+      label: "取消",
+      severity: "secondary",
+    },
+    acceptProps: {
+      label: "删除",
+      severity: "danger",
+    },
+    accept: async () => {
+      const params = { postId: data.id };
+      const res = await blogInfo.deleteArticle(params);
+      toastService.add({
+        summary: "删除文章成功",
+        detail: res.data,
+        severity: "success",
+        life: 1500,
+      });
+      await getArticleList();
+    },
+    reject: () => {
+      toastService.add({
+        severity: "warn",
+        summary: "取消删除",
+        detail: "您取消了删除该文章",
+        life: 1500,
+      });
+    },
+  });
 };
 
 onMounted(() => {

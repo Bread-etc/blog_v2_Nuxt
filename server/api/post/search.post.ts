@@ -13,14 +13,23 @@ export default defineEventHandler(async (event) => {
     const post = await prisma.post.findUnique({
       where: { id },
       include: {
-        categories: true, // 查询文章关联的分类
-        postFiles: true, // 查询文章关联的文件
+        postFiles: true,
+        PostCategory: {
+          include: {
+            category: true, // 获取关联的分类信息
+          },
+        },
       },
     });
 
     if (!post) return useErrorWrapper("Post not found", 404);
 
-    return useResponseWrapper(post);
+    const processedPost = {
+      ...post,
+      categories: post.PostCategory.map((pc) => pc.category),
+    };
+
+    return useResponseWrapper(processedPost);
   } catch (error) {
     return useErrorWrapper(error, 500);
   }

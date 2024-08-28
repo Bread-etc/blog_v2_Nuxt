@@ -34,7 +34,6 @@ model Post {
   status      Boolean  @default(false) @map("status")
 
   author       User           @relation(fields: [authorId], references: [id])
-  categories   Category[]     @relation("PostCategory")
   postFiles    PostFile[]
   PostCategory PostCategory[]
 
@@ -58,7 +57,6 @@ model Category {
   color String?
   icon  String?
 
-  posts        Post[]         @relation("PostCategory")
   PostCategory PostCategory[]
 
   @@map("category")
