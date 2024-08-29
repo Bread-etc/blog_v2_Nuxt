@@ -135,8 +135,8 @@ import { FilterMatchMode } from "@primevue/core/api";
 import type { Article, articleShow } from "model/BlogInfo";
 
 const confirm = useConfirm();
-const toastService = usePVToastService();
-
+// 吐司组件
+const toastService = useToast();
 // datatable 配置项
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },

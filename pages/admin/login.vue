@@ -61,7 +61,6 @@ import type { LoginParams, LoginResultModel } from "model/Login";
 import { useEncrypt } from "~/composables";
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo } from "nuxt/app";
-import { usePVToastService } from "~/composables/useToastService";
 
 const username = ref<string>("");
 const password = ref<string>("");
@@ -69,7 +68,7 @@ const password = ref<string>("");
 const userStore = useUserStore();
 const { encryptContent } = useEncrypt();
 // 吐司组件
-const toastService = usePVToastService();
+const toastService = useToast();
 
 const handleLogin = async () => {
   //获取加密后的用户名和密码
@@ -87,10 +86,10 @@ const handleLogin = async () => {
       life: 3000,
     });
     localStorage.setItem("_token", userInfo.token);
-    setTimeout(() => {
-      navigateTo("/admin/dashboard");
-    }, 1500);
   }
+  setTimeout(async () => {
+    await navigateTo("/admin/dashboard");
+  }, 1000);
 };
 </script>
 

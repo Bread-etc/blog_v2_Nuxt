@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     transpile: ["jsencrypt"],
   },
   dir: {
-    public: "uploads"
+    public: "uploads",
   },
 
   // 模块配置项

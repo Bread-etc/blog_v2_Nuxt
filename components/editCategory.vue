@@ -98,7 +98,8 @@ import type { MultiSelectChangeEvent } from "primevue/multiselect";
 const isShow = ref(false);
 const mode = ref("创建");
 const options = ref(["创建", "编辑", "删除"]);
-const toastService = usePVToastService();
+// 吐司组件
+const toastService = useToast();
 
 // 定义打开方法
 const open = () => {

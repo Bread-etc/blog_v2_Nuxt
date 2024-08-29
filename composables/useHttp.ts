@@ -7,7 +7,6 @@
 import { useUserStore } from "~/stores/user.store";
 import { navigateTo, useRuntimeConfig } from "nuxt/app";
 import type { FetchResponse, SearchParameters } from "ofetch";
-import { usePVToastService } from "./useToastService";
 
 export interface ResOptions<T> {
   code: number;
@@ -16,19 +15,12 @@ export interface ResOptions<T> {
   success: boolean;
 }
 
-const toastService = usePVToastService();
-
 // 处理错误
 function handelError<T>(
   response: FetchResponse<ResOptions<T>> & FetchResponse<ResponseType>,
 ) {
   const err = (text: string) => {
-    toastService.add({
-      severity: "error",
-      summary: "Error 😢",
-      detail: response?._data?.message ?? text,
-      life: 3000,
-    });
+    console.error(`Error 😢, ${response?._data?.message ?? text}`);
   };
 
   if (!response._data) {

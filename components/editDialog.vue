@@ -82,7 +82,8 @@ import { get, set } from "@vueuse/core";
 
 /* 弹窗控制 */
 const isShow = ref(false);
-const toastService = usePVToastService();
+// 吐司组件
+const toastService = useToast();
 const dialogData = ref<Article>();
 const mode = ref(false); // false 为创建模式，true 为编辑模式
 // 定义打开方法
