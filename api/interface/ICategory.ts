@@ -11,21 +11,24 @@ enum Api {
   delete = "/category/delete",
 }
 
-const userStore = useUserStore();
-const token = userStore.getToken;
-
 export async function getList() {
   return useHttp.get<Category[]>(Api.getList);
 }
 
 export async function createTag(params: CategoryWithoutId) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
   return useHttp.post<string>(Api.create, params, token);
 }
 
 export async function updateTag(params: Category) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
   return useHttp.post<string>(Api.update, params, token);
 }
 
 export async function deleteTag(params: { id: number }) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
   return useHttp.post<string>(Api.delete, params, token);
 }

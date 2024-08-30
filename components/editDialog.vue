@@ -155,7 +155,7 @@ const clearUpInfo = () => {
 };
 
 /* 网络请求 */
-const { category } = useApi();
+const { blogInfo, category } = useApi();
 
 // 提交创建表单
 const submitCreate = async () => {
@@ -175,38 +175,20 @@ const submitCreate = async () => {
   }
   formData.append("status", String(status.value));
 
-  try {
-    const token = localStorage.getItem("_token");
-    const response = await fetch("/api/post/create", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const res = await blogInfo.createArticle(formData);
+
+  if (res.success) {
+    toastService.add({
+      severity: "success",
+      summary: "成功",
+      detail: "新增成功",
+      life: 1500,
     });
-
-    const result = await response.json();
-
-    if (result.success) {
-      toastService.add({
-        severity: "success",
-        summary: "成功",
-        detail: "新增成功",
-        life: 1500,
-      });
-    } else {
-      toastService.add({
-        severity: "error",
-        summary: "失败",
-        detail: "新增失败",
-        life: 1500,
-      });
-    }
-  } catch (error) {
+  } else {
     toastService.add({
       severity: "error",
-      summary: "错误",
-      detail: "提交时出现问题",
+      summary: "失败",
+      detail: "新增失败",
       life: 1500,
     });
   }
@@ -234,37 +216,20 @@ const updateArticle = async () => {
     formData.append("file", fileUpload.value.files[0]);
   }
 
-  try {
-    const token = localStorage.getItem("_token");
-    const response = await fetch("/api/post/edit", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const res = await blogInfo.updateArticle(formData);
 
-    const result = await response.json();
-    if (result.success) {
-      toastService.add({
-        severity: "success",
-        summary: "成功",
-        detail: "更新成功",
-        life: 1500,
-      });
-    } else {
-      toastService.add({
-        severity: "error",
-        summary: "失败",
-        detail: "更新失败",
-        life: 1500,
-      });
-    }
-  } catch (error) {
+  if (res.success) {
+    toastService.add({
+      severity: "success",
+      summary: "成功",
+      detail: "更新成功",
+      life: 1500,
+    });
+  } else {
     toastService.add({
       severity: "error",
-      summary: "错误",
-      detail: "提交时出现问题",
+      summary: "失败",
+      detail: "更新失败",
       life: 1500,
     });
   }

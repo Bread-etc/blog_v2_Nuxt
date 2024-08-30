@@ -65,11 +65,10 @@ export default defineNuxtConfig({
 
   piniaPersistedState: {
     cookieOptions: {
-      // 30 天过期
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      // 7 天过期
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "strict",
     },
-    storage: "localStorage",
   },
 
   lodash: {

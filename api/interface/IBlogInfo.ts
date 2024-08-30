@@ -8,11 +8,9 @@ enum Api {
   getList = "/post/getArticleList",
   searchArticle = "/post/search",
   deleteArticle = "/post/delete",
-  updateArticle = "/post/update",
+  createArticle = "/post/create",
+  updateArticle = "/post/edit",
 }
-
-const userStore = useUserStore();
-const token = userStore.getToken;
 
 // 获取文章列表
 export async function getList(params: ArticleListParams) {
@@ -26,5 +24,21 @@ export async function getArticle(params: { id: number }) {
 
 // 删除指定 id 的文章
 export async function deleteArticle(params: { postId: number }) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
   return useHttp.post<string>(Api.deleteArticle, params, token);
+}
+
+// 创建文章
+export async function createArticle(params: FormData) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
+  return useHttp.post<string>(Api.createArticle, params, token);
+}
+
+// 更新文章
+export async function updateArticle(params: FormData) {
+  const userStore = useUserStore();
+  const token = userStore.getToken;
+  return useHttp.post<string>(Api.updateArticle, params, token);
 }

@@ -6,6 +6,14 @@ import formidable from "formidable";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+  // 从请求头中获取 Authorization
+  const authHeader = getHeader(event, "authorization");
+  if (!authHeader) {
+    return useErrorWrapper("", 401, false, "Authorization header missing");
+  }
+  const token = authHeader.split(" ")[1];
+  verifyToken(token);
+  
   // 上传路径
   const uploadDir = path.join(process.cwd(), "uploads");
   // 如果文件夹不存在, 则创建文件夹
