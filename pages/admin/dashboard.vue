@@ -78,7 +78,7 @@
               <template #loading>
                 <div class="my-1">加载中,请稍后...</div>
               </template>
-              <Column field="id" header="#"></Column>
+              <Column field="showId" header="#"></Column>
               <Column field="title" header="标题"></Column>
               <Column field="fileName" header="文件名"></Column>
               <Column field="status" header="状态">
@@ -119,7 +119,7 @@
     </div>
 
     <ConfirmDialog></ConfirmDialog>
-    <EditDialog ref="refEditDialog" />
+    <EditDialog ref="refEditDialog" @refresh="getArticleList" />
     <EditCategory ref="refEditTagDialog" />
     <InfoDialog ref="refInfoDialog" />
   </div>
@@ -174,12 +174,16 @@ const showEditDialog = async (data: any) => {
 
 /* 网络请求 */
 const { blogInfo } = useApi();
+
 const getArticleList = async () => {
   loading.value = true;
   let list = (await blogInfo.getList(query.value)).data.list;
+  let ascId: number = 0;
   articleList = list.map((item) => {
     const fileName = item.postFiles[0].fileName;
+    ascId++;
     return {
+      showId: ascId,
       id: item.id,
       title: item.title,
       authorId: item.authorId,

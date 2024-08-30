@@ -1,4 +1,3 @@
-import { defineStore } from "pinia";
 import { useApi } from "~/composables/index";
 import type { LoginParams, LoginResultModel } from "model/Login";
 import { computed, ref } from "vue";
@@ -38,13 +37,6 @@ function storeSetup() {
     clearUserInfo();
   };
 
-  // 计算登录次数
-  const count = ref(1);
-  const getCount = computed(() => count.value);
-  const addCount = () => {
-    count.value++;
-  };
-
   return {
     userInfo,
     login,
@@ -53,9 +45,6 @@ function storeSetup() {
     getToken,
     isLogin,
     clearUserInfo,
-    count,
-    getCount,
-    addCount,
     setUserInfo,
   };
 }

@@ -109,6 +109,8 @@ const setData = (data: Article | boolean) => {
     }
   }
 };
+// 定义父组件方法
+const emit = defineEmits(["refresh"]);
 
 // 暴露给父组件
 defineExpose({ open, setData });
@@ -139,6 +141,7 @@ const saveEditModal = async () => {
   isShow.value = false;
   get(mode) ? await updateArticle() : await submitCreate();
   clearUpInfo();
+  emit("refresh");
 };
 
 const clearUpInfo = () => {
@@ -173,9 +176,13 @@ const submitCreate = async () => {
   formData.append("status", String(status.value));
 
   try {
+    const token = localStorage.getItem("_token");
     const response = await fetch("/api/post/create", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const result = await response.json();
@@ -228,13 +235,16 @@ const updateArticle = async () => {
   }
 
   try {
+    const token = localStorage.getItem("_token");
     const response = await fetch("/api/post/edit", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const result = await response.json();
-    console.log(result, response);
     if (result.success) {
       toastService.add({
         severity: "success",

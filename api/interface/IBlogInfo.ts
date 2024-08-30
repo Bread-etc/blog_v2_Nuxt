@@ -2,7 +2,7 @@
  * 博客首页主要内容接口
  */
 import { useHttp } from "~/composables/useHttp";
-import type { Article, ArticleList, ArticleListParams } from "model/BlogInfo";
+import type { ArticleList, ArticleListParams } from "model/BlogInfo";
 
 enum Api {
   getList = "/post/getArticleList",
@@ -10,6 +10,9 @@ enum Api {
   deleteArticle = "/post/delete",
   updateArticle = "/post/update",
 }
+
+const userStore = useUserStore();
+const token = userStore.getToken;
 
 // 获取文章列表
 export async function getList(params: ArticleListParams) {
@@ -23,5 +26,5 @@ export async function getArticle(params: { id: number }) {
 
 // 删除指定 id 的文章
 export async function deleteArticle(params: { postId: number }) {
-  return useHttp.post<string>(Api.deleteArticle, params);
+  return useHttp.post<string>(Api.deleteArticle, params, token);
 }

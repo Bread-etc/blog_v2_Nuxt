@@ -64,12 +64,13 @@ const fetch = $fetch.create({
     // 添加baseUrl
     const config = useRuntimeConfig();
     options.baseURL = config.public.apiBase;
-    // 添加请求头
+    // 动态添加请求头
     const userStore = useUserStore();
-    if (userStore.isLogin) {
-      options.headers = new Headers(options.headers);
-      options.headers.set("Authorization", `Bearer ${userStore.getToken}`);
+    const headers = new Headers(options.headers);
+    if (userStore.isLogin && !headers.has('Authorization')) {
+      headers.set("Authorization", `Bearer ${userStore.getToken}`);
     }
+    options.headers = headers; // 设置 options.headers 为 headers 实例
   },
   // 响应拦截器
   onResponse({ response }) {
@@ -94,19 +95,19 @@ const fetch = $fetch.create({
 });
 
 export const useHttp = {
-  get: <T>(url: string, params?: any) => {
-    return fetch<ResOptions<T>>(url, { method: "get", params });
+  get: <T>(url: string, params?: any, options: any = {}) => {
+    return fetch<ResOptions<T>>(url, { method: "get", params, ...options });
   },
 
-  post: <T>(url: string, body?: any) => {
-    return fetch<ResOptions<T>>(url, { method: "post", body });
+  post: <T>(url: string, body?: any, options: any = {}) => {
+    return fetch<ResOptions<T>>(url, { method: "post", body, ...options });
   },
 
-  put: <T>(url: string, body?: any) => {
-    return fetch<ResOptions<T>>(url, { method: "put", body });
+  put: <T>(url: string, body?: any, options: any = {}) => {
+    return fetch<ResOptions<T>>(url, { method: "put", body, ...options });
   },
 
-  delete: <T>(url: string, body?: any) => {
-    return fetch<ResOptions<T>>(url, { method: "delete", body });
+  delete: <T>(url: string, body?: any, options: any = {}) => {
+    return fetch<ResOptions<T>>(url, { method: "delete", body, ...options });
   },
 };
