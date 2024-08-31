@@ -40,7 +40,7 @@ export interface Meta {
   currentPage: number;
   pageSize: number;
   total: number;
-  totalPage: number;
+  totalPages: number;
 }
 
 // 获取单个文章文件 [用于content渲染markdown]

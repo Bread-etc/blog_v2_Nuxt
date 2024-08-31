@@ -58,6 +58,7 @@
               :filters="filters"
               data-key="id"
               :loading="loading"
+              :lazy="true"
               :global-filter-fields="[
                 'title',
                 'fileName',
@@ -68,7 +69,11 @@
               row-hover
               paginator
               :rowsPerPageOptions="[10, 20]"
+              paginator-template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+              currentPageReportTemplate="{first} to {last} of {currentPage}"
+              :totalRecords="meta.total"
               @row-edit-save="showEditDialog"
+              @page="changeQuery($event)"
               scrollable
               scroll-height="calc(92vh -  6.5rem)"
             >
@@ -79,7 +84,7 @@
                 <div class="my-1">加载中,请稍后...</div>
               </template>
               <Column field="showId" header="#"></Column>
-              <Column field="title" header="标题"></Column>
+              <Column field="title" header="标题" class="w-1/5"></Column>
               <Column field="fileName" header="文件名"></Column>
               <Column field="status" header="状态">
                 <template #body="{ data }">
@@ -118,7 +123,7 @@
       </div>
     </div>
 
-    <ConfirmDialog></ConfirmDialog>
+    <ConfirmDialog />
     <EditDialog ref="refEditDialog" @refresh="getArticleList" />
     <EditCategory ref="refEditTagDialog" />
     <InfoDialog ref="refInfoDialog" />
@@ -133,6 +138,7 @@ definePageMeta({
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
 import type { Article, articleShow } from "model/BlogInfo";
+import { set } from "@vueuse/core";
 
 const confirm = useConfirm();
 // 吐司组件
@@ -148,6 +154,17 @@ let articleList: articleShow[] = [];
 let query = ref({
   page: 1,
   limit: 10,
+});
+const meta = ref<{
+  currentPage: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+}>({
+  currentPage: 0,
+  pageSize: 0,
+  total: 0,
+  totalPages: 0,
 });
 
 /* 弹窗 Dialog 控制 */
@@ -177,7 +194,9 @@ const { blogInfo } = useApi();
 
 const getArticleList = async () => {
   loading.value = true;
-  let list = (await blogInfo.getList(query.value)).data.list;
+  let data = (await blogInfo.getList(query.value)).data;
+  let list = data.list;
+  set(meta, data.meta);
   let ascId: number = 0;
   articleList = list.map((item) => {
     const fileName = item.postFiles[0].fileName;
@@ -188,7 +207,7 @@ const getArticleList = async () => {
       title: item.title,
       authorId: item.authorId,
       status: item.status,
-      fileName: fileName.slice(0, fileName.indexOf(".")),
+      fileName: fileName.slice(0, -3),
       categories: item.categories,
       createdTime: useDateFormat(item.createdTime, "YYYY-MM-DD").value,
       updatedTime: useDateFormat(item.updatedTime, "YYYY-MM-DD").value,
@@ -237,6 +256,15 @@ const deleteItem = async (data: articleShow, event: any) => {
       });
     },
   });
+};
+
+// 控制分页
+const changeQuery = (event: any) => {
+  if (event) {
+    query.value.page = event.page + 1;
+    query.value.limit = event.rows;
+    getArticleList();
+  }
 };
 
 onMounted(() => {
