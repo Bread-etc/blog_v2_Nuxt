@@ -11,15 +11,6 @@
             </h1>
           </template>
           <template #end>
-            <!-- 打开站点信息弹窗 -->
-            <Button
-              class="mr-2 text-black dark:text-white"
-              icon="pi pi-compass"
-              severity="secondary"
-              text
-              size="small"
-              @click="showInfoDialog"
-            />
             <!-- 打开分类编辑弹窗 -->
             <Button
               class="mr-2 text-black dark:text-white"
@@ -44,8 +35,9 @@
               </InputIcon>
               <InputText
                 size="small"
-                v-model="filters['global'].value"
-                placeholder="Filter Search..."
+                v-model="searchValue"
+                @keyup.enter.native="searchPost"
+                placeholder="Post Search..."
               />
             </IconField>
           </template>
@@ -55,16 +47,9 @@
           <div class="flex-1 overflow-hidden rounded-lg">
             <DataTable
               :value="articleList"
-              :filters="filters"
               data-key="id"
               :loading="loading"
               :lazy="true"
-              :global-filter-fields="[
-                'title',
-                'fileName',
-                'createdTime',
-                'status',
-              ]"
               :rows="10"
               row-hover
               paginator
@@ -126,7 +111,6 @@
     <ConfirmDialog />
     <EditDialog ref="refEditDialog" @refresh="getArticleList" />
     <EditCategory ref="refEditTagDialog" />
-    <InfoDialog ref="refInfoDialog" />
   </div>
 </template>
 
@@ -136,7 +120,6 @@ definePageMeta({
   middleware: ["auth"],
 });
 import { ref, onMounted } from "vue";
-import { FilterMatchMode } from "@primevue/core/api";
 import type { Article, articleShow } from "model/BlogInfo";
 import { set } from "@vueuse/core";
 
@@ -144,9 +127,7 @@ const confirm = useConfirm();
 // 吐司组件
 const toastService = useToast();
 // datatable 配置项
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
+const searchValue = ref("");
 const loading = ref(true);
 
 // 数据和请求参数
@@ -168,11 +149,6 @@ const meta = ref<{
 });
 
 /* 弹窗 Dialog 控制 */
-const refInfoDialog = ref();
-const showInfoDialog = () => {
-  refInfoDialog.value.open();
-};
-
 const refEditTagDialog = ref();
 const showTagDialog = () => {
   refEditTagDialog.value.open();
@@ -193,7 +169,7 @@ const showEditDialog = async (data: any) => {
 const { blogInfo } = useApi();
 
 const getArticleList = async () => {
-  loading.value = true;
+  set(loading, true);
   let data = (await blogInfo.getList(query.value)).data;
   let list = data.list;
   set(meta, data.meta);
@@ -213,11 +189,11 @@ const getArticleList = async () => {
       updatedTime: useDateFormat(item.updatedTime, "YYYY-MM-DD").value,
     };
   });
-  loading.value = false;
+  set(loading, false);
 };
 
 const getArticleById = async (id: number) => {
-  let params: { id: number } = { id: id };
+  const params: { query: number } = { query: id };
   let data = (await blogInfo.getArticle(params)).data;
   return data;
 };
@@ -227,7 +203,7 @@ const deleteItem = async (data: articleShow, event: any) => {
     message: `是否删除${data.fileName}.md和相关记录?`,
     header: "删除记录",
     icon: "pi pi-times-circle",
-    rejectLabel: "Cancel",
+    rejectLabel: "取消",
     rejectProps: {
       label: "取消",
       severity: "secondary",
@@ -258,12 +234,36 @@ const deleteItem = async (data: articleShow, event: any) => {
   });
 };
 
-// 控制分页
 const changeQuery = (event: any) => {
+  // 分页控制
   if (event) {
-    query.value.page = event.page + 1;
+    query.value.page = event.page++;
     query.value.limit = event.rows;
     getArticleList();
+  }
+};
+
+const searchPost = async () => {
+  if (!searchValue.value) {
+    getArticleList();
+  } else {
+    const params: { query: string } = { query: searchValue.value };
+    set(loading, true);
+    let data = (await blogInfo.getArticle(params)).data;
+    let fileName = data.postFiles[0].fileName;
+    articleList = [
+      {
+        id: data.id,
+        title: data.title,
+        authorId: data.authorId,
+        status: data.status,
+        fileName: fileName.slice(0, -3),
+        categories: data.categories,
+        createdTime: useDateFormat(data.createdTime, "YYYY-MM-DD").value,
+        updatedTime: useDateFormat(data.updatedTime, "YYYY-MM-DD").value,
+      },
+    ];
+    set(loading, false);
   }
 };
 

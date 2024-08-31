@@ -1,4 +1,3 @@
-//./error.vue
 <template>
   <div
     class="flex min-h-screen w-screen items-center justify-center overflow-hidden bg-lightOutBgImage dark:bg-darkOutBgImage lg:px-4"

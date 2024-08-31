@@ -3,15 +3,25 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-  // 获取查询id
-  const { id } = await readBody(event);
+  // 获取查询参数
+  const { query } = await readBody(event);
 
-  if (isNaN(id)) return useErrorWrapper("Invalid post id", 404);
+  if (!query) return useErrorWrapper("Query is required", 400);
 
   try {
-    // 开始事务
-    const post = await prisma.post.findUnique({
-      where: { id },
+    // 根据传入的查询参数，进行搜索
+    const post = await prisma.post.findFirst({
+      where: {
+        OR: [
+          { id: isNaN(Number(query)) ? undefined : Number(query) },
+          { title: { contains: query, mode: "insensitive" } },
+          {
+            postFiles: {
+              some: { fileName: { contains: query, mode: "insensitive" } },
+            },
+          },
+        ],
+      },
       include: {
         postFiles: true,
         PostCategory: {

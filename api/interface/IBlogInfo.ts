@@ -18,7 +18,7 @@ export async function getList(params: ArticleListParams) {
 }
 
 // 获取指定id的文章
-export async function getArticle(params: { id: number }) {
+export async function getArticle(params: { query: number | string }) {
   return useHttp.post<ArticleList>(Api.searchArticle, params);
 }
 

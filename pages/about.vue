@@ -59,7 +59,6 @@
 definePageMeta({
   layout: "default",
 });
-import { navigateTo } from "nuxt/app";
 
 const friendLinkList: { id: number; value: string; name: string }[] = [
   { id: 1, value: "http://hastur23.top", name: "hastur23.top" },
@@ -87,6 +86,6 @@ const routeToLogin = () => {
 }
 
 :deep(.p-fieldset-toggleable > .p-fieldset-legend):hover {
-  @apply text-black dark:text-white bg-transparent;
+  @apply bg-transparent text-black dark:text-white;
 }
 </style>
