@@ -16,7 +16,7 @@
               id="username"
               v-model="username"
               type="text"
-              style="padding: 0.25rem 0.5rem"
+              class="px-2 py-1"
             />
             <label
               for="username"
@@ -43,6 +43,7 @@
             label="Login"
             severity="success"
             icon="pi pi-check"
+            :disabled="username === '' || password === ''"
             @click="handleLogin"
             size="small"
           ></Button>
@@ -58,9 +59,6 @@ definePageMeta({
 });
 import { ref } from "vue";
 import type { LoginParams, LoginResultModel } from "model/Login";
-import { useEncrypt } from "~/composables";
-import { useUserStore } from "~/stores/user.store";
-import { navigateTo } from "nuxt/app";
 
 const username = ref<string>("");
 const password = ref<string>("");
@@ -101,14 +99,14 @@ const handleLogin = async () => {
 }
 
 :deep(.p-floatlabel) {
-  width: 100%;
+  @apply w-full;
 
   .p-password {
-    width: 100%;
+    @apply w-full;
   }
 
   .p-inputtext {
-    width: 100%;
+    @apply w-full;
   }
 }
 </style>

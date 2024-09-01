@@ -31,8 +31,8 @@
           </span>
         </p>
       </Fieldset>
-      <h2 class="py-2 text-lg font-bold">友情链接🔗</h2>
-      <Fieldset
+      <h2 class="py-2 text-lg font-bold">HeatMap🎯</h2>
+      <!-- <Fieldset
         id="fieldset"
         class="bg-LightContent dark:bg-DarkContent dark:text-white"
         :toggleable="true"
@@ -50,7 +50,11 @@
             {{ link.name }}
           </NuxtLink>
         </p>
-      </Fieldset>
+      </Fieldset> -->
+      <img
+        src="http://ghchart.rshah.org/Bread-etc"
+        alt="Bread-etc's Github chart"
+      />
     </div>
   </div>
 </template>
@@ -62,8 +66,6 @@ definePageMeta({
 
 const friendLinkList: { id: number; value: string; name: string }[] = [
   { id: 1, value: "http://hastur23.top", name: "hastur23.top" },
-  { id: 2, value: "https://github.com", name: "github" },
-  { id: 3, value: "https://x.com", name: "x.com" },
 ];
 
 // 跳转后台登录界面

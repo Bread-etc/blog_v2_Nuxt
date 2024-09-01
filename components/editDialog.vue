@@ -68,6 +68,7 @@
       <Button
         type="button"
         label="保存"
+        :disabled="selectedTags.length === 0"
         @click="saveEditModal"
         size="small"
       ></Button>
