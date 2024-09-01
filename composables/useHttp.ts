@@ -67,7 +67,7 @@ const fetch = $fetch.create({
     // 动态添加请求头
     const userStore = useUserStore();
     const headers = new Headers(options.headers);
-    if (userStore.isLogin && !headers.has('Authorization')) {
+    if (userStore.isLogin && !headers.has("Authorization")) {
       headers.set("Authorization", `Bearer ${userStore.getToken}`);
     }
     options.headers = headers; // 设置 options.headers 为 headers 实例

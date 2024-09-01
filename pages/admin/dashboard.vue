@@ -193,8 +193,8 @@ const getArticleList = async () => {
 };
 
 const getArticleById = async (id: number) => {
-  const params: { query: number } = { query: id };
-  let data = (await blogInfo.getArticle(params)).data;
+  const params: { id: number } = { id: id };
+  let data = (await blogInfo.searchArticleById(params)).data;
   return data;
 };
 
@@ -249,21 +249,45 @@ const searchPost = async () => {
   } else {
     const params: { query: string } = { query: searchValue.value };
     set(loading, true);
-    let data = (await blogInfo.getArticle(params)).data;
-    let fileName = data.postFiles[0].fileName;
-    articleList = [
-      {
-        id: data.id,
-        title: data.title,
-        authorId: data.authorId,
-        status: data.status,
-        fileName: fileName.slice(0, -3),
-        categories: data.categories,
-        createdTime: useDateFormat(data.createdTime, "YYYY-MM-DD").value,
-        updatedTime: useDateFormat(data.updatedTime, "YYYY-MM-DD").value,
-      },
-    ];
-    set(loading, false);
+    try {
+      let data = (await blogInfo.searchArticle(params)).data;
+
+      if (data && data.length > 0) {
+        let ascId: number = 0;
+        articleList = data.map((item) => {
+          const fileName = item.postFiles[0].fileName;
+          ascId++;
+          return {
+            showId: ascId,
+            id: item.id,
+            title: item.title,
+            authorId: item.authorId,
+            status: item.status,
+            fileName: fileName.slice(0, -3),
+            categories: item.categories,
+            createdTime: useDateFormat(item.createdTime, "YYYY-MM-DD").value,
+            updatedTime: useDateFormat(item.updatedTime, "YYYY-MM-DD").value,
+          };
+        });
+      } else {
+        toastService.add({
+          severity: "warn",
+          summary: "未找到匹配项",
+          detail: "未找到匹配项",
+          life: 1500,
+        });
+      }
+    } catch (error: any) {
+      toastService.add({
+        severity: "warn",
+        summary: "未找到匹配项",
+        detail: "未找到匹配项",
+        life: 1500,
+      });
+    } finally {
+      set(loading, false);
+      set(searchValue, "");
+    }
   }
 };
 

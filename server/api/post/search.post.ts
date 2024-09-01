@@ -6,18 +6,19 @@ export default defineEventHandler(async (event) => {
   // 获取查询参数
   const { query } = await readBody(event);
 
-  if (!query) return useErrorWrapper("Query is required", 400);
+  if (!query || query.trim() === "")
+    return useErrorWrapper("Query is required", 400);
 
   try {
     // 根据传入的查询参数，进行搜索
-    const post = await prisma.post.findFirst({
+    const posts = await prisma.post.findMany({
       where: {
         OR: [
-          { id: isNaN(Number(query)) ? undefined : Number(query) },
-          { title: { contains: query, mode: "insensitive" } },
+          // 模糊匹配
+          { title: { contains: query } },
           {
             postFiles: {
-              some: { fileName: { contains: query, mode: "insensitive" } },
+              some: { fileName: { contains: query } },
             },
           },
         ],
@@ -32,14 +33,15 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    if (!post) return useErrorWrapper("Post not found", 404);
+    if (posts.length === 0) return useErrorWrapper("Post not found", 404);
 
-    const processedPost = {
+    // 处理每个文章的分类信息
+    const processedPosts = posts.map((post) => ({
       ...post,
       categories: post.PostCategory.map((pc) => pc.category),
-    };
+    }));
 
-    return useResponseWrapper(processedPost);
+    return useResponseWrapper(processedPosts);
   } catch (error) {
     return useErrorWrapper(error, 500);
   }

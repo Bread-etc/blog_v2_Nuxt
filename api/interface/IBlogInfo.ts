@@ -7,6 +7,7 @@ import type { ArticleList, ArticleListParams } from "model/BlogInfo";
 enum Api {
   getList = "/post/getArticleList",
   searchArticle = "/post/search",
+  searchArticleById = "/post/searchById",
   deleteArticle = "/post/delete",
   createArticle = "/post/create",
   updateArticle = "/post/edit",
@@ -17,9 +18,14 @@ export async function getList(params: ArticleListParams) {
   return useHttp.get<ArticleList>(Api.getList, params);
 }
 
-// 获取指定id的文章
-export async function getArticle(params: { query: number | string }) {
-  return useHttp.post<ArticleList>(Api.searchArticle, params);
+// 搜索文章
+export async function searchArticle(params: { query: string }) {
+  return useHttp.post<ArticleList[]>(Api.searchArticle, params);
+}
+
+// 获取指定 id 的文章
+export async function searchArticleById(params: { id: number }) {
+  return useHttp.post<ArticleList>(Api.searchArticleById, params);
 }
 
 // 删除指定 id 的文章
