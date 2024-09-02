@@ -73,3 +73,8 @@
 - 添加`jsonwebtoken`鉴权
 - 添加`PostCategory`关联表,形成多对多关系
 - 完成`category`增删改查接口
+- 完成`post`增删改查接口
+
+## 优化目标
+- 移动端适配
+- dashboard index 页面优化代码 (含pages下组件)
