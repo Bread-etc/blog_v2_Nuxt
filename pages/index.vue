@@ -1,8 +1,43 @@
 <template>
   <div class="flex rounded-xl bg-transparent px-2 pb-2">
-    <div class="h-[92vh] flex-1 overflow-auto rounded-xl">
+    <div class="h-[92vh] flex-1 overflow-auto rounded-xl" ref="scrollContainer">
+      <!-- 卡片内容 -->
+      <Card
+        v-for="item in data"
+        :key="item.id"
+        class="card mb-3 h-[22vh] bg-LightContent dark:bg-DarkContent dark:text-white"
+        v-animateonscroll="{
+          enterClass: 'animate-fadeinright',
+          leaveClass: 'animate-fadeoutright',
+        }"
+        style="transition: all ease-in-out 0.5s !important"
+        @click="navigateToArticle(item)"
+      >
+        <template #title>
+          <p class="text-xl font-extrabold">{{ item.title }}</p>
+        </template>
+        <template #content>
+          <p class="cardCut m-0">
+            {{ item.content }}
+          </p>
+        </template>
+        <template #footer>
+          <div class="flex flex-col">
+            <div class="flex space-x-2">
+              <Tag
+                v-for="category in item.categories"
+                :key="category.id"
+                :icon="`pi pi-${category.icon}`"
+                :value="category.name"
+                :style="{ backgroundColor: '#' + category.color }"
+                class="custom-tag"
+              ></Tag>
+            </div>
+          </div>
+        </template>
+      </Card>
       <!-- 骨架屏 -->
-      <div v-if="!hasData" class="h-[92vh] flex-1 overflow-auto rounded-xl">
+      <div class="h-[92vh] flex-1 overflow-auto rounded-xl" v-if="loading">
         <div
           v-for="n in 4"
           :key="n"
@@ -19,38 +54,6 @@
           </div>
         </div>
       </div>
-      <Card
-        v-show="hasData"
-        v-for="item in data"
-        :key="item.id"
-        class="mb-3 h-[22vh] bg-LightContent dark:bg-DarkContent dark:text-white"
-        v-animateonscroll="{
-          enterClass: 'animate-fadeinright',
-          leaveClass: 'animate-fadeoutright',
-        }"
-        style="transition: all ease-in-out 0.5s !important"
-      >
-        <template #title>
-          <p class="text-xl font-extrabold">{{ item.title }}</p>
-        </template>
-        <template #content>
-          <p class="cardCut m-0">
-            {{ item.content }}
-          </p>
-        </template>
-        <template #footer>
-          <div class="flex space-x-2">
-            <Tag
-              v-for="category in item.categories"
-              :key="category.id"
-              :icon="`pi pi-${category.icon}`"
-              :value="category.name"
-              :style="{ backgroundColor: '#' + category.color }"
-              class="custom-tag"
-            ></Tag>
-          </div>
-        </template>
-      </Card>
     </div>
   </div>
 </template>
@@ -66,7 +69,7 @@ import { set } from "@vueuse/core";
 
 const toastService = useToast();
 
-const hasData = ref(false);
+const loading = ref(true);
 const data = ref<Article[]>();
 const meta = ref<Meta>();
 let query = ref<ArticleListParams>({
@@ -74,21 +77,44 @@ let query = ref<ArticleListParams>({
   limit: 10,
 });
 
+const navigateToArticle = (article: Article) => {
+  navigateTo(`/article/${article.title}`);
+};
+
 /* 网络请求 */
-const { blogInfo, category } = useApi();
+const { blogInfo } = useApi();
 
 const getArticleList = async () => {
+  set(loading, true);
   const res = (await blogInfo.getList(query.value)).data;
   const fetchData = res.list;
   const fetchMeta = res.meta;
   set(data, fetchData);
   set(meta, fetchMeta);
+  set(loading, false);
 };
+
+const loadMore = async () => {
+  if (loading.value) return;
+  if (data.value!.length >= meta.value!.total) return;
+  set(loading, true);
+
+  // 换页请求
+  query.value.page++;
+  const res = (await blogInfo.getList(query.value)).data;
+  data.value?.push(...res.list);
+  set(loading, false);
+};
+
+const scrollContainer = ref<HTMLElement | null>(null);
+
+useInfiniteScroll(scrollContainer, loadMore, {
+  distance: 250,
+});
 
 onMounted(() => {
   try {
     getArticleList();
-    set(hasData, true);
   } catch (error) {
     toastService.add({
       severity: "error",
@@ -120,5 +146,20 @@ onMounted(() => {
 
 .custom-tag:hover {
   @apply translate-y-[-4px] duration-300 ease-out; /* 向上浮动 4px */
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card:after {
+  content: "";
+  transition: width 0.7s ease-out;
+  @apply absolute bottom-0 left-0 h-1 w-0 rounded-md bg-LightEm dark:bg-DarkEm;
+}
+
+.card:hover:after {
+  width: 100%;
 }
 </style>

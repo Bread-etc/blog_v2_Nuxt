@@ -237,9 +237,11 @@ const deleteItem = async (data: articleShow, event: any) => {
 const changeQuery = (event: any) => {
   // 分页控制
   if (event) {
-    query.value.page = event.page++;
+    query.value.page = event.page + 1;
     query.value.limit = event.rows;
     getArticleList();
+  } else {
+    console.warn("query is null");
   }
 };
 
