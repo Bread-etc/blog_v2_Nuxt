@@ -2,6 +2,7 @@ import Aura from "@primevue/themes/aura";
 import { fileURLToPath } from "url";
 import { appConfig, createNitroConifg, createRuntimeConfig } from "./config";
 import { defineNuxtConfig } from "nuxt/config";
+import { resolve } from "path";
 
 export default defineNuxtConfig({
   typescript: {
@@ -22,7 +23,7 @@ export default defineNuxtConfig({
     transpile: ["jsencrypt"],
   },
   dir: {
-    public: "uploads",
+    public: "./content",
   },
 
   // 模块配置项
@@ -34,6 +35,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-lodash",
     "@prisma/nuxt",
+    "@nuxt/content",
   ],
 
   tailwindcss: {
@@ -76,6 +78,8 @@ export default defineNuxtConfig({
     prefix: "use",
     prefixSkip: ["string"],
   },
+
+  content: {},
 
   compatibilityDate: "2024-08-09",
 });

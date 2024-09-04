@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   verifyToken(token);
   
   // 上传路径
-  const uploadDir = path.join(process.cwd(), "uploads");
+  const uploadDir = path.join(process.cwd(), "content");
   // 如果文件夹不存在, 则创建文件夹
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });

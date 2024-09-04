@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   verifyToken(token);
 
   // 获取 postId
-  const uploadDir = path.join(process.cwd(), "uploads");
+  const uploadDir = path.join(process.cwd(), "content");
 
   // 创建上传文件夹（如果不存在）
   if (!fs.existsSync(uploadDir)) {
