@@ -79,7 +79,34 @@ export default defineNuxtConfig({
     prefixSkip: ["string"],
   },
 
-  content: {},
+  content: {
+    /* 配置项 */
+    ws: false,
+
+    markdown: {
+      highlight: {
+        theme: {
+          default: "github-light",
+          dark: "github-dark",
+          lineNumbers: true,
+          toc: { depth: 3, searchDepth: 3 },
+          externalLinks: {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          },
+        },
+        preload: [
+          "javascript",
+          "typescript",
+          "vue",
+          "css",
+          "html",
+          "tsx",
+          "jsx",
+        ],
+      },
+    },
+  },
 
   compatibilityDate: "2024-08-09",
 });
