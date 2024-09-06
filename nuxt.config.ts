@@ -82,30 +82,31 @@ export default defineNuxtConfig({
   content: {
     /* 配置项 */
     ws: false,
-
     markdown: {
+      /* 目录深度配置 */
+      toc: { depth: 3, searchDepth: 3 },
+      /* 高亮配置 */
       highlight: {
-        theme: {
-          default: "github-light",
-          dark: "github-dark",
-          lineNumbers: true,
-          toc: { depth: 3, searchDepth: 3 },
-          externalLinks: {
-            target: "_blank",
-            rel: "noopener noreferrer",
-          },
-        },
-        preload: [
-          "javascript",
-          "typescript",
-          "vue",
+        theme: 'github-light',
+        langs: [
+          "js",
+          "ts",
           "css",
           "html",
-          "tsx",
-          "jsx",
+          "cpp",
+          "go",
+          "java",
+          "sql",
+          "rust",
+          "json",
         ],
       },
     },
+  },
+
+  prisma: {
+    /* 配置项 */
+    installStudio: false, // 关闭每次询问安装studio
   },
 
   compatibilityDate: "2024-08-09",

@@ -25,6 +25,7 @@ body {
     Microsoft YaHei,
     Source Han Sans CN,
     sans-serif;
+  overflow: hidden;
 }
 
 :root {

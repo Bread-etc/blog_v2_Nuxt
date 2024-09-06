@@ -5,7 +5,7 @@
       <Card
         v-for="item in data"
         :key="item.id"
-        class="card mb-3 h-[22vh] bg-LightContent dark:bg-DarkContent dark:text-white"
+        class="card mb-3 h-[29vh] bg-LightContent dark:bg-DarkContent dark:text-white"
         v-animateonscroll="{
           enterClass: 'animate-fadeinright',
           leaveClass: 'animate-fadeoutright',
@@ -17,7 +17,7 @@
           <p class="text-xl font-extrabold">{{ item.title }}</p>
         </template>
         <template #content>
-          <p class="cardCut m-0">
+          <p class="cardCut m-0 text-sm">
             {{ item.content }}
           </p>
         </template>
@@ -39,9 +39,9 @@
       <!-- 骨架屏 -->
       <div class="h-[92vh] flex-1 overflow-auto rounded-xl" v-if="loading">
         <div
-          v-for="n in 4"
+          v-for="n in 3"
           :key="n"
-          class="mb-3 h-[22vh] animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700"
+          class="mb-3 h-[29vh] animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700"
         >
           <div class="p-4">
             <div
