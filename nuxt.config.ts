@@ -1,6 +1,12 @@
 import Aura from "@primevue/themes/aura";
 import { fileURLToPath } from "url";
-import { appConfig, createNitroConifg, createRuntimeConfig } from "./config";
+import {
+  appConfig,
+  createNitroConifg,
+  createRuntimeConfig,
+  seoConfig,
+  createViteConfig,
+} from "./config";
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
@@ -15,14 +21,18 @@ export default defineNuxtConfig({
   app: appConfig(),
   runtimeConfig: createRuntimeConfig(),
   nitro: createNitroConifg(),
+  vite: createViteConfig(),
   devServer: { port: 3030 },
   devtools: { enabled: false },
   build: {
     // 构建添加编译 jsencrypt
     transpile: ["jsencrypt"],
+    // 打包分析
+    analyze: true,
   },
-  dir: {
-    public: "./content",
+  site: seoConfig(),
+  robots: {
+    disallow: ["/secret", "/admin"],
   },
 
   // 模块配置项
@@ -36,6 +46,7 @@ export default defineNuxtConfig({
     "@prisma/nuxt",
     "@nuxt/content",
     "@nuxt/image",
+    "@nuxtjs/seo",
   ],
 
   tailwindcss: {
@@ -65,14 +76,6 @@ export default defineNuxtConfig({
     ssrHandlers: true,
   },
 
-  piniaPersistedState: {
-    cookieOptions: {
-      // 7 天过期
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: "strict",
-    },
-  },
-
   lodash: {
     /* 配置项 */
     prefix: "use",
@@ -86,6 +89,8 @@ export default defineNuxtConfig({
       mdc: false,
       /* 目录深度配置 */
       toc: { depth: 3, searchDepth: 3 },
+      lineNumbers: true,
+      copyCode: true,
     },
     /* 高亮配置 */
     highlight: {
@@ -107,9 +112,10 @@ export default defineNuxtConfig({
           "sql",
           "java",
         ],
-        lineNumbers: true,
       },
     },
+    lineNumbers: true,
+    copyCode: true,
   },
 
   image: {

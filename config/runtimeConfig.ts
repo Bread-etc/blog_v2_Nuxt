@@ -1,4 +1,4 @@
-import { NuxtConfig } from "nuxt/schema";
+import type { NuxtConfig } from "nuxt/schema";
 
 export function createRuntimeConfig(): NuxtConfig["runtimeConfig"] {
   const config: NuxtConfig["runtimeConfig"] = {

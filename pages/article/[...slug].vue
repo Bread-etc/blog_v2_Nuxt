@@ -3,12 +3,12 @@
     <div class="flex h-[92vh] flex-1 flex-col overflow-auto">
       <main>
         <div v-if="doc" class="flex">
-          <div class="flex flex-1 justify-center">
+          <article class="flex flex-1 justify-center">
             <ContentRenderer
               :value="doc"
               class="prose prose-green flex flex-col dark:prose-yellow dark:prose-invert"
             />
-          </div>
+          </article>
           <div class="sticky top-20 ml-2 self-start overflow-hidden">
             <h2
               class="mb-2 text-sm font-bold dark:text-white"
@@ -87,7 +87,8 @@ const { data: doc } = await useAsyncData("doc", () =>
 
 // 动态设置页面标题
 useHead({
-  title: `Bread_etc / ${doc?.value?.title || "文章"}`,
+  title: `Bread_etc | ${doc?.value?.title || "Bread_etc's Blog"}`,
+  meta: [{ name: "description", content: "Bread_etc的个人博客" }],
 });
 
 // 构建树形图
@@ -148,14 +149,26 @@ const onNodeSelect = (node: TreeNode) => {
     });
   }
 };
+
+onMounted(() => {
+  const nofollowLinks = document.querySelectorAll('a[rel="nofollow"]');
+  nofollowLinks.forEach((link) => {
+    link.setAttribute("target", "_blank");
+  });
+});
 </script>
 
 <style scoped>
 :root {
   user-select: none;
+
   code {
     user-select: text;
   }
+}
+
+:deep(img) {
+  /* @apply w-full; */
 }
 
 :deep(.p-tree) {

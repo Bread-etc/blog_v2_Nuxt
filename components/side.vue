@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-LightContent dark:bg-DarkContent m-4 mr-0 h-full w-10 rounded-2xl"
+    class="m-4 mr-0 h-full w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
     style="transition: all ease-in-out 0.4s !important"
   >
     <div class="flex h-[92vh] flex-col items-center">
@@ -29,7 +29,7 @@
               border: 0;
               --tw-ring-color: none;
             "
-            class="bg-LightEm dark:bg-DarkEm hover:bg-HoverLightEm dark:hover:bg-HoverDarkEm text-white"
+            class="bg-LightEm text-white hover:bg-HoverLightEm dark:bg-DarkEm dark:hover:bg-HoverDarkEm"
           />
         </NuxtLink>
       </div>

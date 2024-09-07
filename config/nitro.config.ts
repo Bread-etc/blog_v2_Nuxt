@@ -1,5 +1,5 @@
 // 配置nitro服务端
-import type { NuxtConfig } from "@nuxt/schema";
+import type { NuxtConfig } from "nuxt/schema";
 
 export function createNitroConifg(): NuxtConfig["nitro"] {
   const config: NuxtConfig["nitro"] = {
@@ -7,6 +7,8 @@ export function createNitroConifg(): NuxtConfig["nitro"] {
     baseURL: "/",
     // 插件配置
     // plugins: ["../server/plugins"],
+    // 压缩配置
+    compressPublicAssets: true,
   };
 
   return config;

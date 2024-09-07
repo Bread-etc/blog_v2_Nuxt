@@ -6,17 +6,13 @@ export function appConfig(): NuxtConfig["app"] {
     layoutTransition: { name: "layout", mode: "out-in" },
     keepalive: true,
     head: {
-      title: "Bread_etc 's blog",
+      charset: 'utf-8',
+      titleTemplate: "Bread_etc 's blog" || "%s",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],
-      link: [
-        // {
-        //   rel: "stylesheet",
-        //   href: "https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css",
-        // },
-      ],
-    }
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    },
   };
 
   return appConfig;

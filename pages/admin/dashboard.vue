@@ -119,6 +119,10 @@ definePageMeta({
   layout: "admin",
   middleware: ["auth"],
 });
+
+useHead({
+  title: `Dashboard`,
+});
 import { ref, onMounted } from "vue";
 import type { Article, articleShow } from "model/BlogInfo";
 import { set } from "@vueuse/core";
