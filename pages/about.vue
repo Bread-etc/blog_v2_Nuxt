@@ -51,7 +51,7 @@
           </NuxtLink>
         </p>
       </Fieldset> -->
-      <img
+      <NuxtImg
         src="http://ghchart.rshah.org/Bread-etc"
         alt="Bread-etc's Github chart"
       />

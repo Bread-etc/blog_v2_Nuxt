@@ -26,6 +26,29 @@ body {
     Source Han Sans CN,
     sans-serif;
   overflow: hidden;
+
+  /* 禁止所有文本选择 */
+  .prose {
+    user-select: none;
+  }
+
+  .prose code {
+    @apply text-codeEm mx-0.5 p-0.5;
+  }
+
+  /* 允许代码块选择 */
+  .prose pre,
+  .prose code {
+    user-select: text;
+  }
+
+  /* 自定义选中文本的样式 */
+  ::selection {
+    @apply bg-none underline underline-offset-2;
+    text-decoration-thickness: 2px; /* 设置下划线的粗细 */
+    text-decoration-color: #7e45cd;
+    color: inherit; /* 保持文本颜色 */
+  }
 }
 
 :root {

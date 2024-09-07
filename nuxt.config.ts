@@ -2,7 +2,6 @@ import Aura from "@primevue/themes/aura";
 import { fileURLToPath } from "url";
 import { appConfig, createNitroConifg, createRuntimeConfig } from "./config";
 import { defineNuxtConfig } from "nuxt/config";
-import { resolve } from "path";
 
 export default defineNuxtConfig({
   typescript: {
@@ -36,6 +35,7 @@ export default defineNuxtConfig({
     "nuxt-lodash",
     "@prisma/nuxt",
     "@nuxt/content",
+    "@nuxt/image",
   ],
 
   tailwindcss: {
@@ -81,27 +81,39 @@ export default defineNuxtConfig({
 
   content: {
     /* 配置项 */
-    ws: false,
+    watch: false,
     markdown: {
+      mdc: false,
       /* 目录深度配置 */
       toc: { depth: 3, searchDepth: 3 },
-      /* 高亮配置 */
-      highlight: {
-        theme: 'github-light',
+    },
+    /* 高亮配置 */
+    highlight: {
+      theme: {
+        default: "dracula",
         langs: [
           "js",
+          "jsx",
+          "json",
           "ts",
+          "tsx",
+          "vue",
           "css",
           "html",
-          "cpp",
+          "bash",
+          "md",
+          "c++",
           "go",
-          "java",
           "sql",
-          "rust",
-          "json",
+          "java",
         ],
+        lineNumbers: true,
       },
     },
+  },
+
+  image: {
+    format: ["webp"],
   },
 
   prisma: {

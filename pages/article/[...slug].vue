@@ -4,16 +4,20 @@
       <main>
         <div v-if="doc" class="flex">
           <div class="flex flex-1 justify-center">
-            <ContentRenderer :value="doc">
-              <ContentRendererMarkdown
-                :value="doc"
-                class="prose prose-zinc flex flex-col dark:prose-invert"
-              />
-            </ContentRenderer>
+            <ContentRenderer
+              :value="doc"
+              class="prose prose-green flex flex-col dark:prose-yellow dark:prose-invert"
+            />
           </div>
           <div class="sticky top-20 ml-2 self-start overflow-hidden">
-            <h2 class="text-md font-bold dark:text-white scale-[0.8]" style="transform-origin: top left;">目录</h2>
+            <h2
+              class="mb-2 text-sm font-bold dark:text-white"
+              style="transform-origin: top left"
+            >
+              目录🗿
+            </h2>
             <Tree
+              v-if="treeNodes?.length"
               :value="treeNodes"
               scrollHeight="calc(50vh + 1rem)"
               selectionMode="single"
@@ -24,9 +28,22 @@
                 transform-origin: top left;
               "
             />
-            <div class="text-sm text-center dark:text-white scale-[0.8]" style="transform-origin: top left;">
+            <div
+              v-else
+              class="flex scale-[0.8] flex-col items-center justify-center rounded border border-gray-500 dark:border-white dark:text-white"
+              style="
+                min-height: calc(50vh + 2rem + 2px);
+                transform-origin: top left;
+              "
+            >
+              <p>暂无目录📍</p>
+            </div>
+            <div
+              class="scale-[0.8] text-center text-sm dark:text-white"
+              style="transform-origin: top left"
+            >
               <p>发布时间: {{ articleInfo.createdTime }}</p>
-              <Divider class="bg-black h-[1px]"/>
+              <Divider class="h-[1px] bg-black" />
               <p>更新时间: {{ articleInfo.updatedTime }}</p>
             </div>
           </div>
@@ -44,6 +61,7 @@ import type { ParsedContent } from "@nuxt/content";
 import type { TreeNode } from "primevue/treenode";
 
 const route = useRoute();
+const toastService = useToast();
 const articleInfo = ref();
 const { blogInfo } = useApi();
 
@@ -67,6 +85,11 @@ const { data: doc } = await useAsyncData("doc", () =>
   queryContent().where({ _file: fileName }).findOne(),
 );
 
+// 动态设置页面标题
+useHead({
+  title: `Bread_etc / ${doc?.value?.title || "文章"}`,
+});
+
 // 构建树形图
 const structureTreeNode = (doc: ParsedContent) => {
   let treeNode: TreeNode[] = [];
@@ -75,6 +98,7 @@ const structureTreeNode = (doc: ParsedContent) => {
     let i = 0;
     doc.body.toc.links.forEach((item) => {
       let node = {
+        id: item.id,
         key: String(i),
         label: item.text,
         children: [],
@@ -89,6 +113,7 @@ const structureTreeNode = (doc: ParsedContent) => {
         let k = 0;
         doc.body.toc.links[j].children?.forEach((item) => {
           let node: TreeNode = {
+            id: item.id,
             key: String(j) + "-" + String(k),
             label: item.text,
             type: "url",
@@ -109,16 +134,30 @@ if (doc.value) {
 
 // 选择node节点并导航到指定节点
 const onNodeSelect = (node: TreeNode) => {
-  const currentUrl = route.fullPath.split("#")[0];
-  navigateTo(currentUrl + "#" + node.label);
-  const element = document.getElementById(node.label as string);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
+  // 锚点为 node.id
+  const anchorElement = document.getElementById(node.id);
+
+  if (anchorElement) {
+    anchorElement.scrollIntoView({ behavior: "smooth" });
+  } else {
+    toastService.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Node not found",
+      life: 1500,
+    });
   }
 };
 </script>
 
 <style scoped>
+:root {
+  user-select: none;
+  code {
+    user-select: text;
+  }
+}
+
 :deep(.p-tree) {
   @apply bg-transparent p-0 text-sm duration-300;
 }
@@ -133,17 +172,14 @@ const onNodeSelect = (node: TreeNode) => {
 
 :deep(.p-tree-node-children) {
   .p-tree-node > .p-tree-node-content > button {
-    display: none;
+    opacity: 0; /* 隐藏按钮但保持其功能 */
+    pointer-events: none; /* 禁用按钮的点击事件 */
+    width: 0px;
   }
 
   .p-tree-node > .p-tree-node-content > .p-tree-node-label {
     margin-left: 0.5rem;
   }
-}
-
-:deep(.p-tree-node-content.p-tree-node-selectable):is(.p-tree-node-selected)
-  > .p-tree-node-label {
-  /* @apply text-white dark:text-black; */
 }
 
 :deep(.p-tree-node-content.p-tree-node-selectable):not(

@@ -5,8 +5,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // 全局颜色变量
-
         /* 背景颜色 [外部圆角矩形] */
         LightBg: "#f0f2f5", // 浅灰
         DarkBg: "#1f1f1f", // 黑色
@@ -22,11 +20,22 @@ module.exports = {
         /* 突出部分hover颜色 */
         HoverLightEm: "#009e3d", // 深绿
         HoverDarkEm: "#a88400", // 深黄
+
+        /* code 行内代码块颜色 */
+        codeEm: "#7e45cd",
       },
       backgroundImage: {
         lightOutBgImage: "linear-gradient(to top, #fddb92 0%, #d1fdff 100%)",
         darkOutBgImage: "linear-gradient(to top, #09203f 0%, #537895 100%)",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            "code::before": null,
+            "code::after": null,
+          },
+        },
+      }),
     },
   },
   plugins: [require("@tailwindcss/typography")],
