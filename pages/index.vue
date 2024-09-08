@@ -1,5 +1,5 @@
 <template>
-  <div class="flex rounded-xl bg-transparent px-2 pb-2">
+  <div class="flex flex-col rounded-xl bg-transparent px-2 pb-2">
     <div class="h-[92vh] flex-1 overflow-auto rounded-xl" ref="scrollContainer">
       <!-- 卡片内容 -->
       <Card
@@ -10,7 +10,7 @@
           enterClass: 'animate-fadeinright',
           leaveClass: 'animate-fadeoutright',
         }"
-        style="transition: all ease-in-out 0.5s !important"
+        style="transition: all ease-in-out 0.5s !important;"
         @click="navigateToArticle(item)"
       >
         <template #title>

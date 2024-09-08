@@ -12,12 +12,7 @@
         </div>
         <div class="flex flex-col items-center justify-center">
           <FloatLabel class="mx-2 my-3">
-            <InputText
-              id="username"
-              v-model="username"
-              type="text"
-              class="px-2 py-1"
-            />
+            <InputText id="username" v-model="username" type="text" />
             <label
               for="username"
               style="font-size: 0.7rem; left: 0.5rem; margin-top: -0.35rem"
@@ -96,6 +91,10 @@ const handleLogin = async () => {
   input {
     @apply px-2 py-1;
   }
+}
+
+:deep(#username) {
+  @apply px-2 py-1;
 }
 
 :deep(.p-floatlabel) {

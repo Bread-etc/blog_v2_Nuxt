@@ -1,9 +1,9 @@
 <template>
   <div
-    class="m-4 mr-0 h-full w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
+    class="m-4 mb-0 mr-0 w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
     style="transition: all ease-in-out 0.4s !important"
   >
-    <div class="flex h-[92vh] flex-col items-center">
+    <div class="flex flex-col items-center" style="height: calc(92vh - 0.5rem);">
       <div class="pt-4">
         <Avatar
           class="image"

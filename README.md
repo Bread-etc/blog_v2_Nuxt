@@ -1,4 +1,4 @@
-利用Nuxt重构博客前后端项目[hastur23.top]
+## 利用Nuxt重构博客前后端项目[hastur23.top]
 
 - 添加 PrimeVue 和 tailwindcss
 - 添加字体 ~~LXGW WenKai webfont~~,Pingfang SC
