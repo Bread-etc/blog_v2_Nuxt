@@ -2,6 +2,10 @@
 module.exports = {
   darkMode: "class",
   content: ["./pages/**/*.{vue,ts}", "./components/**.{vue,ts}"],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/nesting"),
+  ],
   theme: {
     extend: {
       colors: {
@@ -38,5 +42,4 @@ module.exports = {
       }),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
 };

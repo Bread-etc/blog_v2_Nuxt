@@ -61,10 +61,6 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  layout: "default",
-});
-
 const friendLinkList: { id: number; value: string; name: string }[] = [
   { id: 1, value: "http://hastur23.top", name: "hastur23.top" },
 ];

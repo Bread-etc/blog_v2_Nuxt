@@ -52,7 +52,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     /* 配置项 */
     viewer: false,
-    configPath: "./tailwind.config.ts",
+    configPath: "tailwind.config.ts",
   },
 
   primevue: {
@@ -95,8 +95,6 @@ export default defineNuxtConfig({
       theme: {
         default: "dracula",
       },
-      lineNumbers: true,
-      copyCode: true,
       langs: [
         "js",
         "jsx",
@@ -117,7 +115,7 @@ export default defineNuxtConfig({
   },
 
   image: {
-    format: ["webp"],
+    format: ["webp", "jpg", "png"],
   },
 
   prisma: {

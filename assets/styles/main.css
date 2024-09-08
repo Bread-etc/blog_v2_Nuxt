@@ -33,7 +33,8 @@ body {
   }
 
   .prose code {
-    @apply text-codeEm mx-0.5 p-0.5;
+    @apply mx-0.5 p-0.5;
+    color: #7e45cd;
   }
 
   /* 允许代码块选择 */

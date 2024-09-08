@@ -10,7 +10,7 @@
           enterClass: 'animate-fadeinright',
           leaveClass: 'animate-fadeoutright',
         }"
-        style="transition: all ease-in-out 0.5s !important;"
+        style="transition: all ease-in-out 0.5s !important"
         @click="navigateToArticle(item)"
       >
         <template #title>
@@ -59,10 +59,6 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  layout: "default",
-});
-
 import { onMounted, ref } from "vue";
 import type { Article, ArticleListParams, Meta } from "model/BlogInfo";
 import { set } from "@vueuse/core";

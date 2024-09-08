@@ -1,5 +1,5 @@
 {
-  "name": "Nuxt3 Blog V1",
+  "name": "Nuxt3 Blog",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -22,6 +22,7 @@
     "@pinia/nuxt": "^0.5.3",
     "@primevue/themes": "^4.0.4",
     "@prisma/nuxt": "^0.0.35",
+    "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
     "@types/pg": "^8.11.6",
     "formidable": "^3.5.1",
     "jsencrypt": "^3.3.2",
@@ -43,6 +44,7 @@
     "@vueuse/nuxt": "^10.11.1",
     "nuxt-lodash": "^2.5.3",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.5"
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "prisma": "5.18.0"
   }
 }

@@ -6,7 +6,7 @@
           <article class="flex flex-1 justify-center">
             <ContentRenderer
               :value="doc"
-              class="prose prose-green flex flex-col dark:prose-yellow dark:prose-invert"
+              class="prose prose-green dark:prose-yellow dark:prose-invert flex flex-col"
             />
           </article>
           <div class="sticky top-20 ml-2 self-start overflow-hidden">
@@ -57,6 +57,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  layout: "content",
+});
 import type { ParsedContent } from "@nuxt/content";
 import type { TreeNode } from "primevue/treenode";
 

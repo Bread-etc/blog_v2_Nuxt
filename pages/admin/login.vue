@@ -49,9 +49,6 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  layout: "default",
-});
 import { ref } from "vue";
 import type { LoginParams, LoginResultModel } from "model/Login";
 
