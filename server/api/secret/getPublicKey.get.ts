@@ -5,10 +5,10 @@ import {
 } from "~/server/utils/responseWrapper";
 
 // 生成 RSA 密钥对
-const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
   modulusLength: 2048,
   publicKeyEncoding: {
-    type: "spki",
+    type: "pkcs1",
     format: "pem",
   },
   privateKeyEncoding: {

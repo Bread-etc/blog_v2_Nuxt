@@ -57,7 +57,6 @@ const password = ref<string>("");
 // 实例化 store
 const userStore = useUserStore();
 const { encryptContent } = useEncrypt();
-// 吐司组件
 const toastService = useToast();
 
 const handleLogin = async () => {
@@ -68,6 +67,7 @@ const handleLogin = async () => {
   );
   // 调用store实例中登录接口,获取token
   const userInfo: LoginResultModel = await userStore.login(params);
+
   if (userInfo) {
     toastService.add({
       severity: "success",

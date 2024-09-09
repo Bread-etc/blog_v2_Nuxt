@@ -25,30 +25,26 @@ export default defineNuxtConfig({
   site: seoConfig(),
   devServer: { port: 3030 },
   devtools: { enabled: false },
-  build: {
-    /* 编译加入jsencrypt */
-    transpile: ["jsencrypt"],
-  },
+
   robots: {
     disallow: ["/secret", "/admin"],
   },
 
-    modules: [
-    '@nuxtjs/tailwindcss',
-    '@primevue/nuxt-module',
-    '@vueuse/nuxt',
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-lodash',
-    '@prisma/nuxt',
-    '@nuxt/content',
-    '@nuxt/image',
-    '@nuxtjs/seo',
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@primevue/nuxt-module",
+    "@vueuse/nuxt",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+    "nuxt-lodash",
+    "@prisma/nuxt",
+    "@nuxt/content",
+    "@nuxtjs/seo",
   ],
 
   tailwindcss: {
     viewer: false,
-    configPath: './tailwind.config.ts',
+    configPath: "./tailwind.config.ts",
   },
 
   primevue: {

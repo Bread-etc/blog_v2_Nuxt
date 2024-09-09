@@ -1,7 +1,7 @@
 /**
- * 使用 Jsencrypt 实现 RSA 加密
+ * 使用 node-forge 实现 RSA 加密
  */
-import JSEncrypt from "jsencrypt";
+import forge, { md } from "node-forge";
 
 // 调用API获取公钥
 async function fetchPublicKey(): Promise<string> {
@@ -18,17 +18,23 @@ async function fetchPublicKey(): Promise<string> {
 
 async function encryptContent(username: string, password: string) {
   // 获取公钥
-  let publicKey = await fetchPublicKey();
+  let publicKeyPem = await fetchPublicKey();
 
-  // 加密器
-  const encryptor = new JSEncrypt();
-  encryptor.setPublicKey(publicKey);
-  const encryptedUsername = encryptor.encrypt(username);
-  const encryptedPassword = encryptor.encrypt(password);
+  // 解析公钥
+  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
 
-  if (!encryptedUsername || !encryptedPassword) {
-    throw new Error("Failed to encrypt content");
-  }
+  // 加密内容
+  const encryptedUsername = forge.util.encode64(
+    publicKey.encrypt(username, "RSA-OAEP", {
+      md: forge.md.sha256.create(),
+    }),
+  );
+
+  const encryptedPassword = forge.util.encode64(
+    publicKey.encrypt(password, "RSA-OAEP", {
+      md: forge.md.sha256.create(),
+    }),
+  );
 
   return { username: encryptedUsername, password: encryptedPassword };
 }
