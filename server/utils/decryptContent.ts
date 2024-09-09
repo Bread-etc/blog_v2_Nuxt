@@ -7,13 +7,13 @@
 import crypto from "crypto";
 
 export function decryptContent(content: string, privateKey: string) {
-    const buffer = Buffer.from(content, 'base64');
-    const decrypted = crypto.privateDecrypt(
-        {
-            key: privateKey,
-            padding: crypto.constants.RSA_PKCS1_PADDING,
-        },
-        buffer
-    );
-    return decrypted.toString("utf8");
+  const buffer = Buffer.from(content, "base64");
+  const decrypted = crypto.privateDecrypt(
+    {
+      key: privateKey,
+      padding: crypto.constants.RSA_PKCS1_PADDING,
+    },
+    buffer,
+  );
+  return decrypted.toString("utf8");
 }

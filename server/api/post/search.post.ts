@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
   // 获取查询参数
@@ -36,9 +34,9 @@ export default defineEventHandler(async (event) => {
     if (posts.length === 0) return useErrorWrapper("Post not found", 404);
 
     // 处理每个文章的分类信息
-    const processedPosts = posts.map((post) => ({
+    const processedPosts = posts.map((post: any) => ({
       ...post,
-      categories: post.PostCategory.map((pc) => pc.category),
+      categories: post.PostCategory.map((pc: any) => pc.category),
     }));
 
     return useResponseWrapper(processedPosts);

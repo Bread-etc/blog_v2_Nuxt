@@ -1,9 +1,7 @@
 import path from "path";
 import fs from "fs";
-import { PrismaClient } from "@prisma/client";
 import formidable from "formidable";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
   // 从请求头中获取 Authorization

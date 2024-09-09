@@ -1,7 +1,5 @@
 import fs from "fs";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
   // 从请求头中获取 Authorization
@@ -26,7 +24,7 @@ export default defineEventHandler(async (event) => {
       }
 
       // 删除文件系统中的对应文件
-      post.postFiles.forEach((file) => {
+      post.postFiles.forEach((file: any) => {
         try {
           fs.unlinkSync(file.fileAddress);
         } catch (error) {

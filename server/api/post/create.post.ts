@@ -1,9 +1,7 @@
 import path from "path";
 import fs from "fs";
-import { PrismaClient } from "@prisma/client";
 import formidable from "formidable";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
   // 从请求头中获取 Authorization
@@ -54,7 +52,7 @@ export default defineEventHandler(async (event) => {
     const filePath = file.filepath;
 
     // 开启事务时, 确保操作的一致性
-    await prisma.$transaction(async (prisma) => {
+    await prisma.$transaction(async (prisma: any) => {
       // 创建新文章记录
       const post = await prisma.post.create({
         data: {

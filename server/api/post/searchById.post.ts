@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
   // 获取查询id
@@ -26,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
     const processedPost = {
       ...post,
-      categories: post.PostCategory.map((pc) => pc.category),
+      categories: post.PostCategory.map((pc: any) => pc.category),
     };
 
     return useResponseWrapper(processedPost);

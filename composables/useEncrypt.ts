@@ -26,7 +26,6 @@ async function encryptContent(username: string, password: string) {
   const encryptedUsername = encryptor.encrypt(username);
   const encryptedPassword = encryptor.encrypt(password);
 
-
   if (!encryptedUsername || !encryptedPassword) {
     throw new Error("Failed to encrypt content");
   }

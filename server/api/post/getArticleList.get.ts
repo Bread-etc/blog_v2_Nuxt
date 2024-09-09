@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "~/lib/prisma";
 
 // 有分页的博客文章接口获取
 export default defineEventHandler(async (event) => {
@@ -33,9 +31,9 @@ export default defineEventHandler(async (event) => {
     });
 
     // 处理文章中的分类信息
-    const processedArticles = articles.map((article) => ({
+    const processedArticles = articles.map((article: any) => ({
       ...article,
-      categories: article.PostCategory.map((pc) => pc.category), // 提取分类信息
+      categories: article.PostCategory.map((pc: any) => pc.category), // 提取分类信息
     }));
 
     // 获取文章总数
