@@ -33,11 +33,9 @@ body {
 
   /* 自定义选中文本的样式 */
   ::selection {
-    @apply bg-none underline underline-offset-2;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #7e45cd;
-    color: inherit;
+    @apply bg-[#7e45cd] text-white;
   }
+
 }
 
 :root {

@@ -43,7 +43,6 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@primevue/nuxt-module",
     "@vueuse/nuxt",
-    '@nuxt/content',
   ],
 
   lodash: {
@@ -73,34 +72,5 @@ export default defineNuxtConfig({
 
   vueuse: {
     ssrHandlers: true,
-  },
-
-  content: {
-    watch: false,
-    markdown: {
-      mdc: false,
-      toc: { depth: 3, searchDepth: 3 },
-    },
-    highlight: {
-      theme: {
-        default: "dracula-soft",
-      },
-      langs: [
-        "js",
-        "jsx",
-        "json",
-        "ts",
-        "tsx",
-        "vue",
-        "css",
-        "html",
-        "bash",
-        "md",
-        "c++",
-        "go",
-        "sql",
-        "java",
-      ],
-    },
   },
 });

@@ -11,6 +11,7 @@ enum Api {
   deleteArticle = "/post/delete",
   createArticle = "/post/create",
   updateArticle = "/post/edit",
+  getFile = "/post/getFile",
 }
 
 // 获取文章列表
@@ -48,3 +49,9 @@ export async function updateArticle(params: FormData) {
   const token = userStore.getToken;
   return useHttp.post<string>(Api.updateArticle, params, token);
 }
+
+// 获取指定文章文件
+export async function getFile(params: { filename: string }) {
+  return useHttp.post<string>(Api.getFile, params);
+}
+
