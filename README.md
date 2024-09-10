@@ -1,28 +1,75 @@
-## 利用Nuxt重构博客前后端项目[hastur23.top]
+# Nuxt 3 Minimal Starter
 
-- 添加 PrimeVue 和 tailwindcss
-- 添加字体 ~~LXGW WenKai webfont~~,Pingfang SC
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-### update
+## Setup
 
-- 添加`vueuse`
-- 添加深色浅色模式切换
-- 分离`tailwindcss.config.ts`配置文件
-- 利用`$fetch`封装拦截器interceptor
-- 添加`nuxt-lodash`
-- 引入`utteranc`评论功能
-- 添加`styleLint`配置
-- 添加`error.vue`错误页
-- 添加`markdown`解析器`@nuxt/content`
-- 使用`layout`布局
+Make sure to install the dependencies:
 
-## backend design
+```bash
+# npm
+npm install
 
-- 采用原生`nitro` + `prisma`
-- 采用~~`MySQL`~~,`postgresql`
-- 添加`jsonwebtoken`鉴权
-- 完成`category`增删改查接口
-- 完成`post`增删改查接口
+# pnpm
+pnpm install
 
-## Optimization objective
-- 移动端/大小屏/竖屏适配
+# yarn
+yarn install
+
+# bun
+bun install
+```
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

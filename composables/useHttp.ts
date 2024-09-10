@@ -17,7 +17,7 @@ export interface ResOptions<T> {
 
 // 处理错误
 function handelError<T>(
-  response: FetchResponse<ResOptions<T>> & FetchResponse<ResponseType>,
+  response: FetchResponse<ResOptions<T>> & FetchResponse<ResponseType>
 ) {
   const err = (text: string) => {
     console.error(`Error 😢, ${response?._data?.message ?? text}`);

@@ -1,12 +1,11 @@
 import { useApi } from "~/composables/index";
-import type { LoginParams, LoginResultModel } from "model/Login";
+import type { LoginParams, LoginResultModel } from "~/api/model/Login";
 import { computed, ref } from "vue";
+import { defineStore } from "pinia";
 
 function storeSetup() {
   // 用户信息
   const userInfo = ref<LoginResultModel>();
-  // 获取用户信息方法
-  const getUserInfo = computed(() => userInfo.value);
   // 是否登录
   const isLogin = computed(() => !!userInfo.value?.token);
   // 获取令牌token
@@ -41,7 +40,6 @@ function storeSetup() {
     userInfo,
     login,
     logout,
-    getUserInfo,
     getToken,
     isLogin,
     clearUserInfo,
@@ -49,6 +47,4 @@ function storeSetup() {
   };
 }
 
-export const useUserStore = defineStore("userStore", storeSetup, {
-  persist: true,
-});
+export const useUserStore = defineStore("userStore", storeSetup);

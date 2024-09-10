@@ -85,7 +85,7 @@ const routes = ref<any[]>([
 ]);
 
 /* 深色模式切换 */
-const { system: themeSystem, store: themeStore } = useColorMode();
+const { system: _themeSystem, store: themeStore } = useColorMode();
 const toggleColorMode = () => {
   themeStore.value = themeStore.value === "dark" ? "light" : "dark";
 };

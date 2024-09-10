@@ -14,7 +14,7 @@ export function decryptContent(content: string, privateKey: string) {
       padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
       oaepHash: "sha256",
     },
-    buffer,
+    buffer
   );
   return decrypted.toString("utf8");
 }

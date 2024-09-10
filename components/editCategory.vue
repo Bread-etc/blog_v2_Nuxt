@@ -91,7 +91,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Category, CategoryWithoutId } from "model/Category";
+import type { Category, CategoryWithoutId } from "~/api/model/Category";
 import type { MultiSelectChangeEvent } from "primevue/multiselect";
 
 /* 弹窗控制 */

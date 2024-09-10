@@ -2,7 +2,7 @@
  * 标签/分类crud接口
  */
 import { useHttp } from "~/composables/useHttp";
-import type { Category, CategoryWithoutId } from "model/Category";
+import type { Category, CategoryWithoutId } from "~/api/model/Category";
 
 enum Api {
   getList = "/category/getList",

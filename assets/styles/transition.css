@@ -28,7 +28,6 @@
   position: absolute;
 }
 
-
 /* 布局切换动画 */
 .layout-enter-active,
 .layout-leave-active {
@@ -41,5 +40,3 @@
   opacity: 0;
   transform: translateX(-20px);
 }
-
-

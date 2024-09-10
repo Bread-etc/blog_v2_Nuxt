@@ -3,12 +3,11 @@
  */
 
 import { useHttp } from "~/composables/useHttp";
-import type { LoginParams, LoginResultModel } from "model/Login";
+import type { LoginParams, LoginResultModel } from "~/api/model/Login";
 
 enum Api {
   login = "/auth/login",
   logout = "/auth/logout",
-  getUserInfo = "/auth/getUserInfo",
 }
 
 // 登录
@@ -19,9 +18,4 @@ export async function login(params: LoginParams) {
 // 登出
 export async function logout() {
   return useHttp.post<string>(Api.logout);
-}
-
-// 获取用户信息
-export async function getUserInfo() {
-  return useHttp.get(Api.getUserInfo);
 }

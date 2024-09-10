@@ -1,4 +1,7 @@
-import prisma from "~/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+import { verifyToken } from "~/server/utils/verifyToken";
+
+const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   try {

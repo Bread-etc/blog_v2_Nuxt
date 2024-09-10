@@ -1,46 +1,55 @@
 import Aura from "@primevue/themes/aura";
-import { fileURLToPath } from "url";
-import {
-  appConfig,
-  createNitroConifg,
-  createRuntimeConfig,
-  seoConfig,
-  createViteConfig,
-} from "./config";
-import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
+  compatibilityDate: "2024-04-03",
+  devtools: { enabled: false },
+
   typescript: {
     shim: false,
     strict: true,
   },
-  alias: {
-    model: fileURLToPath(new URL("./api/model", import.meta.url)),
+  app: {
+    keepalive: true,
+    head: {
+      charset: "utf-8",
+      titleTemplate: "Bread_etc 's blog" || "%s",
+      meta: [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    },
+    pageTransition: { name: "page", mode: "out-in" },
+    layoutTransition: { name: "layout", mode: "out-in" },
   },
-  css: ["assets/styles/main.css"],
-  app: appConfig(),
-  runtimeConfig: createRuntimeConfig(),
-  nitro: createNitroConifg(),
-  vite: createViteConfig(),
-  site: seoConfig(),
-  devServer: { port: 3030 },
-  devtools: { enabled: false },
+  css: ["assets/styles/main.css", "assets/styles/transition.css"],
 
-  robots: {
-    disallow: ["/secret", "/admin"],
+  runtimeConfig: {
+    databaseUrl: process.env.DATABASE_URL,
+    jwtSecret: process.env.JWT_SECRET,
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API,
+    },
+  },
+
+  nitro: {
+    compressPublicAssets: {
+      gzip: true
+    }
   },
 
   modules: [
+    "nuxt-lodash",
+    "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
     "@primevue/nuxt-module",
     "@vueuse/nuxt",
-    "@pinia/nuxt",
-    "@pinia-plugin-persistedstate/nuxt",
-    "nuxt-lodash",
-    "@prisma/nuxt",
-    "@nuxt/content",
-    "@nuxtjs/seo",
+    '@nuxt/content',
   ],
+
+  lodash: {
+    prefix: "use",
+    prefixSkip: ["string"],
+  },
 
   tailwindcss: {
     viewer: false,
@@ -55,7 +64,7 @@ export default defineNuxtConfig({
         preset: Aura,
         options: {
           preset: "Prime",
-          darkModeSelector: "system",
+          darkModeSelectors: "system",
           cssLayer: false,
         },
       },
@@ -64,11 +73,6 @@ export default defineNuxtConfig({
 
   vueuse: {
     ssrHandlers: true,
-  },
-
-  lodash: {
-    prefix: "use",
-    prefixSkip: ["string"],
   },
 
   content: {
@@ -99,14 +103,4 @@ export default defineNuxtConfig({
       ],
     },
   },
-
-  image: {
-    format: ["webp", "jpg", "png"],
-  },
-
-  prisma: {
-    installStudio: false,
-  },
-
-  compatibilityDate: "2024-08-09",
 });

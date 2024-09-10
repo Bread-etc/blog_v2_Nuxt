@@ -60,7 +60,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import type { Article, ArticleListParams, Meta } from "model/BlogInfo";
+import type { Article, ArticleListParams, Meta } from "~/api/model/BlogInfo";
 import { set } from "@vueuse/core";
 
 const toastService = useToast();

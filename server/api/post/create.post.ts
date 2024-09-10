@@ -1,7 +1,9 @@
 import path from "path";
 import fs from "fs";
 import formidable from "formidable";
-import prisma from "~/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   // 从请求头中获取 Authorization
@@ -11,7 +13,7 @@ export default defineEventHandler(async (event) => {
   }
   const token = authHeader.split(" ")[1];
   verifyToken(token);
-  
+
   // 上传路径
   const uploadDir = path.join(process.cwd(), "content");
   // 如果文件夹不存在, 则创建文件夹
@@ -89,7 +91,7 @@ export default defineEventHandler(async (event) => {
       error,
       500,
       false,
-      "File upload or datebase insertion failed",
+      "File upload or datebase insertion failed"
     );
   }
 });

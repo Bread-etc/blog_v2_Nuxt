@@ -2,7 +2,7 @@
  * 博客首页主要内容接口
  */
 import { useHttp } from "~/composables/useHttp";
-import type { ArticleList, ArticleListParams } from "model/BlogInfo";
+import type { ArticleList, ArticleListParams } from "~/api/model/BlogInfo";
 
 enum Api {
   getList = "/post/getArticleList",

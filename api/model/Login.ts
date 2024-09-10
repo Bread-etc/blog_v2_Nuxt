@@ -12,8 +12,6 @@ export interface LoginResultModel {
   id: number;
   // 用户名
   userName: string;
-  // 密码
-  // password: string;
   // 角色
   role: string;
   // 昵称

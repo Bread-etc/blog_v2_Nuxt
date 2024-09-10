@@ -1,9 +1,12 @@
 import { privateKey } from "../secret/getPublicKey.get";
 import { decryptContent } from "../../utils/decryptContent";
 import jwt from "jsonwebtoken";
-import prisma from "~/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+const prisma = new PrismaClient();
+
+const JWT_SECRET = useRuntimeConfig().jwtSecret;
+
 
 export default defineEventHandler(async (event) => {
   try {
@@ -38,7 +41,7 @@ export default defineEventHandler(async (event) => {
       JWT_SECRET,
       {
         expiresIn: "1h",
-      },
+      }
     );
 
     // 返回不含密码,包含token的用户信息

@@ -6,7 +6,7 @@ export function useResponseWrapper(
   data: any,
   code: number = 200,
   success: boolean = true,
-  message: string = "success",
+  message: string = "success"
 ) {
   return {
     code,
@@ -20,7 +20,7 @@ export function useErrorWrapper(
   error: any,
   code: number = -1,
   success: boolean = false,
-  message: string = error,
+  message: string = error
 ) {
   return {
     code,

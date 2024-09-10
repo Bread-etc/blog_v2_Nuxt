@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import type { LoginParams, LoginResultModel } from "model/Login";
+import type { LoginParams, LoginResultModel } from "~/api/model/Login";
 
 const username = ref<string>("");
 const password = ref<string>("");

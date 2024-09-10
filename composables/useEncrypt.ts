@@ -27,13 +27,13 @@ async function encryptContent(username: string, password: string) {
   const encryptedUsername = forge.util.encode64(
     publicKey.encrypt(username, "RSA-OAEP", {
       md: forge.md.sha256.create(),
-    }),
+    })
   );
 
   const encryptedPassword = forge.util.encode64(
     publicKey.encrypt(password, "RSA-OAEP", {
       md: forge.md.sha256.create(),
-    }),
+    })
   );
 
   return { username: encryptedUsername, password: encryptedPassword };

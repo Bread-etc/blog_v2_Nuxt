@@ -1,11 +1,8 @@
 /** @type {import('tailwincss').Config} */
-
 module.exports = {
   darkMode: "class",
   content: ["./pages/**/*.{vue,ts}", "./components/**.{vue,ts}"],
-  plugins: [
-    require('@tailwindcss/typography')
-  ],
+  plugins: [require("@tailwindcss/typography")],
   theme: {
     extend: {
       colors: {

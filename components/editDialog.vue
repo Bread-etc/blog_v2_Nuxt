@@ -77,8 +77,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Category } from "model/Category";
-import type { Article } from "model/BlogInfo";
+import type { Category } from "~/api/model/Category";
+import type { Article } from "~/api/model/BlogInfo";
 import { get, set } from "@vueuse/core";
 
 /* 弹窗控制 */

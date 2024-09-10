@@ -1,4 +1,6 @@
-import prisma from "~/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 // 有分页的博客文章接口获取
 export default defineEventHandler(async (event) => {

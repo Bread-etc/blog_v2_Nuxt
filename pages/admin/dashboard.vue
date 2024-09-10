@@ -124,7 +124,7 @@ useHead({
   title: `Dashboard`,
 });
 import { ref, onMounted } from "vue";
-import type { Article, articleShow } from "model/BlogInfo";
+import type { Article, articleShow } from "~/api/model/BlogInfo";
 import { set } from "@vueuse/core";
 
 const confirm = useConfirm();

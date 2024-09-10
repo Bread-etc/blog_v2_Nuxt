@@ -32,25 +32,6 @@
         </p>
       </Fieldset>
       <h2 class="py-2 text-lg font-bold">HeatMap🎯</h2>
-      <!-- <Fieldset
-        id="fieldset"
-        class="bg-LightContent dark:bg-DarkContent dark:text-white"
-        :toggleable="true"
-      >
-        <template #legend> Link📌 </template>
-        <p class="m-0 flex flex-col">
-          <NuxtLink
-            v-for="link in friendLinkList"
-            class="email inline-block px-1 text-sm font-bold text-blue-500"
-            alt="friendLink"
-            :to="link.value"
-            no-rel
-            target="_blank"
-          >
-            {{ link.name }}
-          </NuxtLink>
-        </p>
-      </Fieldset> -->
       <img
         style="scale: 0.8; transform-origin: top left"
         src="http://ghchart.rshah.org/Bread-etc"
@@ -61,10 +42,6 @@
 </template>
 
 <script lang="ts" setup>
-const friendLinkList: { id: number; value: string; name: string }[] = [
-  { id: 1, value: "http://hastur23.top", name: "hastur23.top" },
-];
-
 // 跳转后台登录界面
 const routeToLogin = () => {
   navigateTo("/admin/login");
