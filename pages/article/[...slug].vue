@@ -4,7 +4,10 @@
       <main>
         <div v-if="doc" class="flex">
           <article class="flex flex-1 justify-center">
-            <div v-html="doc" class="prose dark:prose-invert flex flex-col"></div>
+            <div
+              v-html="doc"
+              class="prose flex flex-col dark:prose-invert"
+            ></div>
           </article>
           <div class="sticky top-20 ml-2 self-start overflow-hidden">
             <h2
@@ -13,7 +16,7 @@
             >
               目录🗿
             </h2>
-            <!-- <Tree
+            <Tree
               v-if="treeNodes?.length"
               :value="treeNodes"
               scrollHeight="calc(50vh + 1rem)"
@@ -24,8 +27,9 @@
                 min-height: calc(50vh + 2rem + 2px);
                 transform-origin: top left;
               "
-            /> -->
+            />
             <div
+              v-else
               class="flex scale-[0.8] flex-col items-center justify-center rounded border border-gray-500 dark:border-white dark:text-white"
               style="
                 min-height: calc(50vh + 2rem + 2px);
@@ -34,15 +38,18 @@
             >
               <p>暂无目录📍</p>
             </div>
-            <!-- <div
+            <div
               class="scale-[0.8] text-center text-sm dark:text-white"
               style="transform-origin: top left"
             >
               <p>发布时间: {{ articleInfo.createdTime }}</p>
               <Divider class="h-[1px] bg-black" />
               <p>更新时间: {{ articleInfo.updatedTime }}</p>
-            </div> -->
+            </div>
           </div>
+        </div>
+        <div v-else>
+          <p>Loading</p>
         </div>
       </main>
     </div>
@@ -53,17 +60,13 @@
 definePageMeta({
   layout: "content",
 });
-import { marked } from 'marked'
-import hljs from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css"; 
+import "highlight.js/styles/atom-one-dark-reasonable.css";
 import type { TreeNode } from "primevue/treenode";
 
 const route = useRoute();
 const { blogInfo } = useApi();
 const toastService = useToast();
 const articleInfo = ref();
-const doc = ref('');
-const toc = ref([]);
 
 // 获取文件名
 const getFileName = async () => {
@@ -80,8 +83,8 @@ const getFileName = async () => {
 
 const fileName = await getFileName();
 
-// 获取md文档内容
-const getFileContent = async () => {
+// 获取md文档内容和toc
+const getFileContentAndToc = async () => {
   const params = { filename: fileName };
   const res = (await blogInfo.getFile(params)).data;
   if (!res) {
@@ -91,88 +94,85 @@ const getFileContent = async () => {
       detail: "File not found",
       life: 1500,
     });
-    return "";
+    return { content: "", toc: [{ label: "Node", index: 1, id: "" }] };
   } else {
-    doc.value = res;
-    return res;
+    return { content: res.content, toc: res.toc };
   }
 };
 
-// 获取toc
-const getContentToc = async () => {
+const { content: doc, toc: toc } = await getFileContentAndToc();
 
+// 构建树形图
+const structureTreeNode = async () => {
+  let treeNode: TreeNode[] = [];
+
+  if (toc) {
+    let newToc = useCloneDeep(toc);
+    newToc.shift();
+
+    // 已经分好的分组
+    let groupToc: any[] = [];
+    let currentGroup: { label: string; index: number; id: string }[] = [];
+    newToc.forEach((item) => {
+      if (item.index === 2) {
+        if (currentGroup.length > 0) {
+          groupToc.push(currentGroup);
+          currentGroup = [item];
+        } else {
+          currentGroup = [item];
+        }
+      } else {
+        currentGroup.push(item);
+      }
+    });
+
+    let i = 0;
+    groupToc.forEach((group) => {
+      // 第一层
+      let firstNode: TreeNode = {
+        id: group[0].id,
+        key: String(i),
+        label: group[0].label,
+        children: [],
+      };
+      treeNode.push(firstNode);
+
+      for (let j = 1; j < group.length; j++) {
+        let childNode: TreeNode = {
+          id: group[j].id,
+          key: String(i) + "-" + String(j),
+          label: group[j].label,
+          type: "url",
+        };
+        treeNode[i].children!.push(childNode);
+      }
+      i++;
+    });
+  } else {
+    treeNode = [];
+  }
+
+  return treeNode;
 };
 
-// const treeNodes = ref<TreeNode[]>();
+const treeNodes = await structureTreeNode();
 
-// // 构建树形图
-// const structureTreeNode = (doc: ParsedContent) => {
-//   let treeNode: TreeNode[] = [];
-//   if (doc.body?.toc) {
-//     // 第一层嵌入
-//     let i = 0;
-//     doc.body.toc.links.forEach((item) => {
-//       let node = {
-//         id: item.id,
-//         key: String(i),
-//         label: item.text,
-//         children: [],
-//       };
-//       i++;
-//       treeNode.push(node);
-//     });
+// 选择node节点并导航到指定节点
+const onNodeSelect = (node: TreeNode) => {
+  // 锚点为 node.id
+  const anchorElement = document.getElementById(node.id);
 
-//     // 第二层嵌入
-//     for (let j = 0; j < treeNode.length; j++) {
-//       if (doc.body.toc.links[j].children) {
-//         let k = 0;
-//         doc.body.toc.links[j].children?.forEach((item) => {
-//           let node: TreeNode = {
-//             id: item.id,
-//             key: String(j) + "-" + String(k),
-//             label: item.text,
-//             type: "url",
-//           };
-//           k++;
-//           treeNode[j].children!.push(node);
-//         });
-//       }
-//     }
-//   }
-//   return treeNode;
-// };
-
-// // 当doc存在时，生成并赋值treeNodes
-// if (doc.value) {
-//   treeNodes.value = structureTreeNode(doc.value);
-// }
-
-// // 选择node节点并导航到指定节点
-// const onNodeSelect = (node: TreeNode) => {
-//   // 锚点为 node.id
-//   const anchorElement = document.getElementById(node.id);
-
-//   if (anchorElement) {
-//     anchorElement.scrollIntoView({ behavior: "smooth" });
-//   } else {
-//     toastService.add({
-//       severity: "error",
-//       summary: "Error",
-//       detail: "Node not found",
-//       life: 1500,
-//     });
-//   }
-// };
-
-onMounted(async () => {
-  getFileContent();
-  // treeNodes.value = structureTreeNode(doc.value);
-
-  // const nofollowLinks = document.querySelectorAll('a[rel="nofollow"]');
-  // nofollowLinks.forEach((link) => {
-  //   link.setAttribute("target", "_blank");
-  // });
-});
+  if (anchorElement) {
+    anchorElement.scrollIntoView({ behavior: "smooth" });
+  } else {
+    toastService.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Node not found",
+      life: 1500,
+    });
+  }
+};
 </script>
 
 <style scoped>
@@ -202,8 +202,10 @@ onMounted(async () => {
 
 :deep(.p-tree-node-children) {
   .p-tree-node > .p-tree-node-content > button {
-    opacity: 0; /* 隐藏按钮但保持其功能 */
-    pointer-events: none; /* 禁用按钮的点击事件 */
+    opacity: 0;
+    /* 隐藏按钮但保持其功能 */
+    pointer-events: none;
+    /* 禁用按钮的点击事件 */
     width: 0px;
   }
 

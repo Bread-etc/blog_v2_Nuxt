@@ -52,6 +52,6 @@ export async function updateArticle(params: FormData) {
 
 // 获取指定文章文件
 export async function getFile(params: { filename: string }) {
-  return useHttp.post<string>(Api.getFile, params);
+  return useHttp.post<{ content: string; toc: { label: string; index: number, id: string }[] }>(Api.getFile, params);
 }
 
