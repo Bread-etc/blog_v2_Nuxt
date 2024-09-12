@@ -3,18 +3,21 @@ import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: false },
-
+  
   typescript: {
     shim: false,
     strict: true,
   },
   app: {
-    keepalive: true,
     head: {
       charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      htmlAttrs: { lang: "zh-CN" },
       titleTemplate: "Bread_etc 's blog" || "%s",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "description", content: "Bread-etc's Blog" },
+        { name: "keywords", content: "前端, 博客, blog" },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
@@ -33,8 +36,15 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: {
-      gzip: true
-    }
+      gzip: true,
+      brotli: true,
+    },
+  },
+
+  vite: {
+    esbuild: {
+      drop: ["console", "debugger"],
+    },
   },
 
   modules: [

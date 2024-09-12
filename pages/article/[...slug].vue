@@ -2,46 +2,37 @@
   <div class="flex rounded-xl bg-transparent pt-4">
     <div class="flex h-[92vh] flex-1 flex-col overflow-auto">
       <main>
-        <div v-if="doc" class="flex">
-          <article class="flex flex-1 justify-center">
-            <div
-              v-html="doc"
-              class="prose flex flex-col dark:prose-invert"
-            ></div>
+        <div v-if="doc" class="flex w-full">
+          <article class="flex">
+            <div v-html="doc" class="prose dark:prose-invert"></div>
           </article>
-          <div class="sticky top-20 ml-2 self-start overflow-hidden">
-            <h2
-              class="mb-2 text-sm font-bold dark:text-white"
-              style="transform-origin: top left"
-            >
-              目录🗿
-            </h2>
+          <div class="sticky top-20 ml-2 flex-1 self-start overflow-hidden">
+            <h2 class="mb-2 text-sm font-bold dark:text-white">目录🗿</h2>
             <Tree
               v-if="treeNodes?.length"
               :value="treeNodes"
               scrollHeight="calc(50vh + 1rem)"
               selectionMode="single"
               @nodeSelect="onNodeSelect"
-              class="scale-[0.8] rounded border border-gray-500 dark:border-white"
-              style="
-                min-height: calc(50vh + 2rem + 2px);
-                transform-origin: top left;
-              "
+              class="rounded border border-gray-500 text-sm dark:border-white"
+              style="min-height: calc(50vh + 2rem + 2px)"
+              :pt="{
+                nodeToggleButton: {
+                  class: ['scale-75', 'text-gray-500'],
+                },
+                nodeLabel: {
+                  class: ['text-xs', 'cursor-pointer', 'text-gray-500'],
+                },
+              }"
             />
             <div
               v-else
-              class="flex scale-[0.8] flex-col items-center justify-center rounded border border-gray-500 dark:border-white dark:text-white"
-              style="
-                min-height: calc(50vh + 2rem + 2px);
-                transform-origin: top left;
-              "
+              class="flex flex-col items-center justify-center rounded border border-gray-500 dark:border-white dark:text-white"
+              style="min-height: calc(50vh + 2rem + 2px)"
             >
               <p>暂无目录📍</p>
             </div>
-            <div
-              class="scale-[0.8] text-center text-sm dark:text-white"
-              style="transform-origin: top left"
-            >
+            <div class="scale-75 text-center text-sm dark:text-white">
               <p>发布时间: {{ articleInfo.createdTime }}</p>
               <Divider class="h-[1px] bg-black" />
               <p>更新时间: {{ articleInfo.updatedTime }}</p>
@@ -61,6 +52,7 @@ definePageMeta({
   layout: "content",
 });
 import "highlight.js/styles/atom-one-dark-reasonable.css";
+import { options } from "marked";
 import type { TreeNode } from "primevue/treenode";
 
 const route = useRoute();
@@ -184,20 +176,8 @@ const onNodeSelect = (node: TreeNode) => {
   }
 }
 
-:deep(img) {
-  /* @apply w-full; */
-}
-
 :deep(.p-tree) {
   @apply bg-transparent p-0 text-sm duration-300;
-}
-
-:deep(.p-tree-node-label) {
-  @apply cursor-pointer text-gray-500;
-}
-
-:deep(.p-tree-node-toggle-button) {
-  @apply scale-75 text-gray-500;
 }
 
 :deep(.p-tree-node-children) {

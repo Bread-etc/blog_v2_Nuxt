@@ -51,5 +51,3 @@ const open = () => {
 // 暴露给父组件
 defineExpose({ open });
 </script>
-
-<style scoped></style>

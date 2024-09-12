@@ -1,13 +1,13 @@
 {
   "name": "blog_v2_Nuxt",
   "version": "1.0.0",
-  "description": "Bread_etc rebuilding SSR Blog",
+  "description": "Bread_etc SSR Blog",
   "author": "bread_etc",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "nuxt build --dotenv .env",
-    "dev": "nuxt dev --dotenv .env",
+    "build": "prisma generate && nuxt build --dotenv .env.production",
+    "dev": "nuxt dev --dotenv .env.development",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
