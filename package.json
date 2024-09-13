@@ -1,10 +1,19 @@
 {
   "name": "blog_v2_Nuxt",
-  "version": "1.0.0",
+  "type": "module",
+  "version": "1.0.1",
   "description": "Bread_etc SSR Blog",
   "author": "bread_etc",
   "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bread-etc/blog_v2_Nuxt"
+  },
+  "keywords": [
+    "personal-blog",
+    "nuxt3"
+  ],
   "scripts": {
     "build": "prisma generate && nuxt build --dotenv .env.production",
     "dev": "nuxt dev --dotenv .env.development",

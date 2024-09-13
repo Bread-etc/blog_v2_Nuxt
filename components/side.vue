@@ -1,7 +1,6 @@
 <template>
   <div
-    class="m-4 mb-0 mr-0 w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
-    style="transition: all ease-in-out 0.4s !important"
+    class="transitionForButton m-4 mb-0 mr-0 w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
   >
     <div class="flex flex-col items-center" style="height: calc(92vh - 0.5rem)">
       <div class="pt-4">
@@ -31,16 +30,12 @@
             :aria-label="route.label"
             rounded
             iconClass="text-[20px]"
-            style="
-              transition: all ease-in-out 0.4s !important;
-              border: 0;
-              --tw-ring-color: none;
-            "
+            class="transitionForButton"
             :pt="{
               root: {
                 class: [
                   'bg-LightEm',
-                  'text-white',
+                  '!text-white',
                   'hover:bg-HoverLightEm',
                   'dark:bg-DarkEm',
                   'dark:hover:bg-HoverDarkEm',
@@ -51,21 +46,17 @@
         </NuxtLink>
       </div>
       <div class="mb-4 flex w-full flex-col items-center justify-center">
-        <div class="mb-2" style="scale: 0.65">
+        <div class="mb-2 scale-[0.65]">
           <Button
             :icon="themeStore === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"
             aria-label="darkModeToggle"
             rounded
             severity="secondary"
             :class="[
+              'transitionForButton',
               'text-[20px]',
               { 'transition-all duration-500': themeStore },
             ]"
-            style="
-              transition: all ease-in-out 0.4s !important;
-              border: 0;
-              --tw-ring-color: none;
-            "
             @click="toggleColorMode"
           />
         </div>
@@ -73,7 +64,7 @@
           :href="githubUrl"
           target="_blank"
           rel="noopener noreferrer"
-          style="scale: 0.65"
+          class="scale-[0.65]"
         >
           <Button
             icon="pi pi-github"
@@ -81,7 +72,7 @@
             rounded
             severity="secondary"
             iconClass="text-[20px]"
-            style="transition: all ease-in-out 0.4s !important; border: 0px"
+            class="transitionForButton"
           />
         </a>
       </div>
@@ -109,3 +100,10 @@ const toggleColorMode = () => {
   themeStore.value = themeStore.value === "dark" ? "light" : "dark";
 };
 </script>
+
+<style scoped>
+.transitionForButton {
+  transition: all ease-in-out 0.4s !important;
+  border: 0;
+}
+</style>

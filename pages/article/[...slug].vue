@@ -3,10 +3,15 @@
     <div class="flex h-[92vh] flex-1 flex-col overflow-auto">
       <main>
         <div v-if="doc" class="flex w-full">
-          <article class="flex">
-            <div v-html="doc" class="prose dark:prose-invert"></div>
+          <article class="flex flex-1 justify-center">
+            <div
+              v-html="doc"
+              class="prose prose-green select-none dark:prose-yellow dark:prose-invert prose-h1:font-extrabold prose-a:no-underline prose-code:select-text prose-img:rounded-md"
+            ></div>
           </article>
-          <div class="sticky top-20 ml-2 flex-1 self-start overflow-hidden">
+          <div
+            class="sticky top-[4.5rem] ml-2 max-w-48 flex-1 self-start overflow-hidden"
+          >
             <h2 class="mb-2 text-sm font-bold dark:text-white">目录🗿</h2>
             <Tree
               v-if="treeNodes?.length"
@@ -32,10 +37,10 @@
             >
               <p>暂无目录📍</p>
             </div>
-            <div class="scale-75 text-center text-sm dark:text-white">
-              <p>发布时间: {{ articleInfo.createdTime }}</p>
-              <Divider class="h-[1px] bg-black" />
-              <p>更新时间: {{ articleInfo.updatedTime }}</p>
+            <div class="mt-4 text-center text-xs dark:text-white">
+              <div>发布于{{ articleInfo.createdTime }}</div>
+              <hr class="my-2 h-[2px] bg-black dark:bg-white" />
+              <div>更新于{{ articleInfo.updatedTime }}</div>
             </div>
           </div>
         </div>
@@ -52,7 +57,6 @@ definePageMeta({
   layout: "content",
 });
 import "highlight.js/styles/atom-one-dark-reasonable.css";
-import { options } from "marked";
 import type { TreeNode } from "primevue/treenode";
 
 const route = useRoute();
@@ -165,17 +169,20 @@ const onNodeSelect = (node: TreeNode) => {
     });
   }
 };
+
+// 给有img元素的a标签添加target属性
+onMounted(() => {
+  const elements = document.querySelectorAll("a");
+
+  elements.forEach((item) => {
+    if (item.querySelector("img")) {
+      item.target = "_blank";
+    }
+  });
+});
 </script>
 
 <style scoped>
-:root {
-  user-select: none;
-
-  code {
-    user-select: text;
-  }
-}
-
 :deep(.p-tree) {
   @apply bg-transparent p-0 text-sm duration-300;
 }

@@ -3,6 +3,7 @@
     v-model:visible="isShow"
     modal
     class="w-2/5 !border-none dark:bg-DarkBg dark:text-white"
+    @hide="clearUpInfo"
   >
     <template #header>
       <h1 class="text-lg font-semibold">编辑信息</h1>
@@ -135,13 +136,11 @@ const cancelEditModal = () => {
     detail: "取消编辑",
     life: 1500,
   });
-  clearUpInfo();
 };
 
 const saveEditModal = async () => {
   isShow.value = false;
   get(mode) ? await updateArticle() : await submitCreate();
-  clearUpInfo();
   emit("refresh");
 };
 
