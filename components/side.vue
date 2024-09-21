@@ -1,6 +1,7 @@
 <template>
   <div
-    class="transitionForButton m-4 mb-0 mr-0 w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
+    class="m-4 mb-0 mr-0 w-10 rounded-2xl bg-LightContent dark:bg-DarkContent"
+    style="transition: all ease-in-out 0.4s !important"
   >
     <div class="flex flex-col items-center" style="height: calc(92vh - 0.5rem)">
       <div class="pt-4">
@@ -30,7 +31,11 @@
             :aria-label="route.label"
             rounded
             iconClass="text-[20px]"
-            class="transitionForButton"
+            style="
+              transition: all ease-in-out 0.4s !important;
+              border: 0;
+              --tw-ring-color: none;
+            "
             :pt="{
               root: {
                 class: [
@@ -53,10 +58,14 @@
             rounded
             severity="secondary"
             :class="[
-              'transitionForButton',
               'text-[20px]',
               { 'transition-all duration-500': themeStore },
             ]"
+            style="
+              transition: all ease-in-out 0.4s !important;
+              border: 0;
+              --tw-ring-color: none;
+            "
             @click="toggleColorMode"
           />
         </div>
@@ -72,7 +81,7 @@
             rounded
             severity="secondary"
             iconClass="text-[20px]"
-            class="transitionForButton"
+            style="transition: all ease-in-out 0.4s !important; border: 0"
           />
         </a>
       </div>
@@ -100,10 +109,3 @@ const toggleColorMode = () => {
   themeStore.value = themeStore.value === "dark" ? "light" : "dark";
 };
 </script>
-
-<style scoped>
-.transitionForButton {
-  transition: all ease-in-out 0.4s !important;
-  border: 0;
-}
-</style>

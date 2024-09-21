@@ -101,11 +101,9 @@ const { content: doc, toc: toc } = await getFileContentAndToc();
 // 构建树形图
 const structureTreeNode = async () => {
   let treeNode: TreeNode[] = [];
-
   if (toc) {
     let newToc = useCloneDeep(toc);
     newToc.shift();
-
     // 已经分好的分组
     let groupToc: any[] = [];
     let currentGroup: { label: string; index: number; id: string }[] = [];
@@ -113,14 +111,17 @@ const structureTreeNode = async () => {
       if (item.index === 2) {
         if (currentGroup.length > 0) {
           groupToc.push(currentGroup);
-          currentGroup = [item];
-        } else {
-          currentGroup = [item];
         }
+        currentGroup = [item];
       } else {
         currentGroup.push(item);
       }
     });
+
+    // 手动将最后的 h2 及其 h3 推入 groupToc
+    if (currentGroup.length > 0) {
+      groupToc.push(currentGroup);
+    }
 
     let i = 0;
     groupToc.forEach((group) => {
@@ -147,7 +148,6 @@ const structureTreeNode = async () => {
   } else {
     treeNode = [];
   }
-
   return treeNode;
 };
 
