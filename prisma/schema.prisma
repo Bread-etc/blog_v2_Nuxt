@@ -1,75 +1,103 @@
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// 生成器
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-// 定义数据源
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+// --- 枚举定义 ---
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// 用户模型 (精简版)
 model User {
   id          Int      @id @default(autoincrement())
   userName    String   @unique @map("user_name")
   password    String
-  role        String
   nickName    String?  @map("nick_name")
   createdTime DateTime @default(now()) @map("created_time")
+  updatedTime DateTime @updatedAt @map("updated_time")
 
   posts Post[]
 
-  @@map("user")
+  @@map("users")
 }
 
+// 文章模型
 model Post {
-  id          Int      @id @default(autoincrement())
-  title       String
-  content     String? // 对应 PostgreSQL 的 TEXT 类型
-  authorId    Int      @map("author_id")
+  id               Int        @id @default(autoincrement())
+  title            String
+  slug             String     @unique // 用于生成 URL
+  markdownContent  String     @db.Text
+  htmlContent      String     @db.Text
+  excerpt          String? // 文章摘要
+  featuredImageUrl String?    @map("featured_image_url")
+  viewCount        Int        @default(0) @map("view_count")
+  status           PostStatus @default(DRAFT)
+  publishedAt      DateTime?  @map("published_at")
+
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
-  status      Boolean  @default(false) @map("status")
 
-  author       User           @relation(fields: [authorId], references: [id])
-  postFiles    PostFile[]
-  PostCategory PostCategory[]
+  // 关系
+  authorId Int  @map("author_id")
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@map("post")
+  categories PostCategory[]
+  tags       PostTag[]
+
+  @@map("posts")
 }
 
-model PostFile {
-  id          Int    @id @default(autoincrement())
-  postId      Int    @map("post_id")
-  fileName    String @map("file_name")
-  fileAddress String @map("file_address")
-
-  post Post @relation(fields: [postId], references: [id])
-
-  @@map("post_file")
-}
-
+// 分类模型
 model Category {
-  id    Int     @id @default(autoincrement())
-  name  String
-  color String?
-  icon  String?
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  slug        String  @unique
+  description String?
 
-  PostCategory PostCategory[]
+  posts PostCategory[]
 
-  @@map("category")
+  @@map("categories")
 }
 
-model PostCategory {
-  postId     Int
-  categoryId Int
+// 标签模型
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique // 标签页面的 URL
 
-  post     Post     @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  posts PostTag[]
+
+  @@map("tags")
+}
+
+// --- 关系连接表 (多对多) ---
+
+// 文章与分类的连接表
+model PostCategory {
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     Int      @map("post_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int      @map("category_id")
 
   @@id([postId, categoryId])
-  @@map("post_category")
+  @@map("post_categories")
+}
+
+// 文章与标签的连接表
+model PostTag {
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int  @map("post_id")
+  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  Int  @map("tag_id")
+
+  @@id([postId, tagId])
+  @@map("post_tags")
 }
