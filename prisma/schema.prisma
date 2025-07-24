@@ -15,6 +15,17 @@ enum PostStatus {
   ARCHIVED
 }
 
+enum CategoryColor {
+  BLUE
+  GREEN
+  RED
+  PURPLE
+  ORANGE
+  YELLOW
+  PINK
+  GRAY
+}
+
 // 用户模型 (精简版)
 model User {
   id          Int      @id @default(autoincrement())
@@ -45,6 +56,8 @@ model Post {
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
 
+  readingTime Int? // 预计阅读时间（分钟）
+
   // 关系
   authorId Int  @map("author_id")
   author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -52,18 +65,28 @@ model Post {
   categories PostCategory[]
   tags       PostTag[]
 
+  // 索引优化
+  @@index([status, publishedAt(sort: Desc)]) // 按状态和发布时间查询（最常用）
+  @@index([createdTime(sort: Desc)]) // 按创建时间排序
+  @@index([viewCount(sort: Desc)]) // 按浏览量排序（热门文章）
+  @@index([title]) // 文章标题搜索
   @@map("posts")
 }
 
 // 分类模型
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  slug        String  @unique
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  slug        String        @unique
   description String?
+  color       CategoryColor @default(BLUE) // 分类颜色
+  sortOrder   Int           @default(0) // 显示排序
 
   posts PostCategory[]
 
+  // 索引优化
+  @@index([sortOrder]) // 按排序字段查询
+  @@index([name]) // 按名称搜索
   @@map("categories")
 }
 
@@ -75,6 +98,8 @@ model Tag {
 
   posts PostTag[]
 
+  // 索引优化
+  @@index([name]) // 按名称搜索
   @@map("tags")
 }
 
@@ -88,6 +113,9 @@ model PostCategory {
   categoryId Int      @map("category_id")
 
   @@id([postId, categoryId])
+  // 索引优化
+  @@index([categoryId]) // 查询某分类下的所有文章
+  @@index([postId]) // 查询某文章的所有分类
   @@map("post_categories")
 }
 
@@ -99,5 +127,8 @@ model PostTag {
   tagId  Int  @map("tag_id")
 
   @@id([postId, tagId])
+  // 索引优化
+  @@index([tagId]) // 查询某标签下的所有文章
+  @@index([postId]) // 查询某文章的所有标签
   @@map("post_tags")
 }
