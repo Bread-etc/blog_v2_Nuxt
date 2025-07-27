@@ -9,17 +9,17 @@ NodeJs 20.19.0 LTS 环境
 
 ## TodoList
 
-- [x] 重写登录`login`接口
+- [x] 重写`login`接口
 - [x] 封装`Prisma`实例类`db.ts`
 - [x] 重写`responseWrapper`响应函数,验证Token函数
 - [x] 封装用户鉴权函数工具`auth.ts`
 - [x] 重构数据库表结构`schema.prisma`
-- [x] 重构`categories`分类接口
+- [x] 重写`categories`分类接口,包含CRUD + 获取指定类型下的所有文章
+- [x] 重写`posts`文章接口,包含CRUD/文章列表/文章详情/文章统计信息/高级搜索/批量更新/推荐文章/浏览量
+- [x] 重写`tags`接口,包含CRUD/标签列表/标签详情/标签统计信息/批量操作
 - [ ] 移动端适配
-- [ ] 修复生产开发环境样式不一致问题
-- [ ] 文章检索
-- [ ] 自动化部署
+- [ ] 自动化部署`CI/CD`
 
 ## Bug fixs
 
-- 修复toc显示不全的bug
+- [x] 修复toc显示不全的bug
