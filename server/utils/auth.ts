@@ -1,4 +1,4 @@
-import type { H3Event } from 'h3';
+import type { H3Event } from "h3";
 
 // 身份验证结果接口
 interface AuthResult {
@@ -22,7 +22,7 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
     if (!authHeader) {
       return {
         success: false,
-        error: useErrorWrapper("", 401, false, "需要登录权限")
+        error: useErrorWrapper("", 401, false, "需要登录权限"),
       };
     }
 
@@ -31,7 +31,7 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
     if (!token) {
       return {
         success: false,
-        error: useErrorWrapper("", 401, false, "Token格式错误")
+        error: useErrorWrapper("", 401, false, "Token格式错误"),
       };
     }
 
@@ -40,20 +40,24 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
     if (!verifyResult.success) {
       return {
         success: false,
-        error: useErrorWrapper("", 401, false, verifyResult.error || "Token验证失败")
+        error: useErrorWrapper(
+          "",
+          401,
+          false,
+          verifyResult.error || "Token验证失败",
+        ),
       };
     }
 
     // 返回用户信息
     return {
       success: true,
-      user: verifyResult.payload!
+      user: verifyResult.payload!,
     };
-
   } catch (error: any) {
     return {
       success: false,
-      error: useErrorWrapper(error, 500, false, "身份验证失败")
+      error: useErrorWrapper(error, 500, false, "身份验证失败"),
     };
   }
 }
