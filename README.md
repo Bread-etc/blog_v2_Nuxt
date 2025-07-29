@@ -5,7 +5,9 @@
 
 ## Environment
 
-NodeJs 20.19.0 LTS 环境
+- NodeJs`20.19.0 LTS`环境
+- Nuxt`3.13` + Vue`3.4.21` + Vue-router`4.3.0`
+- tailwindcss`3.4.1` + shadcn-vue`1.0.3`
 
 ## TodoList
 
@@ -17,6 +19,8 @@ NodeJs 20.19.0 LTS 环境
 - [x] 重写`categories`分类接口,包含CRUD + 获取指定类型下的所有文章
 - [x] 重写`posts`文章接口,包含CRUD/文章列表/文章详情/文章统计信息/高级搜索/批量更新/推荐文章/浏览量
 - [x] 重写`tags`接口,包含CRUD/标签列表/标签详情/标签统计信息/批量操作
+- [x] 固定`vue`/`vue-router`版本
+- [ ] 
 - [ ] 移动端适配
 - [ ] 自动化部署`CI/CD`
 
