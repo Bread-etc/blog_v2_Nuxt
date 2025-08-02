@@ -1,12 +1,28 @@
 export default defineNuxtConfig({
-  css: [
-    "assets/css/main.css",
-    "assets/css/tailwind.css",
-    "assets/css/transition.css",
-  ],
+  compatibilityDate: "2025-08-03",
+  css: ["assets/css/main.css", "assets/css/tailwind.css"],
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/nuxt"],
   vueuse: {
     ssrHandlers: true,
+  },
+
+  // --- 组件配置 ---
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+    {
+      path: "~/components/ui",
+      extensions: [".vue"],
+      prefix: "Ui",
+      pathPrefix: false,
+    },
+  ],
+
+  // --- tailwindcss 配置 ---
+  tailwindcss: {
+    viewer: false,
   },
 
   // --- 运行时配置
