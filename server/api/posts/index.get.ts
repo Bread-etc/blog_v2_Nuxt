@@ -134,16 +134,15 @@ export default defineEventHandler(async (event) => {
       hasPrev: page > 1,
     };
 
-    return useResponseWrapper(
+    return createSuccessResponse(
       {
         posts: result,
         pagination,
       },
-      200,
-      true,
       "获取文章列表成功",
+      200,
     );
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "获取文章列表失败");
+    return createErrorResponse("获取文章列表失败:" + error, 500, false);
   }
 });

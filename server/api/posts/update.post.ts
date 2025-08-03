@@ -28,13 +28,13 @@ export default defineEventHandler(async (event) => {
 
     // 参数验证
     if (!id) {
-      return useErrorWrapper("", 400, false, "文章ID是必填字段");
+      return createErrorResponse("文章ID是必填字段", 400, false);
     }
 
     // 验证ID格式
     const postId = parseInt(id);
     if (isNaN(postId) || postId <= 0) {
-      return useErrorWrapper("", 400, false, "无效的文章ID");
+      return createErrorResponse("无效的文章ID", 400, false);
     }
 
     // 检查文章是否存在
@@ -44,12 +44,12 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!existingPost) {
-      return useErrorWrapper("", 404, false, "文章不存在");
+      return createErrorResponse("文章不存在", 404, false);
     }
 
     // 检查权限（只有作者可以修改）
     if (existingPost.authorId !== currentUser.userId) {
-      return useErrorWrapper("", 403, false, "无权限修改此文章");
+      return createErrorResponse("无权限修改此文章", 403, false);
     }
 
     // 构建更新数据对象
@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
 
     if (title !== undefined) {
       if (!title.trim()) {
-        return useErrorWrapper("", 400, false, "文章标题不能为空");
+        return createErrorResponse("文章标题不能为空", 400, false);
       }
       updateData.title = title.trim();
     }
@@ -81,7 +81,7 @@ export default defineEventHandler(async (event) => {
     if (status !== undefined) {
       const validStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"];
       if (status && !validStatuses.includes(status)) {
-        return useErrorWrapper("", 400, false, "无效的文章状态");
+        return createErrorResponse("无效的文章状态", 400, false);
       }
       updateData.status = status;
 
@@ -103,7 +103,7 @@ export default defineEventHandler(async (event) => {
     const hasTagUpdate = tagIds !== undefined;
 
     if (!hasDataUpdate && !hasCategoryUpdate && !hasTagUpdate) {
-      return useErrorWrapper("", 400, false, "至少需要提供一个要更新的字段");
+      return createErrorResponse("至少需要提供一个要更新的字段", 400, false);
     }
 
     // 使用事务处理更新
@@ -202,13 +202,13 @@ export default defineEventHandler(async (event) => {
       `用户 ${currentUser.userName} 更新了文章: ${finalResult.title}`,
     );
 
-    return useResponseWrapper(finalResult, 200, true, "文章更新成功");
+    return createSuccessResponse(finalResult, "文章更新成功", 200);
   } catch (error: any) {
     // 处理Prisma错误
     if (error.code === "P2025") {
-      return useErrorWrapper("", 404, false, "文章不存在");
+      return createErrorResponse("文章不存在", 404, false);
     }
 
-    return useErrorWrapper(error, 500, false, "更新文章失败");
+    return createErrorResponse("更新文章失败:" + error, 500, false);
   }
 });

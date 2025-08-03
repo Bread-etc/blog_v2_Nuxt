@@ -11,22 +11,19 @@ export default defineEventHandler(async (event) => {
     }
     const currentUser = authResult.user!;
 
-    // 获取请求参数
     const { postIds, status } = await readBody(event);
-
-    // 参数验证
     if (!postIds || !Array.isArray(postIds) || postIds.length === 0) {
-      return useErrorWrapper("", 400, false, "请选择要操作的文章");
+      return createErrorResponse("请选择要操作的文章", 400, false);
     }
 
     if (!status) {
-      return useErrorWrapper("", 400, false, "请指定目标状态");
+      return createErrorResponse("请指定目标状态", 400, false);
     }
 
     // 验证状态值
     const validStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"];
     if (!validStatuses.includes(status)) {
-      return useErrorWrapper("", 400, false, "无效的文章状态");
+      return createErrorResponse("无效的文章状态", 400, false);
     }
 
     // 验证文章ID格式
@@ -38,7 +35,7 @@ export default defineEventHandler(async (event) => {
       .map((id) => parseInt(id));
 
     if (validPostIds.length === 0) {
-      return useErrorWrapper("", 400, false, "没有有效的文章ID");
+      return createErrorResponse("没有有效的文章ID", 400, false);
     }
 
     // 检查权限 - 只能操作自己的文章
@@ -51,11 +48,11 @@ export default defineEventHandler(async (event) => {
     });
 
     if (ownedPosts.length === 0) {
-      return useErrorWrapper("", 403, false, "没有权限操作这些文章");
+      return createErrorResponse("没有权限操作这些文章", 403, false);
     }
 
     if (ownedPosts.length !== validPostIds.length) {
-      return useErrorWrapper("", 403, false, "部分文章无权限操作");
+      return createErrorResponse("部分文章无权限操作", 403, false);
     }
 
     // 构建更新数据
@@ -90,17 +87,16 @@ export default defineEventHandler(async (event) => {
       `用户 ${currentUser.userName} 批量更新了 ${result.count} 篇文章状态为 ${status}`,
     );
 
-    return useResponseWrapper(
+    return createSuccessResponse(
       {
         updatedCount: result.count,
         updatedPosts: updatedPosts,
         targetStatus: status,
       },
-      200,
-      true,
       `成功更新 ${result.count} 篇文章状态`,
+      200,
     );
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "批量更新文章状态失败");
+    return createErrorResponse("批量更新文章状态失败:" + error, 500, false);
   }
 });

@@ -7,7 +7,7 @@ interface AuthResult {
     userId: number;
     userName: string;
   };
-  error?: any; // 直接返回错误响应对象
+  error?: any;
 }
 
 /**
@@ -17,12 +17,12 @@ interface AuthResult {
  */
 export async function authenticateUser(event: H3Event): Promise<AuthResult> {
   try {
-    // 获取Authorization头
+    // 获取Authorization
     const authHeader = getHeader(event, "authorization");
     if (!authHeader) {
       return {
         success: false,
-        error: useErrorWrapper("", 401, false, "需要登录权限"),
+        error: createErrorResponse("需要登录权限", 401, false),
       };
     }
 
@@ -31,7 +31,7 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
     if (!token) {
       return {
         success: false,
-        error: useErrorWrapper("", 401, false, "Token格式错误"),
+        error: createErrorResponse("Token格式错误", 401, false),
       };
     }
 
@@ -40,11 +40,10 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
     if (!verifyResult.success) {
       return {
         success: false,
-        error: useErrorWrapper(
-          "",
+        error: createErrorResponse(
+          verifyResult.error || "Token验证失败",
           401,
           false,
-          verifyResult.error || "Token验证失败",
         ),
       };
     }
@@ -57,7 +56,7 @@ export async function authenticateUser(event: H3Event): Promise<AuthResult> {
   } catch (error: any) {
     return {
       success: false,
-      error: useErrorWrapper(error, 500, false, "身份验证失败"),
+      error: createErrorResponse("身份验证失败:" + error, 500, false),
     };
   }
 }

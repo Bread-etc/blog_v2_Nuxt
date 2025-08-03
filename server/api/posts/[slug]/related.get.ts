@@ -5,9 +5,8 @@ export default defineEventHandler(async (event) => {
   try {
     // 获取路由参数
     const slug = getRouterParam(event, "slug");
-
     if (!slug) {
-      return useErrorWrapper("", 400, false, "文章slug是必填字段");
+      return createErrorResponse("文章slug是必填字段", 400, false);
     }
 
     // 获取查询参数
@@ -30,7 +29,7 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!currentPost) {
-      return useErrorWrapper("", 404, false, "文章不存在");
+      return createErrorResponse("文章不存在", 404, false);
     }
 
     // 提取分类和标签ID
@@ -107,7 +106,7 @@ export default defineEventHandler(async (event) => {
         relationType: "popular",
       }));
 
-      return useResponseWrapper(result, 200, true, "获取热门推荐文章成功");
+      return createSuccessResponse(result, "获取热门推荐文章成功", 200);
     }
 
     // 查询相关文章
@@ -190,8 +189,8 @@ export default defineEventHandler(async (event) => {
       };
     });
 
-    return useResponseWrapper(result, 200, true, "获取相关文章成功");
+    return createSuccessResponse(result, "获取相关文章成功", 200);
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "获取相关文章失败");
+    return createErrorResponse("获取相关文章失败:" + error, 500, false);
   }
 });

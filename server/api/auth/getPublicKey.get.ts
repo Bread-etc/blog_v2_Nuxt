@@ -15,9 +15,9 @@ const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
 
 export default defineEventHandler((event) => {
   try {
-    return useResponseWrapper(publicKey);
+    return createSuccessResponse(publicKey, "获取RSA密钥对成功", 200);
   } catch (error) {
-    return useErrorWrapper(error, 500);
+    return createErrorResponse("获取RSA密钥对出错:" + error, 500, false);
   }
 });
 

@@ -10,13 +10,13 @@ export default defineEventHandler(async (event) => {
 
     // 参数验证
     if (!id) {
-      return useErrorWrapper("", 400, false, "分类ID是必填字段");
+      return createErrorResponse("分类ID是必填字段", 400, false);
     }
 
     // 验证ID格式
     const categoryId = parseInt(id);
     if (isNaN(categoryId) || categoryId <= 0) {
-      return useErrorWrapper("", 400, false, "无效的分类ID");
+      return createErrorResponse("无效的分类ID", 400, false);
     }
 
     // 获取查询参数
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!category) {
-      return useErrorWrapper("", 404, false, "分类不存在");
+      return createErrorResponse("分类不存在", 404, false);
     }
 
     // 处理返回数据
@@ -94,8 +94,8 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    return useResponseWrapper(result, 200, true, "获取分类详情成功");
+    return createSuccessResponse(result, "获取分类详情成功", 200);
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "获取分类详情失败");
+    return createErrorResponse("获取分类详情失败:" + error, 500, false);
   }
 });

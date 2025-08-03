@@ -10,18 +10,15 @@ export default defineEventHandler(async (event) => {
     }
     const currentUser = authResult.user!;
 
-    // 获取请求参数
     const { id } = await readBody(event);
-
-    // 参数验证
     if (!id) {
-      return useErrorWrapper("", 400, false, "分类ID是必填字段");
+      return createErrorResponse("分类ID是必填字段", 400, false);
     }
 
     // 验证ID格式
     const categoryId = parseInt(id);
     if (isNaN(categoryId) || categoryId <= 0) {
-      return useErrorWrapper("", 400, false, "无效的分类ID");
+      return createErrorResponse("无效的分类ID", 400, false);
     }
 
     // 检查分类是否存在
@@ -31,7 +28,7 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!existingCategory) {
-      return useErrorWrapper("", 404, false, "分类不存在");
+      return createErrorResponse("分类不存在", 404, false);
     }
 
     // 安全检查
@@ -40,11 +37,10 @@ export default defineEventHandler(async (event) => {
     });
 
     if (postCount > 0) {
-      return useErrorWrapper(
-        "",
+      return createErrorResponse(
+        `该分类下还有 ${postCount} 篇文章，无法删除。请先移除相关文章或将文章移动到其他分类。`,
         400,
         false,
-        `该分类下还有 ${postCount} 篇文章，无法删除。请先移除相关文章或将文章移动到其他分类。`,
       );
     }
 
@@ -57,18 +53,17 @@ export default defineEventHandler(async (event) => {
       `用户 ${currentUser.userName} 删除了分类: ${existingCategory.name} (ID: ${categoryId})`,
     );
 
-    return useResponseWrapper(
+    return createSuccessResponse(
       { deletedId: categoryId, deletedName: existingCategory.name },
-      200,
-      true,
       "分类删除成功",
+      200,
     );
   } catch (error: any) {
     // 处理Prisma错误
     if (error.code === "P2025") {
-      return useErrorWrapper("", 404, false, "分类不存在");
+      return createErrorResponse("分类不存在", 404, false);
     }
 
-    return useErrorWrapper(error, 500, false, "删除分类失败");
+    return createErrorResponse("删除分类失败:" + error, 500, false);
   }
 });

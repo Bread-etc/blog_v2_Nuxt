@@ -27,11 +27,10 @@ export default defineEventHandler(async (event) => {
 
     // 参数验证
     if (!title || !markdownContent || !htmlContent) {
-      return useErrorWrapper(
-        "",
+      return createErrorResponse(
+        "标题、markdown内容和html内容是必填字段",
         400,
         false,
-        "标题、markdown内容和html内容是必填字段",
       );
     }
 
@@ -143,8 +142,8 @@ export default defineEventHandler(async (event) => {
 
     console.log(`用户 ${currentUser.userName} 创建了文章: ${post.title}`);
 
-    return useResponseWrapper(result, 200, true, "文章创建成功");
+    return createSuccessResponse(result, "文章创建成功", 200);
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "创建文章失败");
+    return createErrorResponse("创建文章失败:" + error, 500, false);
   }
 });

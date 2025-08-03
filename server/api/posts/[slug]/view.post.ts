@@ -5,9 +5,8 @@ export default defineEventHandler(async (event) => {
   try {
     // 获取路由参数
     const slug = getRouterParam(event, "slug");
-
     if (!slug) {
-      return useErrorWrapper("", 400, false, "文章slug是必填字段");
+      return createErrorResponse("文章slug是必填字段", 400, false);
     }
 
     // 获取客户端信息（用于简单的防刷机制）
@@ -33,12 +32,12 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!post) {
-      return useErrorWrapper("", 404, false, "文章不存在");
+      return createErrorResponse("文章不存在", 404, false);
     }
 
     // 只有已发布的文章才统计浏览量
     if (post.status !== "PUBLISHED") {
-      return useErrorWrapper("", 400, false, "文章未发布，无法统计浏览量");
+      return createErrorResponse("文章未发布，无法统计浏览量", 400, false);
     }
 
     // 更新浏览量
@@ -61,7 +60,7 @@ export default defineEventHandler(async (event) => {
       `文章浏览量更新: "${post.title}" +1，当前浏览量: ${updatedPost.viewCount}，访问IP: ${clientIP}`,
     );
 
-    return useResponseWrapper(
+    return createSuccessResponse(
       {
         postId: updatedPost.id,
         title: updatedPost.title,
@@ -69,12 +68,11 @@ export default defineEventHandler(async (event) => {
         previousCount: post.viewCount,
         increment: 1,
       },
-      200,
-      true,
       "浏览量更新成功",
+      200,
     );
   } catch (error: any) {
     console.error("更新浏览量失败:", error);
-    return useErrorWrapper(error, 500, false, "更新浏览量失败");
+    return createErrorResponse("更新浏览量失败:" + error, 500, false);
   }
 });

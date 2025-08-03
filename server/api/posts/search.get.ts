@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
     // 参数验证
     if (!keyword || keyword.trim().length < 2) {
-      return useErrorWrapper("", 400, false, "搜索关键词至少需要2个字符");
+      return createErrorResponse("搜索关键词至少需要2个字符", 400, false);
     }
 
     // 构建查询条件
@@ -157,7 +157,7 @@ export default defineEventHandler(async (event) => {
       hasPrev: page > 1,
     };
 
-    return useResponseWrapper(
+    return createSuccessResponse(
       {
         posts: results,
         pagination,
@@ -170,11 +170,10 @@ export default defineEventHandler(async (event) => {
           total,
         },
       },
-      200,
-      true,
       `找到 ${total} 篇相关文章`,
+      200,
     );
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "搜索文章失败");
+    return createErrorResponse("搜索文章失败:" + error, 500, false);
   }
 });

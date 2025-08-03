@@ -107,8 +107,8 @@ export default defineEventHandler(async (event) => {
       })),
     };
 
-    return useResponseWrapper(stats, 200, true, "获取文章统计信息成功");
+    return createSuccessResponse(stats, "获取文章统计信息成功", 200);
   } catch (error: any) {
-    return useErrorWrapper(error, 500, false, "获取文章统计信息失败");
+    return createErrorResponse("获取文章统计信息失败:" + error, 500, false);
   }
 });

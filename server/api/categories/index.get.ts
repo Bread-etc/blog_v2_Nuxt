@@ -30,8 +30,8 @@ export default defineEventHandler(async (event) => {
         })
       : categories;
 
-    return useResponseWrapper(result, 200, true, "获取分类列表成功");
+    return createSuccessResponse(result, "获取分类列表成功", 200);
   } catch (error: any) {
-    return useErrorWrapper(error, 500);
+    return createErrorResponse("获取分类列表失败:" + error, 500);
   }
 });
