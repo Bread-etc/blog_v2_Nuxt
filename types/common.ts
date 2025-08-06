@@ -50,18 +50,3 @@ export type ID = number;
 
 // 时间戳类型
 export type Timestamp = string;
-
-// 批量操作类型
-export interface BatchOperation<T = any> {
-  action: string;
-  data: T[];
-}
-
-// 批量操作响应类型
-export interface BatchOperationResponse<T = any> {
-  successCount: number;
-  failedCount: number;
-  successItems?: T[];
-  failedItems?: T[];
-  totalRequested: number;
-}

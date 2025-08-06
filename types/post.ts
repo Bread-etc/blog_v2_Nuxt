@@ -4,8 +4,6 @@ import type {
   PostStatus,
   PaginationParams,
   PaginationResponse,
-  BatchOperation,
-  BatchOperationResponse,
 } from "./common";
 import type { Category } from "./category";
 
@@ -161,7 +159,7 @@ export interface PostStats {
 }
 
 // 批量更新文章请求类型
-export interface BatchUpdatePostsRequest extends BatchOperation {
+export interface BatchUpdatePostsRequest {
   action: "updateStatus" | "updateCategory" | "addTags" | "removeTags";
   data: ID[];
   updateData: {
@@ -172,8 +170,7 @@ export interface BatchUpdatePostsRequest extends BatchOperation {
 }
 
 // 批量更新文章响应类型
-export interface BatchUpdatePostsResponse
-  extends BatchOperationResponse<PostListItem> {
+export interface BatchUpdatePostsResponse {
   updatedCount: number;
   updatedPosts: PostListItem[];
 }
