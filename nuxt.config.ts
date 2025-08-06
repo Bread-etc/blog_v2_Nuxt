@@ -1,10 +1,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-08-03",
   css: ["assets/css/main.css", "assets/css/tailwind.css"],
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/nuxt"],
-
-  vueuse: {
-    ssrHandlers: true,
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  colorMode: {
+    classSuffix: "",
   },
 
   // --- 组件配置 ---
