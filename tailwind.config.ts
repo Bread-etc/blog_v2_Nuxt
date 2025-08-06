@@ -2,17 +2,18 @@
 export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx,vue}",
-    "./components/**/*.{ts,tsx,vue}",
-    "./app/**/*.{ts,tsx,vue}",
-    "./src/**/*.{ts,tsx,vue}",
+    ".pages/*.{ts,vue}",
+    "./pages/**/*.{ts,vue}",
+    "./components/*.{ts,vue}",
+    "./components/ui/*.{ts,vue}",
+    "./assets/css/*.css",
   ],
   theme: {
     container: {
-      center: true,
-      padding: "2rem",
+      center: true, // 容器自动居中
+      padding: "1rem", // 容器内边距
       screens: {
-        "2xl": "1400px",
+        "2xl": "1400px", // 超大屏幕最大宽度
       },
     },
     extend: {

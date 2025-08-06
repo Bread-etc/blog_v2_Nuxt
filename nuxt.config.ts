@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-08-03",
   css: ["assets/css/main.css", "assets/css/tailwind.css"],
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/nuxt"],
+
   vueuse: {
     ssrHandlers: true,
   },
@@ -15,7 +16,7 @@ export default defineNuxtConfig({
     {
       path: "~/components/ui",
       extensions: [".vue"],
-      prefix: "Ui",
+      prefix: "",
       pathPrefix: false,
     },
   ],
@@ -25,7 +26,34 @@ export default defineNuxtConfig({
     viewer: false,
   },
 
-  // --- 运行时配置
+  // --- 开发服务器配置 ---
+  devServer: {
+    port: 3000,
+  },
+
+  // --- vite 配置 ---
+  vite: {
+    server: {
+      hmr: {
+        port: 24678,
+        overlay: true,
+      },
+      watch: {
+        usePolling: true,
+        interval: 200,
+      },
+    },
+    optimizeDeps: {
+      include: ["vue", "@vueuse/core", "pinia"],
+    },
+  },
+
+  // --- build 打包配置 ---
+  build: {
+    analyze: false,
+  },
+
+  // --- 运行时配置 ---
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
