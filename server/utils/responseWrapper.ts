@@ -1,30 +1,46 @@
-/**
- * 用户包装API相应的辅助函数
- */
+// 成功响应接口
+interface ApiSuccessResponse<T = any> {
+  code: number;
+  success: true;
+  message: string;
+  data: T;
+}
 
-export function useResponseWrapper(
-  data: any,
+// 错误响应接口
+interface ApiErrorResponse {
+  code: number;
+  success: false;
+  message: string;
+  data: null;
+}
+
+// 成功响应包装器
+export function createSuccessResponse<T = any>(
+  data: T,
+  message: string = "操作成功",
   code: number = 200,
-  success: boolean = true,
-  message: string = "success"
-) {
+): ApiSuccessResponse<T> {
   return {
     code,
-    success,
+    success: true,
     message,
     data,
   };
 }
 
-export function useErrorWrapper(
-  error: any,
-  code: number = -1,
-  success: boolean = false,
-  message: string = error
-) {
+// 错误响应包装器
+export function createErrorResponse(
+  message: string,
+  code: number = 500,
+  error?: any,
+): ApiErrorResponse {
+  if (process.env.NODE_ENV === "development" && error) {
+    console.error("API Error:", error);
+  }
   return {
     code,
-    success,
-    message: error instanceof Error ? error.message : message,
+    success: false,
+    message,
+    data: null,
   };
 }

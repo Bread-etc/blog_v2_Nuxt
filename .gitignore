@@ -5,7 +5,6 @@
 .nitro
 .cache
 dist
-content
 
 # secure information
 yarn.lock
@@ -22,6 +21,8 @@ logs
 .DS_Store
 .fleet
 .idea
+.vscode
+.codebuddy
 
 # Local env files
 .env

@@ -1,31 +1,59 @@
-import Aura from "@primevue/themes/aura";
-
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
-  devtools: { enabled: false },
-  
-  typescript: {
-    shim: false,
-    strict: true,
-  },
-  app: {
-    head: {
-      charset: "utf-8",
-      viewport: "width=device-width, initial-scale=1",
-      htmlAttrs: { lang: "zh-CN" },
-      titleTemplate: "Bread_etc 's blog" || "%s",
-      meta: [
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "description", content: "Bread-etc's Blog" },
-        { name: "keywords", content: "前端, 博客, blog" },
-      ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    },
-    pageTransition: { name: "page", mode: "out-in" },
-    layoutTransition: { name: "layout", mode: "out-in" },
-  },
-  css: ["assets/styles/main.css", "assets/styles/transition.css"],
+  compatibilityDate: "2025-08-03",
+  css: ["assets/css/main.css", "assets/css/tailwind.css"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/nuxt"],
 
+  vueuse: {
+    ssrHandlers: true,
+  },
+
+  // --- 组件配置 ---
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+    {
+      path: "~/components/ui",
+      extensions: [".vue"],
+      prefix: "",
+      pathPrefix: false,
+    },
+  ],
+
+  // --- tailwindcss 配置 ---
+  tailwindcss: {
+    viewer: false,
+  },
+
+  // --- 开发服务器配置 ---
+  devServer: {
+    port: 3000,
+  },
+
+  // --- vite 配置 ---
+  vite: {
+    server: {
+      hmr: {
+        port: 24678,
+        overlay: true,
+      },
+      watch: {
+        usePolling: true,
+        interval: 200,
+      },
+    },
+    optimizeDeps: {
+      include: ["vue", "@vueuse/core", "pinia"],
+    },
+  },
+
+  // --- build 打包配置 ---
+  build: {
+    analyze: false,
+  },
+
+  // --- 运行时配置 ---
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
@@ -34,53 +62,11 @@ export default defineNuxtConfig({
     },
   },
 
+  // --- 后端服务器配置 ---
   nitro: {
     compressPublicAssets: {
       gzip: true,
       brotli: true,
     },
-  },
-
-  vite: {
-    esbuild: {
-      drop: ["console", "debugger"],
-    },
-  },
-
-  modules: [
-    "nuxt-lodash",
-    "@pinia/nuxt",
-    "@nuxtjs/tailwindcss",
-    "@primevue/nuxt-module",
-    "@vueuse/nuxt",
-  ],
-
-  lodash: {
-    prefix: "use",
-    prefixSkip: ["string"],
-  },
-
-  tailwindcss: {
-    viewer: false,
-    configPath: "./tailwind.config.ts",
-  },
-
-  primevue: {
-    options: {
-      ripple: true,
-      inputVariant: "filled",
-      theme: {
-        preset: Aura,
-        options: {
-          preset: "Prime",
-          darkModeSelectors: "system",
-          cssLayer: false,
-        },
-      },
-    },
-  },
-
-  vueuse: {
-    ssrHandlers: true,
   },
 });

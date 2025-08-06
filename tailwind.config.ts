@@ -1,42 +1,77 @@
-/** @type {import('tailwincss').Config} */
-module.exports = {
-  darkMode: "class",
-  content: ["./pages/**/*.{vue,ts}", "./components/**.{vue,ts}"],
-  plugins: [require("@tailwindcss/typography")],
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: [
+    ".pages/*.{ts,vue}",
+    "./pages/**/*.{ts,vue}",
+    "./components/*.{ts,vue}",
+    "./components/ui/*.{ts,vue}",
+    "./assets/css/*.css",
+  ],
   theme: {
+    container: {
+      center: true, // 容器自动居中
+      padding: "1rem", // 容器内边距
+      screens: {
+        "2xl": "1400px", // 超大屏幕最大宽度
+      },
+    },
     extend: {
       colors: {
-        /* 背景颜色 [外部圆角矩形] */
-        LightBg: "#f0f2f5", // 浅灰
-        DarkBg: "#1f1f1f", // 黑色
-
-        /* 内容颜色 [侧边以及中间圆角矩形] */
-        LightContent: "#fefefe", // 白色
-        DarkContent: "#3e4044", // 深灰色
-
-        /* 主题修饰颜色 [部分突出部分] */
-        LightEm: "#00c64b", // 绿色色调
-        DarkEm: "#ffca0b", // 黄色色调
-
-        /* 突出部分hover颜色 */
-        HoverLightEm: "#009e3d", // 深绿
-        HoverDarkEm: "#a88400", // 深黄
-
-        /* code 行内代码块颜色 */
-        codeEm: "#7e45cd",
-      },
-      backgroundImage: {
-        lightOutBgImage: "linear-gradient(to top, #fddb92 0%, #d1fdff 100%)",
-        darkOutBgImage: "linear-gradient(to top, #09203f 0%, #537895 100%)",
-      },
-      typography: (theme: any) => ({
-        DEFAULT: {
-          css: {
-            "code::before": null,
-            "code::after": null,
-          },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
-      }),
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
+  plugins: [require("tailwindcss-animate")],
 };

@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  font-display: swap;
+  src: url("../fonts/NotoSansSC-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  font-display: swap;
+  src: url("../fonts/NotoSansSC-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url("../fonts/NotoSansSC-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 800; /* ExtraBold */
+  font-display: swap;
+  src: url("../fonts/NotoSansSC-ExtraBold.woff2") format("woff2");
+}
+
+body {
+  /* 优先使用 Noto Sans SC, 然后回退到一系列无衬线系统字体 */
+  font-family:
+    "Noto Sans SC",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+  overflow: hidden;
+}
+
+:root {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

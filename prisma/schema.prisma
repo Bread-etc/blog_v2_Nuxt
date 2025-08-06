@@ -1,75 +1,134 @@
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// 生成器
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-// 定义数据源
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+// --- 枚举定义 ---
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CategoryColor {
+  BLUE
+  GREEN
+  RED
+  PURPLE
+  ORANGE
+  YELLOW
+  PINK
+  GRAY
+}
+
+// 用户模型 (精简版)
 model User {
   id          Int      @id @default(autoincrement())
   userName    String   @unique @map("user_name")
   password    String
-  role        String
   nickName    String?  @map("nick_name")
   createdTime DateTime @default(now()) @map("created_time")
+  updatedTime DateTime @updatedAt @map("updated_time")
 
   posts Post[]
 
-  @@map("user")
+  @@map("users")
 }
 
+// 文章模型
 model Post {
-  id          Int      @id @default(autoincrement())
-  title       String
-  content     String? // 对应 PostgreSQL 的 TEXT 类型
-  authorId    Int      @map("author_id")
+  id               Int        @id @default(autoincrement())
+  title            String
+  slug             String     @unique // 用于生成 URL
+  markdownContent  String     @db.Text
+  htmlContent      String     @db.Text
+  excerpt          String? // 文章摘要
+  featuredImageUrl String?    @map("featured_image_url")
+  viewCount        Int        @default(0) @map("view_count")
+  status           PostStatus @default(DRAFT)
+  publishedAt      DateTime?  @map("published_at")
+
   createdTime DateTime @default(now()) @map("created_time")
   updatedTime DateTime @updatedAt @map("updated_time")
-  status      Boolean  @default(false) @map("status")
 
-  author       User           @relation(fields: [authorId], references: [id])
-  postFiles    PostFile[]
-  PostCategory PostCategory[]
+  readingTime Int? // 预计阅读时间（分钟）
 
-  @@map("post")
+  // 关系
+  authorId Int  @map("author_id")
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  categories PostCategory[]
+  tags       PostTag[]
+
+  // 索引优化
+  @@index([status, publishedAt(sort: Desc)]) // 按状态和发布时间查询（最常用）
+  @@index([createdTime(sort: Desc)]) // 按创建时间排序
+  @@index([viewCount(sort: Desc)]) // 按浏览量排序（热门文章）
+  @@index([title]) // 文章标题搜索
+  @@map("posts")
 }
 
-model PostFile {
-  id          Int    @id @default(autoincrement())
-  postId      Int    @map("post_id")
-  fileName    String @map("file_name")
-  fileAddress String @map("file_address")
-
-  post Post @relation(fields: [postId], references: [id])
-
-  @@map("post_file")
-}
-
+// 分类模型
 model Category {
-  id    Int     @id @default(autoincrement())
-  name  String
-  color String?
-  icon  String?
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  slug        String        @unique
+  description String?
+  color       CategoryColor @default(BLUE) // 分类颜色
+  sortOrder   Int           @default(0) // 显示排序
 
-  PostCategory PostCategory[]
+  posts PostCategory[]
 
-  @@map("category")
+  // 索引优化
+  @@index([sortOrder]) // 按排序字段查询
+  @@index([name]) // 按名称搜索
+  @@map("categories")
 }
 
-model PostCategory {
-  postId     Int
-  categoryId Int
+// 标签模型
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique // 标签页面的 URL
 
-  post     Post     @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  posts PostTag[]
+
+  // 索引优化
+  @@index([name]) // 按名称搜索
+  @@map("tags")
+}
+
+// --- 关系连接表 (多对多) ---
+
+// 文章与分类的连接表
+model PostCategory {
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     Int      @map("post_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int      @map("category_id")
 
   @@id([postId, categoryId])
-  @@map("post_category")
+  // 索引优化
+  @@index([categoryId]) // 查询某分类下的所有文章
+  @@index([postId]) // 查询某文章的所有分类
+  @@map("post_categories")
+}
+
+// 文章与标签的连接表
+model PostTag {
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int  @map("post_id")
+  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  Int  @map("tag_id")
+
+  @@id([postId, tagId])
+  // 索引优化
+  @@index([tagId]) // 查询某标签下的所有文章
+  @@index([postId]) // 查询某文章的所有标签
+  @@map("post_tags")
 }
