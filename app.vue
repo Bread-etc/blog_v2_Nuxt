@@ -7,11 +7,14 @@
       <NuxtPage />
     </NuxtLayout>
 
-    <!-- 全局通知组件 -->
+    <Toaster />
   </div>
 </template>
 
 <script setup>
+import { Toaster } from "./components/ui/sonner";
+import "vue-sonner/style.css";
+
 useHead({
   titleTemplate: "%s - 面包etc的博客",
   meta: [

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-background">
-    <div class="mx-auto max-w-screen-xl">
+    <div class="mx-auto max-w-screen-lg">
       <AppNavbar />
       <section class="py-8">
         <slot name="hero">
@@ -19,7 +19,7 @@
       </main>
 
       <footer class="border-t border-border">
-        <div class="mx-auto max-w-6xl px-8 py-2">
+        <div class="mx-auto max-w-xl px-8 py-2">
           <div
             class="cursor-pointer select-none text-center text-xs duration-300 ease-in-out hover:text-primary"
           >
@@ -38,7 +38,7 @@
 
 <script setup>
 useHead({
-  titleTemplate: "%s - 我的博客",
+  titleTemplate: "%s",
   meta: [
     { name: "description", content: "一个专注于技术分享的个人博客" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
