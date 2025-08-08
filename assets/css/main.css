@@ -55,3 +55,25 @@ body {
     display: none;
   }
 }
+
+/* --- View Transitions 动画 --- */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  clip-path: circle(0% at var(--circle-position-x) var(--circle-position-y));
+  animation: reveal .7s ease-in-out forwards;
+}
+
+@keyframes reveal {
+  to {
+    clip-path: circle(
+      var(--transition-radius) at var(--circle-position-x)
+        var(--circle-position-y)
+    );
+  }
+}
+/* --- 动画结束 --- */
