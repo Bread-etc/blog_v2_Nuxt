@@ -1,9 +1,24 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-08-03",
   css: ["assets/css/main.css", "assets/css/tailwind.css"],
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
+    "@vueuse/nuxt",
+    "@pinia/nuxt",
+  ],
+
+  // --- nuxt-color-mode 配置 ---
   colorMode: {
+    preference: "system",
+    fallback: "light",
+    hid: "nuxt-color-mode-script",
+    globalName: "__NUXT_COLOR_MODE__",
+    componentName: "ColorScheme",
+    classPrefix: "",
     classSuffix: "",
+    storage: "localStorage",
+    storageKey: "nuxt-color-mode",
   },
 
   // --- 组件配置 ---

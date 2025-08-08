@@ -20,10 +20,24 @@
 - [x] 重写`posts`文章接口,包含CRUD/文章列表/文章详情/文章统计信息/高级搜索/批量更新/推荐文章/浏览量
 - [x] 重写`tags`接口,包含CRUD/标签列表/标签详情/标签统计信息/批量操作
 - [x] 固定`vue`/`vue-router`版本
-- [ ] 
+- [x] 引入`tailwindcssV3`和`shadcn-vue@1.0.3`(包括相关依赖)
+- [ ] 新增`AppNavBar`类Dock组件
 - [ ] 移动端适配
 - [ ] 自动化部署`CI/CD`
 
 ## Bug fixs
 
 - [x] 修复toc显示不全的bug
+
+
+## feature
+
+- [x] 重写`default.vue`默认页面
+- [ ] robot.txt 爬虫协议
+- [ ] 
+
+## 使用指南
+
+- `pnpm install`
+- `pnpm gen`生成prisma对应的数据库
+- `pnpm dev`
