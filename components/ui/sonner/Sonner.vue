@@ -9,6 +9,7 @@ const props = defineProps<ToasterProps>();
   <Sonner
     class="toaster group"
     v-bind="props"
+    :duration="2000"
     :toast-options="{
       classes: {
         toast:
