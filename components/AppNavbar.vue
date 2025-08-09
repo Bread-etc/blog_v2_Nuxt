@@ -33,7 +33,7 @@
             variant="outline"
             class="group border-none bg-transparent p-2 outline-none ring-0 hover:bg-transparent"
           >
-            <NuxtLink to="/admin">
+            <NuxtLink to="/login">
               <Settings
                 class="h-4 w-4 text-foreground duration-300 group-hover:rotate-90"
               />
