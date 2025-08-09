@@ -3,11 +3,12 @@ import type { ApiResponse } from "~/types";
 
 // 针对 $fetch 进行封装
 
-interface ApiOptions extends RequestInit {
+interface ApiOptions {
   showErrorToast?: boolean;
   showSuccessToast?: boolean;
   successMessage?: string;
   loading?: Ref<boolean>;
+  headers?: HeadersInit;
 }
 
 export const useApi = () => {
@@ -15,14 +16,17 @@ export const useApi = () => {
 
   const request = async <T = any>(
     url: string,
-    options: ApiOptions = {},
+    options: ApiOptions & { method?: string; body?: any } = {},
   ): Promise<ApiResponse<T>> => {
     const {
       showErrorToast = true,
       showSuccessToast = false,
       successMessage = "操作成功",
       loading,
-      ...fetchOptions
+      headers,
+      method,
+      body,
+      ...restOptions
     } = options;
 
     if (loading) loading.value = true;
@@ -30,10 +34,13 @@ export const useApi = () => {
     try {
       const response = await $fetch<ApiResponse<T>>(url, {
         baseURL: config.public.apiBase || "/api",
+        method: method as any,
+        body,
         headers: {
           "Content-Type": "application/json",
-          ...fetchOptions.headers,
+          ...(headers || {}),
         },
+        ...restOptions,
       });
 
       // 成功提示
