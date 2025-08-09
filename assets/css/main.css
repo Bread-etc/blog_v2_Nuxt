@@ -65,7 +65,7 @@ body {
 ::view-transition-new(root) {
   mix-blend-mode: normal;
   clip-path: circle(0% at var(--circle-position-x) var(--circle-position-y));
-  animation: reveal .7s ease-in-out forwards;
+  animation: reveal 0.7s ease-in-out forwards;
 }
 
 @keyframes reveal {
@@ -77,3 +77,19 @@ body {
   }
 }
 /* --- 动画结束 --- */
+
+/* 页面进入动画 */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}

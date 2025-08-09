@@ -62,6 +62,13 @@ export default defineNuxtConfig({
     },
   },
 
+  // --- app 配置 ---
+  app: {
+    keepalive: true,
+    pageTransition: { name: "slide-right", mode: "out-in" },
+    layoutTransition: { name: "slide-right", mode: "out-in" },
+  },
+
   // --- build 打包配置 ---
   build: {
     analyze: false,

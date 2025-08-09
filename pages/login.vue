@@ -62,14 +62,16 @@
     </div>
 
     <!-- 右侧图片 -->
-    <div
-      class="flex-center mr-2 h-[98%] w-1/2 rounded-lg bg-gradient-to-br from-orange-400 to-orange-700"
-    >
-      <img
-        src="~/assets/images/LoginPage.png"
-        alt="Login illustration"
-        class="max-h-96 object-contain"
-      />
+    <div class="flex-center h-full w-1/2">
+      <div
+        class="flex-center h-[96%] w-[96%] rounded-md bg-gradient-to-br from-orange-400 to-orange-800"
+      >
+        <img
+          src="~/assets/images/LoginPage.png"
+          alt="Login illustration"
+          class="max-h-96 object-contain"
+        />
+      </div>
     </div>
   </div>
 </template>

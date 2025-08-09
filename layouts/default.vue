@@ -5,7 +5,7 @@
       <section class="py-8">
         <slot name="hero">
           <!-- 默认页面介绍 -->
-          <div class="text-center">
+          <div class="select-none text-center">
             <h1 class="text-xl font-bold">欢迎来到我的博客</h1>
             <p class="mx-auto max-w-2xl text-sm text-muted-foreground">
               分享学习与生活
