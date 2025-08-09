@@ -23,6 +23,7 @@
                 v-model="loginForm.userName"
                 type="text"
                 placeholder="username"
+                autocomplete="username"
                 :disabled="loading"
                 required
               />
@@ -31,7 +32,7 @@
                 id="password"
                 v-model="loginForm.password"
                 type="password"
-                placeholder="******"
+                autocomplete="current-password"
                 :disabled="loading"
                 required
               />
@@ -62,7 +63,7 @@
 
     <!-- 右侧图片 -->
     <div
-      class="flex-center mr-1 h-[98%] w-1/2 rounded-lg bg-gradient-to-br from-orange-400 to-orange-700"
+      class="flex-center mr-2 h-[98%] w-1/2 rounded-lg bg-gradient-to-br from-orange-400 to-orange-700"
     >
       <img
         src="~/assets/images/LoginPage.png"
@@ -100,7 +101,55 @@ const loginForm = reactive({
 });
 
 // 使用认证服务
-const { login } = useAuthService();
+const { login, getPublicKey } = useAuthService();
+
+// RSA加密函数 - 使用Web Crypto API
+const encryptPassword = async (
+  password: string,
+  publicKey: string,
+): Promise<string> => {
+  try {
+    // 将PEM格式的公钥转换为ArrayBuffer
+    const pemHeader = "-----BEGIN PUBLIC KEY-----";
+    const pemFooter = "-----END PUBLIC KEY-----";
+    const pemContents = publicKey
+      .replace(pemHeader, "")
+      .replace(pemFooter, "")
+      .replace(/\s/g, "");
+    const binaryDer = Uint8Array.from(atob(pemContents), (c) =>
+      c.charCodeAt(0),
+    );
+
+    // 导入公钥
+    const cryptoKey = await crypto.subtle.importKey(
+      "spki",
+      binaryDer,
+      {
+        name: "RSA-OAEP",
+        hash: "SHA-256",
+      },
+      false,
+      ["encrypt"],
+    );
+
+    // 加密密码
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const encrypted = await crypto.subtle.encrypt(
+      {
+        name: "RSA-OAEP",
+      },
+      cryptoKey,
+      data,
+    );
+
+    // 转换为base64
+    return btoa(String.fromCharCode(...new Uint8Array(encrypted)));
+  } catch (error) {
+    console.error("RSA加密失败:", error);
+    throw new Error("密码加密失败");
+  }
+};
 
 // 登录处理函数
 const handleLogin = async () => {
@@ -110,14 +159,29 @@ const handleLogin = async () => {
 
   try {
     loading.value = true;
-    const response = await login(loginForm, loading);
+
+    const publicKeyResponse = await getPublicKey();
+    if (publicKeyResponse.code !== 200) {
+      throw new Error("获取公钥失败");
+    }
+
+    const encryptedPassword = await encryptPassword(
+      loginForm.password,
+      publicKeyResponse.data.publicKey,
+    );
+
+    const loginData = {
+      userName: loginForm.userName,
+      password: encryptedPassword,
+    };
+
+    const response = await login(loginData, loading);
 
     if (response.code === 200) {
-      // 登录成功，跳转到管理后台
-      await navigateTo("/admin");
+      await navigateTo("/admin/dashboard");
     }
   } catch (error) {
-    console.error("登录失败:", error);
+    console.error(error);
   } finally {
     loading.value = false;
   }

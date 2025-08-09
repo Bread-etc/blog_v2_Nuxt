@@ -1,5 +1,10 @@
 import { toast } from "vue-sonner";
-import type { LoginRequest, LoginResponse, PublicKeyResponse } from "~/types";
+import type {
+  LoginRequest,
+  LoginResponse,
+  PublicKeyResponse,
+  User,
+} from "~/types";
 
 export const useAuthService = () => {
   const { get, post } = useApi();
@@ -9,7 +14,7 @@ export const useAuthService = () => {
    * @returns RSA公钥用于密码加密
    */
   const getPublicKey = async () => {
-    return await get<PublicKeyResponse>("/api/auth/getPublicKey", {
+    return await get<PublicKeyResponse>("/auth/getPublicKey", {
       showErrorToast: true,
     });
   };
@@ -21,12 +26,33 @@ export const useAuthService = () => {
    * @returns 登录结果包含token和用户信息
    */
   const login = async (credentials: LoginRequest, loading?: Ref<boolean>) => {
-    return await post<LoginResponse>("/api/auth/login", credentials, {
+    const response = await post<LoginResponse>("/auth/login", credentials, {
       showErrorToast: true,
       showSuccessToast: true,
       successMessage: "登录成功",
       loading,
     });
+
+    // 如果登录成功，保存token和用户信息到cookie
+    if (response && response.code === 200 && response.data) {
+      const token = useCookie<string | null>("auth-token", {
+        default: () => null,
+        maxAge: 60 * 60 * 24 * 7,
+        secure: true,
+        sameSite: "strict",
+      });
+      token.value = response.data.token;
+
+      const user = useCookie<User | null>("user-info", {
+        default: () => null,
+        maxAge: 60 * 60 * 24 * 7,
+        secure: true,
+        sameSite: "strict",
+      });
+      user.value = response.data.user;
+    }
+
+    return response;
   };
 
   /**
