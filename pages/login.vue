@@ -16,7 +16,7 @@
         </CardHeader>
         <CardContent>
           <form @submit.prevent="handleLogin" class="space-y-2">
-            <div class="space-y-3">
+            <div class="space-y-3 mb-3">
               <Input
                 class="font-bold tracking-tight"
                 id="username"
@@ -36,15 +36,6 @@
                 :disabled="loading"
                 required
               />
-            </div>
-            <div class="flex items-center space-x-2 p-1">
-              <input
-                id="remember"
-                type="checkbox"
-                v-model="memoPassword"
-                class="mt-[2px] h-4 w-4"
-              />
-              <Label for="remember" class="select-none text-sm">记住密码</Label>
             </div>
             <Button
               variant="default"
@@ -96,7 +87,6 @@ definePageMeta({
 
 // 响应式数据
 const loading = ref(false);
-const memoPassword = ref(false);
 const loginForm = reactive({
   userName: "",
   password: "",
