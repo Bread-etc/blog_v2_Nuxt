@@ -1,8 +1,8 @@
 <template>
   <div class="flex h-screen w-screen items-center">
     <!-- 左侧表单 -->
-    <div class="flex-center h-full w-1/2 p-16">
-      <Card class="w-full border-none bg-transparent">
+    <div class="flex-center col h-full w-1/2 p-16">
+      <Card class="w-full border-none bg-transparent shadow-none">
         <CardHeader>
           <CardTitle class="select-none text-3xl font-bold">Hello🎉</CardTitle>
           <CardTitle class="select-none text-3xl font-bold"
@@ -13,10 +13,17 @@
           >
             Hey, sign in to manage blogs💡
           </CardDescription>
+          <CardDescription
+            class="select-none truncate font-mono font-extrabold tracking-tight"
+          >
+            <a class="hover:text-primary" @click="handleBack"
+              >click here come back!🧩</a
+            >
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form @submit.prevent="handleLogin" class="space-y-2">
-            <div class="space-y-3 mb-3">
+            <div class="mb-3 space-y-3">
               <Input
                 class="font-bold tracking-tight"
                 id="username"
@@ -40,10 +47,10 @@
             <Button
               variant="default"
               size="sm"
-              class="w-1/4"
               type="submit"
               :disabled="loading"
             >
+              <LogIn class="h-4 w-4" />
               <span class="text-white" v-if="loading">登录中...</span>
               <span class="text-white" v-else>登录</span>
             </Button>
@@ -76,8 +83,8 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
 import { Button } from "~/components/ui/button";
+import { LogIn } from "lucide-vue-next";
 
 useHead({ title: "登录" });
 
@@ -177,5 +184,10 @@ const handleLogin = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const handleBack = () => {
+  const router = useRouter();
+  router.go(-1);
 };
 </script>
