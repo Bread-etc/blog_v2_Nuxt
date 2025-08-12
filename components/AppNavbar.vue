@@ -14,20 +14,34 @@
         </div>
 
         <div class="flex-between space-x-1">
-          <Button
-            @click="toggleTheme"
-            variant="outline"
-            class="group border-none bg-transparent p-2 outline-none ring-0 hover:bg-transparent"
-          >
-            <Sun
-              v-if="isDark"
-              class="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-primary"
-            />
-            <Moon
-              v-else
-              class="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-primary"
-            />
-          </Button>
+          <!-- 包装在ClientOnly中 -->
+          <ClientOnly>
+            <Button
+              @click="toggleTheme"
+              variant="outline"
+              class="group border-none bg-transparent p-2 outline-none ring-0 hover:bg-transparent"
+            >
+              <Sun
+                v-if="isDark"
+                class="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-primary"
+              />
+              <Moon
+                v-else
+                class="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-primary"
+              />
+            </Button>
+            <template #fallback>
+              <!-- 服务端渲染时显示的占位符 -->
+              <Button
+                variant="outline"
+                class="group border-none bg-transparent p-2 outline-none ring-0 hover:bg-transparent"
+              >
+                <Sun
+                  class="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-primary"
+                />
+              </Button>
+            </template>
+          </ClientOnly>
 
           <Button
             variant="outline"
