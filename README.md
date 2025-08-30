@@ -20,10 +20,32 @@
 - [x] 重写`posts`文章接口,包含CRUD/文章列表/文章详情/文章统计信息/高级搜索/批量更新/推荐文章/浏览量
 - [x] 重写`tags`接口,包含CRUD/标签列表/标签详情/标签统计信息/批量操作
 - [x] 固定`vue`/`vue-router`版本
-- [ ] 
+- [x] 引入`tailwindcssV3`和`shadcn-vue@1.0.3`(包括相关依赖)
+- [x] 新增`AppNavBar`类Dock组件
+- [ ] 修改`Login`登录界面
 - [ ] 移动端适配
 - [ ] 自动化部署`CI/CD`
 
 ## Bug fixs
 
 - [x] 修复toc显示不全的bug
+- [x] 移除`node-forge`依赖
+
+## feature
+
+- [x] 重写`default.vue`默认页面
+- [ ] robot.txt 爬虫协议
+- [ ]
+
+## 使用指南
+
+### 项目启动
+
+- `pnpm install`
+- `pnpm gen`生成prisma对应的数据库
+- `pnpm dev`
+
+### 管理员账号注册
+
+- `scripts/createAdmin.js`在`.env.development`/.env.production`或环境变量中设置`ADMIN_USERNAME`、`ADMIN_PASSWORD`和`ADMIN_EMAIL`
+- `node scripts/createAdmin.js`执行脚本

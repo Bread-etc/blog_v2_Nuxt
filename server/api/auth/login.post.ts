@@ -2,13 +2,14 @@ import { privateKey } from "./getPublicKey.get";
 import { CryptoUtils } from "../../utils/crypto";
 import { prisma } from "../../utils/db";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export default defineEventHandler(async (event) => {
   try {
-    const body: { username: string; password: string } = await readBody(event);
-    if (!body.username || !body.password) {
+    const body: { userName: string; password: string } = await readBody(event);
+    if (!body.userName || !body.password) {
       return createErrorResponse("用户名和密码是必填字段", 400, false);
     }
 
@@ -16,13 +17,15 @@ export default defineEventHandler(async (event) => {
     let password: string;
 
     try {
-      username = CryptoUtils.decrypt(body.username, privateKey);
+      // 用户名不加密，直接使用
+      username = body.userName;
+      // 只解密密码
       password = CryptoUtils.decrypt(body.password, privateKey);
     } catch (error: any) {
-      return createErrorResponse("解密失败，请检查数据格式", 400, false);
+      return createErrorResponse("密码解密失败，请检查数据格式", 400, false);
     }
 
-    // 验证解密后的数据
+    // 验证数据
     if (!username.trim() || !password.trim()) {
       return createErrorResponse("用户名和密码不能为空", 400, false);
     }
@@ -46,8 +49,9 @@ export default defineEventHandler(async (event) => {
       return createErrorResponse("用户名或密码错误", 401, false);
     }
 
-    // 验证密码
-    if (user.password !== password) {
+    // 验证密码（使用bcrypt）
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return createErrorResponse("用户名或密码错误", 401, false);
     }
 

@@ -1,17 +1,20 @@
 <template>
   <div>
-    <!-- 全局加载状态 -->
-    <NuxtLoadingIndicator />
+    <NuxtLoadingIndicator color="var(--primary)" />
 
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
 
-    <!-- 全局通知组件 -->
+    <Sonner :theme="theme" richColors />
   </div>
 </template>
 
 <script setup>
+import "vue-sonner/style.css";
+
+const theme = computed(() => useColorMode().value);
+
 useHead({
   titleTemplate: "%s - 面包etc的博客",
   meta: [

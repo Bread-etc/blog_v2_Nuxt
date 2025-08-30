@@ -30,6 +30,12 @@ export interface TokenValidationResponse {
   expiresAt?: Timestamp;
 }
 
+// 公钥响应类型
+export interface PublicKeyResponse {
+  publicKey: string;
+  keyId?: string;
+}
+
 // 用户状态类型
 export interface UserState {
   user: User | null;
